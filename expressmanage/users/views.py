@@ -50,12 +50,3 @@ class UserRedirectView(LoginRequiredMixin, RedirectView):
 
 
 user_redirect_view = UserRedirectView.as_view()
-
-
-# class UserLogoutView(LoginRequiredMixin, DetailView):
-
-#     def logout_view(self):
-#         logout(self.request)
-
-
-# user_logout_view = UserLogoutView.as_view()

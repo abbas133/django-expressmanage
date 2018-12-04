@@ -4,7 +4,6 @@
 <!-- To apply to active item -->
 <!-- nav-active -->
 
-
 <!-- start: sidebar -->
 <aside id="sidebar-left" class="sidebar-left">
 
@@ -22,14 +21,21 @@
         <div class="nano-content">
             <nav id="menu" class="nav-main" role="navigation">
                 <ul class="nav nav-main">
-                    <li>
+                    <li class="opt-home">
                         <a href="{% url 'home' %}">
                             <i class="fa fa-home" aria-hidden="true"></i>
                             <span>Dashboard</span>
                         </a>
                     </li>
 
-                    <!-- <hr class="separator" /> -->
+                    <li class="opt-about">
+                        <a href="{% url 'about' %}">
+                            <i class="fa fa-bookmark" aria-hidden="true"></i>
+                            <span>About</span>
+                        </a>
+                    </li>
+
+                    {% comment %} <hr class="separator" /> {% endcomment %}
 
                     {% comment %}
                     <li class="nav-parent">
@@ -137,8 +143,8 @@
                                     <span>List Invoices</span>
                                 </a>
                             </li>
-                        </ul> {% endcomment %}
-                    </li>
+                        </ul> 
+                    </li> {% endcomment %}
 
                     <!--
                     <li class="nav-parent">
@@ -181,8 +187,6 @@
                 </div>
             </div>
             -->
-
-
         </div>
     </div>
 

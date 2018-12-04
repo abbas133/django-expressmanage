@@ -1,8 +1,11 @@
+static indexing while saving outward orders is buggy as out of 3 olis if first is out of stock,
+still out entry is made for it. Static indexing from request.
+
 Code refactor for naming convention
 
 Base abstract model for audit fields
 
-Custom user model
+Custom user model = DONE
 
 new field in payment -> accepted by - automatic by current user
 

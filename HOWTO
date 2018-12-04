@@ -22,3 +22,11 @@ Running the Cookiecutter-django project locally
 
 Changing database to SQLite/MySQL
     1. Check the base.py in setting and look for DATABASES options. Apply same changes.
+
+
+Remove migrations and reset database
+    1. find . -path "*/migrations/*.py" -not -name "__init__.py" -delete
+    2. find . -path "*/migrations/*.pyc"  -delete
+    3. delete db.sqlite3
+    4. python manage.py makemigrations
+    5. python manage.py migrate

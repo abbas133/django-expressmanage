@@ -225,11 +225,11 @@
                 <div class="dropdown-menu">
                     <ul class="list-unstyled">
                         <li class="divider"></li>
-                        <li>
+                        {% comment %} <li>
                             {# URL provided by django-allauth/account/urls.py #}
                             <a role="menuitem" tabindex="-1" href="{% url 'users:detail' request.user.username %}"><i class="fa fa-user"></i>
                                 My Profile</a>
-                        </li>
+                        </li> {% endcomment %}
                         <li>
                             {# URL provided by django-allauth/account/urls.py #}
                             <a role="menuitem" tabindex="-1" href="{% url 'account_logout' %}"><i class="fa fa-power-off"></i>
