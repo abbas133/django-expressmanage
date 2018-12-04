@@ -1,0 +1,190 @@
+<!-- To apply to active sidebar item -->
+<!-- nav-expanded nav-active -->
+
+<!-- To apply to active item -->
+<!-- nav-active -->
+
+
+<!-- start: sidebar -->
+<aside id="sidebar-left" class="sidebar-left">
+
+    <div class="sidebar-header">
+        <div class="sidebar-title">
+            Navigation
+        </div>
+        <div class="sidebar-toggle hidden-xs" data-toggle-class="sidebar-left-collapsed" data-target="html"
+            data-fire-event="sidebar-left-toggle">
+            <i class="fa fa-bars" aria-label="Toggle sidebar"></i>
+        </div>
+    </div>
+
+    <div class="nano">
+        <div class="nano-content">
+            <nav id="menu" class="nav-main" role="navigation">
+                <ul class="nav nav-main">
+                    <li>
+                        <a href="{% url 'home' %}">
+                            <i class="fa fa-home" aria-hidden="true"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+
+                    <!-- <hr class="separator" /> -->
+
+                    <li class="nav-parent">
+                        <a>
+                            <i class="fa fa-address-book" aria-hidden="true"></i>
+                            <span>Customer Management</span>
+                        </a>
+                        <ul class="nav nav-children">
+                            <li>
+                                {% comment %} <a href="{% url 'customers:customer_index' %}"> {% endcomment %}
+                                <a href="#">
+                                    <i class="fa fa-users" aria-hidden="true"></i>
+                                    <span>List Customers</span>
+                                </a>
+                            </li>
+                            <li>
+                                {% comment %} <a href="{% url 'customers:customer_create' %}"> {% endcomment %}
+                                <a href="#">
+                                    <i class="fa fa-user-plus" aria-hidden="true"></i>
+                                    <span>Add Customer</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    {% comment %}
+                    <li class="nav-parent">
+                        <a>
+                            <i class="fa fa-window-restore" aria-hidden="true"></i>
+                            <span>Product Management</span>
+                        </a>
+                        <ul class="nav nav-children">
+                            <li>
+                                <a href="{% url 'products:product_index' %}">
+                                    <i class="fa fa-list-ul" aria-hidden="true"></i>
+                                    <span>List Products</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{% url 'products:product_create' %}">
+                                    <i class="fa fa-plus-square" aria-hidden="true"></i>
+                                    <span>Add Product</span>
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="nav nav-children">
+                            <li>
+                                <a href="{% url 'products:ct_index' %}">
+                                    <i class="fa fa-th-list" aria-hidden="true"></i>
+                                    <span>List Container Types</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{% url 'products:ct_create' %}">
+                                    <i class="fa fa-dropbox" aria-hidden="true"></i>
+                                    <span>Add Container Type</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-parent">
+                        <a>
+                            <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                            <span>Order Management</span>
+                        </a>
+                        <ul class="nav nav-children">
+                            <li>
+                                <a href="{% url 'orders:in_index' %}">
+                                    <i class="fa fa-upload" aria-hidden="true"></i>
+                                    <span>List Inward Orders</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{% url 'orders:in_create' %}">
+                                    <i class="fa fa-cart-plus" aria-hidden="true"></i>
+                                    <span>Add Inward Order</span>
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="nav nav-children">
+                            <li>
+                                <a href="{% url 'orders:out_index' %}">
+                                    <i class="fa fa-download" aria-hidden="true"></i>
+                                    <span>List Outward Orders</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{% url 'orders:out_create' %}">
+                                    <i class="fa fa-cart-arrow-down" aria-hidden="true"></i>
+                                    <span>Add Outward Order</span>
+                                </a>
+                            </li>
+                        </ul> 
+                    </li>
+
+                    <li class="nav-parent">
+                        <a>
+                            <i class="fa fa-rupee" aria-hidden="true"></i>
+                            <span>Invoices And Payments</span>
+                        </a>
+                        {% comment %} <ul class="nav nav-children">
+                            <li>
+                                <a href="{% url 'invoices:invoice_index' %}">
+                                    <i class="fa fa-list-alt" aria-hidden="true"></i>
+                                    <span>List Invoices</span>
+                                </a>
+                            </li>
+                        </ul> {% endcomment %}
+                    </li>
+
+                    <!--
+                    <li class="nav-parent">
+                        <a>
+                            <i class="fa fa-copy" aria-hidden="true"></i>
+                            <span>Pages</span>
+                        </a>
+                        <ul class="nav nav-children">
+                            <li>
+                                <a href="#">
+                                    Invoice
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="#">
+                                    Blank Page
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    -->
+                </ul>
+            </nav>
+
+
+            <hr class="separator" />
+            <!--
+                Built with love to be written here
+            <div class="sidebar-widget widget-tasks">
+                <div class="widget-header">
+                    <h6>Projects</h6>
+                    <div class="widget-toggle">+</div>
+                </div>
+                <div class="widget-content">
+                    <ul class="list-unstyled m-none">
+                        <li><a href="#">Porto HTML5 Template</a></li>
+                        <li><a href="#">Tucson Template</a></li>
+                        <li><a href="#">Porto Admin</a></li>
+                    </ul>
+                </div>
+            </div>
+            -->
+
+
+        </div>
+    </div>
+
+</aside>
+<!-- end: sidebar -->

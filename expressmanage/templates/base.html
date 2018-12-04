@@ -1,114 +1,112 @@
-{% load static i18n %}<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>{% block title %}Express Manage{% endblock title %}</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
+{% load static %}
 
-    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
-    <!--[if lt IE 9]>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
-    <![endif]-->
+<!doctype html>
+<html class="fixed">
+
+<head>
+
+    <!-- Basic -->
+    <meta charset="UTF-8">
+
+    <title>Express Manage</title>
+    <meta name="keywords" content="HTML5 Admin Template" />
+    <meta name="description" content="Porto Admin - Responsive HTML5 Template">
+    <meta name="author" content="okler.net">
+
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
     <link rel="icon" href="{% static 'images/favicons/favicon.ico' %}">
 
-    {% block css %}
-    
-    <!-- Latest compiled and minified Bootstrap 4.1.1 CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
-    
+    <!-- Web Fonts  -->
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800|Shadows+Into+Light" rel="stylesheet"
+        type="text/css">
 
-    <!-- Your stuff: Third-party CSS libraries go here -->
-    
-    <!-- This file stores project-specific CSS -->
-    
-    <link href="{% static 'css/project.css' %}" rel="stylesheet">
-    
-    
-    {% endblock %}
+    <!-- Vendor CSS -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
+    <link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}">
+    <link rel="stylesheet" href="{% static 'css/datepicker3.css' %}">
 
-  </head>
+    <!-- Theme CSS -->
+    <link rel="stylesheet" href="{% static 'css/theme.css' %}">
 
-  <body>
+    <!-- Skin CSS -->
+    <link rel="stylesheet" href="{% static 'css/default.css' %}">
 
-    <div class="m-b-1">
-      <nav class="navbar navbar-expand-md navbar-light bg-light">
-        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <a class="navbar-brand" href="{% url 'home' %}">Express Manage</a>
+    <!-- Theme Custom CSS -->
+    <link rel="stylesheet" href="{% static 'css/theme-custom.css' %}">
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="{% url 'home' %}">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'about' %}">About</a>
-            </li>
-            {% if request.user.is_authenticated %}
-              <li class="nav-item">
-                {# URL provided by django-allauth/account/urls.py #}
-                <a class="nav-link" href="{% url 'users:detail' request.user.username  %}">{% trans "My Profile" %}</a>
-              </li>
-              <li class="nav-item">
-                {# URL provided by django-allauth/account/urls.py #}
-                <a class="nav-link" href="{% url 'account_logout' %}">{% trans "Sign Out" %}</a>
-              </li>
-            {% else %}
-              <li class="nav-item">
-                {# URL provided by django-allauth/account/urls.py #}
-                <a id="sign-up-link" class="nav-link" href="{% url 'account_signup' %}">{% trans "Sign Up" %}</a>
-              </li>
-              <li class="nav-item">
-                {# URL provided by django-allauth/account/urls.py #}
-                <a id="log-in-link" class="nav-link" href="{% url 'account_login' %}">{% trans "Sign In" %}</a>
-              </li>
-            {% endif %}
-          </ul>
+    <!-- Head Libs -->
+    <script type="text/javascript" src="{% static "js/modernizr.js" %}"></script>
+
+</head>
+
+<body>
+
+    <section class="body">
+        {% include "base_header.html" %}
+
+        <div class="inner-wrapper">
+            {% include "base_sidebar.html" %}
+
+            {% block content %}
+                <section role="main" class="content-body">
+                    <header class="page-header">
+                        <h2>Content Page</h2>
+
+                        <div class="right-wrapper pull-right">
+                            <ol class="breadcrumbs">
+                                <li>
+                                    <a href="{% url 'home' %}">
+                                        <i class="fa fa-home"></i>
+                                    </a>
+                                </li>
+                                <li><span>Content Page</span></li>
+                            </ol>
+
+                            <a class="sidebar-right-toggle"><i class=""></i></a>
+                        </div>
+                    </header>
+
+                    <!-- start: page -->
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <section class="panel panel-primary">
+                                <header class="panel-heading">
+                                    <h2 class="panel-title">Page heading</h2>
+                                </header>
+                                
+                                <div class="panel-body">
+                                    <p>Your content here</p>
+                                </div>
+                            </section>
+                        </div>
+                    </section>
+                    <!-- end: page -->
+                </section>
+            {% endblock content %}
         </div>
-      </nav>
+    </section>
 
-    </div>
+    <!-- Vendor -->
+    <script type="text/javascript" src="{% static "js/jquery.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/jquery.browser.mobile.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/bootstrap.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/nanoscroller.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/bootstrap-datepicker.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/magnific-popup.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/jquery.placeholder.js" %}"></script>
 
-    <div class="container">
+    <!-- Theme Base, Components and Settings -->
+    <script type="text/javascript" src="{% static "js/theme.js" %}"></script>
 
-      {% if messages %}
-          {% for message in messages %}
-              <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">{{ message }}</div>
-          {% endfor %}
-      {% endif %}
+    <!-- Theme Custom -->
+    <script type="text/javascript" src="{% static "js/theme.custom.js" %}"></script>
 
-      {% block content %}
-        <p>Use this document as a way to quick start any new project.</p>
-      {% endblock content %}
+    <!-- Theme Initialization Files -->
+    <script type="text/javascript" src="{% static "js/theme.init.js" %}"></script>
 
-    </div> <!-- /container -->
+</body>
 
-    {% block modal %}{% endblock modal %}
-
-    <!-- Le javascript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    {% block javascript %}
-      
-      <!-- Required by Bootstrap v4.1.1 -->
-      <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
-
-      <!-- Your stuff: Third-party javascript libraries go here -->
-      
-
-      <!-- place project specific Javascript in this file -->
-      
-      <script src="{% static 'js/project.js' %}"></script>
-      
-
-    {% endblock javascript %}
-  </body>
 </html>
- 

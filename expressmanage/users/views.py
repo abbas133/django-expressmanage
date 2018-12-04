@@ -1,4 +1,4 @@
-from django.contrib.auth import get_user_model
+from django.contrib.auth import get_user_model, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse
 from django.views.generic import DetailView, ListView, RedirectView, UpdateView
@@ -50,3 +50,12 @@ class UserRedirectView(LoginRequiredMixin, RedirectView):
 
 
 user_redirect_view = UserRedirectView.as_view()
+
+
+# class UserLogoutView(LoginRequiredMixin, DetailView):
+
+#     def logout_view(self):
+#         logout(self.request)
+
+
+# user_logout_view = UserLogoutView.as_view()
