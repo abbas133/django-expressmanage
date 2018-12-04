@@ -1,6 +1,79 @@
-{% load static i18n %}
+{% extends "account/base.html" %}
+
+{% load i18n %}
 {% load account socialaccount %}
 {% load crispy_forms_tags %}
+
+{% block head_title %}{% trans "Sign In" %}{% endblock %}
+
+{% block inner %}
+
+<h1>{% trans "Sign In" %}</h1>
+
+{% get_providers as socialaccount_providers %}
+
+{% if socialaccount_providers %}
+<p>{% blocktrans with site.name as site_name %}Please sign in with one
+of your existing third party accounts. Or, <a href="{{ signup_url }}">sign up</a>
+for a {{ site_name }} account and sign in below:{% endblocktrans %}</p>
+
+<div class="socialaccount_ballot">
+
+  <ul class="socialaccount_providers">
+    {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+  </ul>
+
+  <div class="login-or">{% trans 'or' %}</div>
+
+</div>
+
+{% include "socialaccount/snippets/login_extra.html" %}
+
+{% else %}
+<p>{% blocktrans %}If you have not created an account yet, then please
+<a href="{{ signup_url }}">sign up</a> first.{% endblocktrans %}</p>
+{% endif %}
+
+<form class="login" method="POST" action="{% url 'account_login' %}">
+  {% csrf_token %}
+  {{ form|crispy }}
+  {% if redirect_field_value %}
+  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+  {% endif %}
+  <a class="button secondaryAction" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
+  <button class="primaryAction btn btn-primary" type="submit">{% trans "Sign In" %}</button>
+</form>
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% load static i18n %}
 
 <!doctype html>
 <html class="fixed">
@@ -22,7 +95,6 @@
 
 <body>
     <!-- start: page -->
-
     <section class="body-sign">
         <div class="center-sign">
             <a href="#" class="logo">
@@ -34,16 +106,8 @@
                     <h2 class="title text-uppercase text-bold m-none"><i class="fa fa-user mr-xs"></i> Sign In</h2>
                 </div>
                 <div class="panel-body">
-                    <form class="login" method="POST" action="{% url 'account_login' %}">
-                        {% csrf_token %}
-
-                        {{ form|crispy }}
-
-                        {% if redirect_field_value %}
-                            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
-                        {% endif %}
-
-                        {% comment %} <div class="form-group mb-lg">
+                    <form action="index.html" method="post">
+                        <div class="form-group mb-lg">
                             <label>Username</label>
                             <div class="input-group input-group-icon">
                                 <input name="username" type="text" class="form-control input-lg" />
@@ -58,6 +122,8 @@
                         <div class="form-group mb-lg">
                             <div class="clearfix">
                                 <label class="pull-left">Password</label>
+                                <a href="{% url 'account_reset_password' %}" class="pull-right">Lost Password?</a>
+                                
                             </div>
                             <div class="input-group input-group-icon">
                                 <input name="pwd" type="password" class="form-control input-lg" />
@@ -67,7 +133,6 @@
                                     </span>
                                 </span>
                             </div>
-                            <a href="{% url 'account_reset_password' %}" class="pull-right">Forgot Password?</a>
                         </div>
 
                         <div class="row">
@@ -77,38 +142,34 @@
                                     <label for="RememberMe">Remember Me</label>
                                 </div>
                             </div>
-                             {% endcomment %}
-
                             <div class="col-sm-4 text-right">
                                 <button type="submit" class="btn btn-primary hidden-xs">Sign In</button>
                                 <button type="submit" class="btn btn-primary btn-block btn-lg visible-xs mt-lg">Sign In</button>
                             </div>
                         </div>
 
-                        {% comment %} 
-                        <span class="mt-lg mb-lg line-thru text-center text-uppercase">
+                        {% comment %} <span class="mt-lg mb-lg line-thru text-center text-uppercase">
                             <span>or</span>
                         </span>
 
                         <div class="mb-xs text-center">
                             <a class="btn btn-facebook mb-md ml-xs mr-xs">Connect with <i class="fa fa-facebook"></i></a>
                             <a class="btn btn-twitter mb-md ml-xs mr-xs">Connect with <i class="fa fa-twitter"></i></a>
-                        </div>
+                        </div> {% endcomment %}
 
                         <p class="text-center">Don't have an account yet? <a href="{{ signup_url }}">Sign Up!</a>
-                        {% endcomment %}
+
                     </form>
                 </div>
             </div>
 
-            {% comment %} 
-            <p class="text-center text-muted mt-md mb-md">&copy; Copyright 2018. All rights reserved. Template by <a
-                    href="https://colorlib.com">Colorlib</a>.</p> 
-            {% endcomment %}
+            {% comment %} <p class="text-center text-muted mt-md mb-md">&copy; Copyright 2018. All rights reserved. Template by <a
+                    href="https://colorlib.com">Colorlib</a>.</p> {% endcomment %}
         </div>
     </section>
     <!-- end: page -->
 </body>
+
     {% include "base_footer_includes.html" %}
 
 </html>

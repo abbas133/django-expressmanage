@@ -1,4 +1,4 @@
-{% load static %}
+{% load static i18n %}
 
 <!doctype html>
 <html class="fixed">
@@ -18,95 +18,73 @@
 
     <link rel="icon" href="{% static 'images/favicons/favicon.ico' %}">
 
-    <!-- Web Fonts  -->
-    <link href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800|Shadows+Into+Light" rel="stylesheet"
-        type="text/css">
+    {% include "base_header_includes.html" %}
 
-    <!-- Vendor CSS -->
-    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
-    <link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}">
-    <link rel="stylesheet" href="{% static 'css/datepicker3.css' %}">
-
-    <!-- Theme CSS -->
-    <link rel="stylesheet" href="{% static 'css/theme.css' %}">
-
-    <!-- Skin CSS -->
-    <link rel="stylesheet" href="{% static 'css/default.css' %}">
-
-    <!-- Theme Custom CSS -->
-    <link rel="stylesheet" href="{% static 'css/theme-custom.css' %}">
-
-    <!-- Head Libs -->
-    <script type="text/javascript" src="{% static "js/modernizr.js" %}"></script>
+    <!-- Page specific includes -->
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.theme.css' %}">
 
 </head>
 
 <body>
 
+
     <section class="body">
         {% include "base_header.html" %}
 
         <div class="inner-wrapper">
-            {% include "base_sidebar.html" %}
+            {% if request.user.is_authenticated %}
 
-            {% block content %}
-                <section role="main" class="content-body">
-                    <header class="page-header">
-                        <h2>Content Page</h2>
+                {% include "base_sidebar.html" %}
 
-                        <div class="right-wrapper pull-right">
-                            <ol class="breadcrumbs">
-                                <li>
-                                    <a href="{% url 'home' %}">
-                                        <i class="fa fa-home"></i>
-                                    </a>
-                                </li>
-                                <li><span>Content Page</span></li>
-                            </ol>
+                {% block content %}
+                    <section role="main" class="content-body">
+                        <header class="page-header">
+                            <h2>Content Page</h2>
 
-                            <a class="sidebar-right-toggle"><i class=""></i></a>
-                        </div>
-                    </header>
+                            <div class="right-wrapper pull-right">
+                                <ol class="breadcrumbs">
+                                    <li>
+                                        <a href="{% url 'home' %}">
+                                            <i class="fa fa-home"></i>
+                                        </a>
+                                    </li>
+                                    <li><span>Content Page</span></li>
+                                </ol>
 
-                    <!-- start: page -->
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <section class="panel panel-primary">
-                                <header class="panel-heading">
-                                    <h2 class="panel-title">Page heading</h2>
-                                </header>
-                                
-                                <div class="panel-body">
-                                    <p>Your content here</p>
-                                </div>
-                            </section>
-                        </div>
+                                <a class="sidebar-right-toggle"><i class=""></i></a>
+                            </div>
+                        </header>
+
+                        <!-- start: page -->
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <section class="panel panel-primary">
+                                    <header class="panel-heading">
+                                        <h2 class="panel-title">Page heading</h2>
+                                    </header>
+                                    
+                                    <div class="panel-body">
+                                        <p>Your content here</p>
+                                    </div>
+                                </section>
+                            </div>
+                        </section>
+                        <!-- end: page -->
                     </section>
-                    <!-- end: page -->
-                </section>
-            {% endblock content %}
+                {% endblock content %}
+            {% else %}
+                <div class="owl-carousel" data-plugin-carousel data-plugin-options='{ "autoPlay": 3000, "items": 1, "itemsDesktop": [1199,4], "itemsDesktopSmall": [979,3], "itemsTablet": [768,2], "itemsMobile": [479,1] }'>
+                    <div class="item spaced"><img class="img-thumbnail" src="{% static 'images/express-logo.png' %}" alt=""></div>
+                    <div class="item spaced"><img class="img-thumbnail" src="{% static 'images/express-logo.png' %}" alt=""></div>
+                    <div class="item spaced"><img class="img-thumbnail" src="{% static 'images/express-logo.png' %}" alt=""></div>
+                </div>
+            {% endif %}
         </div>
     </section>
 
-    <!-- Vendor -->
-    <script type="text/javascript" src="{% static "js/jquery.js" %}"></script>
-    <script type="text/javascript" src="{% static "js/jquery.browser.mobile.js" %}"></script>
-    <script type="text/javascript" src="{% static "js/bootstrap.js" %}"></script>
-    <script type="text/javascript" src="{% static "js/nanoscroller.js" %}"></script>
-    <script type="text/javascript" src="{% static "js/bootstrap-datepicker.js" %}"></script>
-    <script type="text/javascript" src="{% static "js/magnific-popup.js" %}"></script>
-    <script type="text/javascript" src="{% static "js/jquery.placeholder.js" %}"></script>
-
-    <!-- Theme Base, Components and Settings -->
-    <script type="text/javascript" src="{% static "js/theme.js" %}"></script>
-
-    <!-- Theme Custom -->
-    <script type="text/javascript" src="{% static "js/theme.custom.js" %}"></script>
-
-    <!-- Theme Initialization Files -->
-    <script type="text/javascript" src="{% static "js/theme.init.js" %}"></script>
-
 </body>
+
+    {% include "base_footer_includes.html" %}
 
 </html>

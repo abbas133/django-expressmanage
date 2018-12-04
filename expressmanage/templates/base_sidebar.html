@@ -31,6 +31,7 @@
 
                     <!-- <hr class="separator" /> -->
 
+                    {% comment %}
                     <li class="nav-parent">
                         <a>
                             <i class="fa fa-address-book" aria-hidden="true"></i>
@@ -38,14 +39,14 @@
                         </a>
                         <ul class="nav nav-children">
                             <li>
-                                {% comment %} <a href="{% url 'customers:customer_index' %}"> {% endcomment %}
+                                <a href="{% url 'customers:customer_index' %}">
                                 <a href="#">
                                     <i class="fa fa-users" aria-hidden="true"></i>
                                     <span>List Customers</span>
                                 </a>
                             </li>
                             <li>
-                                {% comment %} <a href="{% url 'customers:customer_create' %}"> {% endcomment %}
+                                <a href="{% url 'customers:customer_create' %}">
                                 <a href="#">
                                     <i class="fa fa-user-plus" aria-hidden="true"></i>
                                     <span>Add Customer</span>
@@ -54,7 +55,6 @@
                         </ul>
                     </li>
 
-                    {% comment %}
                     <li class="nav-parent">
                         <a>
                             <i class="fa fa-window-restore" aria-hidden="true"></i>
