@@ -1,0 +1,15 @@
+Code refactor for naming convention
+
+Base abstract model for audit fields
+
+Custom user model
+
+new field in payment -> accepted by - automatic by current user
+
+Generate receiving challan same as invoice on outward order
+
+Invoice should contain name of the receiver
+
+selected section to be auto expanded and highlighted in side bar
+
+Facebook like timeline in customer detail page which will show inward order, outward orders and payment

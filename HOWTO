@@ -1,0 +1,24 @@
+Generate project
+    1. Install cookiecutter
+        pip install cookiecutter
+    2. Run it against a template repo
+        cookiecutter https://github.com/pydanny/cookiecutter-django
+    3. Answer the questions on prompt and the project will be generated
+
+
+Running the Cookiecutter-django project locally
+    1. Create a virtualenv
+        python -m venv <virtual env path>
+    2. Activate the virtualenv you have just created
+        source <virtual env path>/bin/activate
+    3. Install development requirements
+        pip install -r requirements/local.txt
+    4. If you are using PostgreSQL then checkout https://cookiecutter-django.readthedocs.io/en/latest/developing-locally.html
+    5. If you are using MySQL then Apply migrations
+        python manage.py migrate
+    6. See the application being served through Django development server
+        python manage.py runserver 0.0.0.0:8000
+
+
+Changing database to SQLite/MySQL
+    1. Check the base.py in setting and look for DATABASES options. Apply same changes.
