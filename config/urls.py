@@ -20,7 +20,10 @@ urlpatterns = [
         include("expressmanage.users.urls", namespace="users"),
     ),
     path("accounts/", include("allauth.urls")),
+    
     # Your stuff: custom urls includes go here
+    path('customers/', include('expressmanage.customers.urls', namespace="customers")),
+
 ] + static(
     settings.MEDIA_URL, document_root=settings.MEDIA_ROOT
 )

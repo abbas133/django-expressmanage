@@ -71,17 +71,23 @@ DJANGO_APPS = [
     # 'django.contrib.humanize', # Handy template tags
     'django.contrib.admin',
 ]
+
 THIRD_PARTY_APPS = [
     'crispy_forms',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'rest_framework',
+    'widget_tweaks',
+    'django_extensions',
 ]
+
+# Your stuff: custom apps go here
 LOCAL_APPS = [
     'expressmanage.users.apps.UsersAppConfig',
-    # Your stuff: custom apps go here
+    'expressmanage.customers.apps.CustomersConfig'
 ]
+
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
@@ -144,6 +150,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # 'audit_log.middleware.UserLoggingMiddleware',
 ]
 
 # STATIC

@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <section role="main" class="content-body">
+        <header class="page-header">
+            <h2>Customer Management</h2>
+
+            <div class="right-wrapper pull-right">
+                <ol class="breadcrumbs">
+                    <li>
+                        <a href="{% url 'home' %}">
+                            <i class="fa fa-home"></i>
+                        </a>
+                    </li>
+                    <li><span>Customer Management</span></li>
+                    <li><span>Customer Details</span></li>
+                </ol>
+
+                <a class="sidebar-right-toggle"><i class=""></i></a>
+            </div>
+        </header>
+
+        <!-- start: page -->
+        <!-- end: page -->
+    </section>
+{% endblock content %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+<section class="content-header">
+    <h1>{{ customer.first_name }} {{ customer.last_name }}</h1>
+    <!-- <ol class="breadcrumb">
+      <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+      <li class="active">Dashboard</li>
+</section>
+
+<section class="content">
+
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+
+            <div class="box box-primary">
+                <div class="box-body">
+                    {% comment %} <form method="post"> {% endcomment %}
+                        {% comment %} {% csrf_token %} {% endcomment %}
+                        {% comment %} {{ form }} {% endcomment %}
+                        <div class="form-group">
+                            <label for="cust_firm">Firm:</label>
+                            <output type="text" class="form-control" id="cust_firm">{{ customer.firm }}</output>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="cust_fname">First Name:</label>
+                            <output type="text" class="form-control" id="cust_fname">{{ customer.first_name }}</output>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="cust_lname">Last Name:</label>
+                            <output type="text" class="form-control" id="cust_lname">{{ customer.last_name }}</output>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="cust_address">Address:</label>
+                            <output type="text" class="form-control" id="cust_address">{{ customer.address }}</output>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="cust_city">City:</label>
+                            <output type="text" class="form-control" id="cust_city">{{ customer.city }}</output>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="cust_mob">Mobile Number</label>
+                            <output type="text" class="form-control" id="cust_mob">{{ customer.mobile_number }}</output>
+                        </div>
+
+                        {% comment %} <input type="submit" value="Save"> {% endcomment %}
+                    {% comment %} </form> {% endcomment %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+-->

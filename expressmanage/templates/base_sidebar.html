@@ -28,32 +28,20 @@
                         </a>
                     </li>
 
-                    <li class="opt-about">
-                        <a href="{% url 'about' %}">
-                            <i class="fa fa-bookmark" aria-hidden="true"></i>
-                            <span>About</span>
-                        </a>
-                    </li>
-
-                    {% comment %} <hr class="separator" /> {% endcomment %}
-
-                    {% comment %}
-                    <li class="nav-parent">
+                    <li class="opt-customers nav-parent">
                         <a>
                             <i class="fa fa-address-book" aria-hidden="true"></i>
                             <span>Customer Management</span>
                         </a>
                         <ul class="nav nav-children">
-                            <li>
+                            <li class="opt-customer-list">
                                 <a href="{% url 'customers:customer_index' %}">
-                                <a href="#">
                                     <i class="fa fa-users" aria-hidden="true"></i>
                                     <span>List Customers</span>
                                 </a>
                             </li>
-                            <li>
+                            <li class="opt-customer-create">
                                 <a href="{% url 'customers:customer_create' %}">
-                                <a href="#">
                                     <i class="fa fa-user-plus" aria-hidden="true"></i>
                                     <span>Add Customer</span>
                                 </a>
@@ -61,6 +49,7 @@
                         </ul>
                     </li>
 
+                    {% comment %}
                     <li class="nav-parent">
                         <a>
                             <i class="fa fa-window-restore" aria-hidden="true"></i>
@@ -166,6 +155,14 @@
                         </ul>
                     </li>
                     -->
+
+
+                    <li class="opt-about">
+                        <a href="{% url 'about' %}">
+                            <i class="fa fa-bookmark" aria-hidden="true"></i>
+                            <span>About</span>
+                        </a>
+                    </li>
                 </ul>
             </nav>
 
