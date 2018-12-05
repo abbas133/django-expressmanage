@@ -31,6 +31,16 @@ var hightlightCurrentSelection = function() {
         } else {
             $(".opt-customer-list").addClass("nav-active")
         }
+        
+        // Product options
+    } else if(pathname.startsWith('/products')) {
+        $(".opt-products").addClass("nav-expanded nav-active")
+
+        if(pathname.indexOf('new') != -1) {
+            $(".opt-product-create").addClass("nav-active")
+        } else {
+            $(".opt-product-list").addClass("nav-active")
+        }
     }
 
 

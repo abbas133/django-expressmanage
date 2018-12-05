@@ -86,7 +86,8 @@ THIRD_PARTY_APPS = [
 # Your stuff: custom apps go here
 LOCAL_APPS = [
     'expressmanage.users.apps.UsersAppConfig',
-    'expressmanage.customers.apps.CustomersConfig'
+    'expressmanage.customers.apps.CustomersConfig',
+    'expressmanage.products.apps.ProductsConfig'
 ]
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps

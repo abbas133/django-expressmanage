@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <section role="main" class="content-body">
+        <header class="page-header">
+            <h2>Products</h2>
+
+            <div class="right-wrapper pull-right">
+                <ol class="breadcrumbs">
+                    <li>
+                        <a href="{% url 'home' %}">
+                            <i class="fa fa-home"></i>
+                        </a>
+                    </li>
+                    <li><span>Products</span></li>
+                    <li><span>List of Products</span></li>
+                </ol>
+
+                <a class="sidebar-right-toggle"><i class=""></i></a>
+            </div>
+        </header>
+
+        <!-- start: page -->
+        <div class="row">
+            <div class="col-lg-12">
+                <section class="panel panel-primary">
+                    <header class="panel-heading">
+                        <h2 class="panel-title">List Of Products</h2>
+                    </header>
+
+                    <div class="panel-body">
+                        {% if product_list %}
+                            <table class="table table-bordered table-striped table-condensed mb-none">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for product in product_list %}
+                                        <tr>
+                                            <td>{{ product.name }}</td>
+                                            <td>
+                                                <a href="{% url 'products:product_detail' product.id %}"><i class="fa fa-list"></i> Details </a>
+                                                
+                                                {% if request.user.is_authenticated and request.user.is_staff %}
+                                                    |
+                                                    <a href="{% url 'products:product_update' product.id %}"><i class="fa fa-pencil"></i> Edit </a>
+                                                    |
+                                                    <a href="{% url 'products:product_delete' product.id %}"><i class="fa fa-trash-o"></i> Delete </a>
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        {% else %}
+                            <p>No products are available.</p>
+                            <a href="{% url 'products:product_create' %}">
+                                <i class="fa fa-check-square-o"></i>
+                                Add New Product
+                            </a>
+                        {% endif %}
+                    </div>
+                </section>
+            </div>
+        </section>
+        <!-- end: page -->
+    </section>
+{% endblock content %}

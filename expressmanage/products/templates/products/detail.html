@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% load widget_tweaks %}
+
+{% block content %}
+    <section role="main" class="content-body">
+        <header class="page-header">
+            <h2>Product Management</h2>
+
+            <div class="right-wrapper pull-right">
+                <ol class="breadcrumbs">
+                    <li>
+                        <a href="{% url 'home' %}">
+                            <i class="fa fa-home"></i>
+                        </a>
+                    </li>
+                    <li><span>Product Management</span></li>
+                    <li><span>Product Details</span></li>
+                </ol>
+
+                <a class="sidebar-right-toggle"><i class=""></i></a>
+            </div>
+        </header>
+
+        <!-- start: page -->
+        <div class="row">
+            <div class="col-lg-12">
+                <section class="panel panel-primary">
+                    <header class="panel-heading">
+                        <h2 class="panel-title">Product Details</h2>
+                    </header>
+
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label for="productName">Product Name: </label>
+                            <output type="text" class="form-control" id="productName">{{ product.name }}</output>
+                        </div>
+                    </div>
+
+                    <footer>
+                        <div class="pull-right">
+                            <a class="mb-xs mt-xs mr-xs btn btn-default" href="{% url 'products:product_index' %}"><i class="fa fa-home"></i> Back </a>
+
+                            {% if request.user.is_authenticated and request.user.is_staff %}
+                                <a class="mb-xs mt-xs mr-xs btn btn-danger" href="{% url 'products:product_delete' product.id %}"><i class="fa fa-trash-o"></i> Delete </a>
+                                <a class="mb-xs mt-xs mr-xs btn btn-primary" href="{% url 'products:product_update' product.id %}"><i class="fa fa-pencil"></i> Edit </a>
+                            {% endif %}
+                        </div>
+                    </footer>
+                </section>
+
+            </div>
+        </section>
+        <!-- end: page -->
+    </section>
+{% endblock content %}

@@ -52,26 +52,30 @@
                         </ul>
                     </li>
 
-                    {% comment %}
-                    <li class="nav-parent">
+                    <li class="opt-products nav-parent">
                         <a>
                             <i class="fa fa-window-restore" aria-hidden="true"></i>
                             <span>Product Management</span>
                         </a>
                         <ul class="nav nav-children">
-                            <li>
+                            <li class="opt-product-list">
                                 <a href="{% url 'products:product_index' %}">
                                     <i class="fa fa-list-ul" aria-hidden="true"></i>
                                     <span>List Products</span>
                                 </a>
                             </li>
-                            <li>
+
+                            {% if request.user.is_authenticated and request.user.is_staff %}
+                            <li class="opt-product-create">
                                 <a href="{% url 'products:product_create' %}">
                                     <i class="fa fa-plus-square" aria-hidden="true"></i>
                                     <span>Add Product</span>
                                 </a>
                             </li>
+                            {% endif %}
                         </ul>
+
+                {% comment %}
                         <ul class="nav nav-children">
                             <li>
                                 <a href="{% url 'products:ct_index' %}">
@@ -79,12 +83,15 @@
                                     <span>List Container Types</span>
                                 </a>
                             </li>
+
+                            {% if request.user.is_authenticated and request.user.is_staff %}
                             <li>
                                 <a href="{% url 'products:ct_create' %}">
                                     <i class="fa fa-dropbox" aria-hidden="true"></i>
                                     <span>Add Container Type</span>
                                 </a>
                             </li>
+                            {% endif %}
                         </ul>
                     </li>
 

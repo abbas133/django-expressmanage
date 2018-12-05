@@ -26,8 +26,6 @@ class Customer_DetailView(LoginRequiredMixin, PermissionRequiredMixin, generic.D
         return context
 
 
-
-
 class Customer_CreateView(LoginRequiredMixin, PermissionRequiredMixin, generic.CreateView):
     raise_exception = True
     permission_required = ('customers.add_customer')

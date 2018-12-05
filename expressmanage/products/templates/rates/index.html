@@ -1,0 +1,65 @@
+{% comment %} {% load static %} {% endcomment %}
+
+{% comment %}
+<link rel="stylesheet" type="text/css" href="{% static 'products/style.css' %}"> {% endcomment %}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1> Rate Slabs </h1>
+    <!-- <ol class="breadcrumb">
+      <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+      <li class="active">Dashboard</li>
+    </ol> -->
+</section>
+
+<!-- Main content -->
+<section class="content">
+
+    <a href="{% url 'products:rate_create' %}">Add New Rate Slab</a>
+
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+
+            <div class="box box-primary">
+                <div class="box-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover table-striped table-responsive">
+                            <thead>
+                                <tr>
+                                    <th>Container Type</th>
+                                    <th>Rate</th>
+                                    <th>Number of Days</th>
+                                    <th>Slab Number</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                {% if rateslab_list %}
+                                    {% for rsRec in rateslab_list %}
+                                        <tr>
+                                            <td>{{ rsRec.container_type }}</td>
+                                            <td>{{ rsRec.rate }}</td>
+                                            <td>{{ rsRec.number_of_days }}</td>
+                                            <td>{{ rsRec.slab_number }}</td>
+                                            <td>
+                                                <a href="{% url 'products:rate_detail' rsRec.id %}"><i class="fa fa-fw fa-trash"></i> Details </a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                {% else %}
+                                    <p>No rate slabs are available.</p>
+                                {% endif %}
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+                <!-- /.box-body -->
+
+            </div>
+            <!-- /.box -->
+        </div>
+    </div>
+
+</section>
+<!-- /.content -->
