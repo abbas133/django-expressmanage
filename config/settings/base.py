@@ -80,6 +80,7 @@ THIRD_PARTY_APPS = [
     'rest_framework',
     'widget_tweaks',
     'django_extensions',
+    'author'
 ]
 
 # Your stuff: custom apps go here
@@ -150,7 +151,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    # 'audit_log.middleware.UserLoggingMiddleware',
+    'author.middlewares.AuthorDefaultBackendMiddleware',
 ]
 
 # STATIC
@@ -267,3 +268,9 @@ SOCIALACCOUNT_ADAPTER = 'expressmanage.users.adapters.SocialAccountAdapter'
 # ------------------------------------------------------------------------------
 ACCOUNT_LOGOUT_ON_GET = True
 ACCOUNT_LOGOUT_REDIRECT_URL = 'home'
+
+
+# django-author
+# ------------------------------------------------------------------------------
+AUTHOR_CREATED_BY_FIELD_NAME = 'created_by'
+AUTHOR_UPDATED_BY_FIELD_NAME = 'last_modified_by'

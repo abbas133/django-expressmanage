@@ -53,8 +53,14 @@
                                             <td>{{ cust.city }}</td>
                                             <td>{{ cust.mobile_number }}</td>
                                             <td>
-                                                <a href="{% url 'customers:customer_detail' cust.id %}"><i class="fa fa-list"></i>
-                                                    Details</a>
+                                                <a href="{% url 'customers:customer_detail' cust.id %}"><i class="fa fa-list"></i> Details </a>
+                                                
+                                                {% if request.user.is_authenticated and request.user.is_staff %}
+                                                    |
+                                                    <a href="{% url 'customers:customer_update' cust.id %}"><i class="fa fa-pencil"></i> Edit </a>
+                                                    |
+                                                    <a href="{% url 'customers:customer_delete' cust.id %}"><i class="fa fa-trash-o"></i> Delete </a>
+                                                {% endif %}
                                             </td>
                                         </tr>
                                     {% endfor %}
