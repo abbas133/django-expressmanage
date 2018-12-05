@@ -24,20 +24,20 @@ urlpatterns = [
 
     # CONTAINER TYPE
     # ------------------------------------------------------------------------------
-    # # ex: /products/containers/
-    # path('containers/', views.ContainerType_IndexView.as_view(), name='container_index'),
+    # ex: /products/containers/
+    path('containers/', views.ContainerType_IndexView.as_view(), name='container_index'),
 
-    # # ex: /products/containers/1/
-    # path('containers/<int:pk>/', views.ContainerType_DetailView.as_view(), name='container_detail'),
+    # ex: /products/containers/1/
+    path('containers/<int:pk>/', views.ContainerType_DetailView.as_view(), name='container_detail'),
 
-    # # ex: /products/containers/new
-    # path('containers/new', views.ContainerType_CreateView.as_view(), name='container_create'),
+    # ex: /products/containers/new
+    path('containers/new', views.ContainerType_CreateView.as_view(), name='container_create'),
 
     # # ex: /products/containers/e/5/
-    # path('containers/e/<int:pk>/', views.ContainerType_UpdateView.as_view(), name='container_update'),
+    path('containers/e/<int:pk>/', views.ContainerType_UpdateView.as_view(), name='container_update'),
 
-    # # ex: /products/containers/d/5/
-    # path('containers/d/<int:pk>/', views.ContainerType_DeleteView.as_view(), name='container_delete'),
+    # ex: /products/containers/d/5/
+    path('containers/d/<int:pk>/', views.ContainerType_DeleteView.as_view(), name='container_delete'),
 
 
     # RATE SLAB

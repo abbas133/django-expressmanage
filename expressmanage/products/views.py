@@ -103,7 +103,7 @@ class ContainerType_CreateView(LoginRequiredMixin, PermissionRequiredMixin, gene
         return super(ContainerType_CreateView, self).form_valid(form)
 
     def get_success_url(self):
-        return reverse_lazy('products:ContainerType_detail', kwargs={'pk': self.object.pk})
+        return reverse_lazy('products:container_detail', kwargs={'pk': self.object.pk})
 
 
 class ContainerType_UpdateView(LoginRequiredMixin, PermissionRequiredMixin, generic.UpdateView):
@@ -119,6 +119,8 @@ class ContainerType_UpdateView(LoginRequiredMixin, PermissionRequiredMixin, gene
         if self.request.POST:
             context['rate_slabs'] = RateSlabFormSet(self.request.POST)
         else:
+            # import pdb; pdb.set_trace()
+            # rate_slabs = RateSlab.objects.filter(container_type=2)
             context['rate_slabs'] = RateSlabFormSet()
         return context
 
@@ -132,10 +134,20 @@ class ContainerType_UpdateView(LoginRequiredMixin, PermissionRequiredMixin, gene
             if rate_slabs.is_valid():
                 rate_slabs.instance = self.object
                 rate_slabs.save()
-        return super(ContainerType_CreateView, self).form_valid(form)
+        return super(ContainerType_UpdateView, self).form_valid(form)
 
     def get_success_url(self):
-        return reverse_lazy('products:ContainerType_detail', kwargs={'pk': self.object.pk})
+        return reverse_lazy('products:container_detail', kwargs={'pk': self.object.pk})
+
+
+class ContainerType_DeleteView(LoginRequiredMixin, PermissionRequiredMixin, generic.DeleteView):
+    raise_exception = True
+    permission_required = ('products.delete_containertype')
+
+    model = ContainerType
+    template_name = 'containers/delete.html'
+    success_url = reverse_lazy('products:container_index')
+
 
 # RATE SLABS
 # ------------------------------------------------------------------------------

@@ -33,12 +33,15 @@
 
                         <div class="panel-body">
                             <p>Are you sure you want to permanantly delete <b>{{ product.first_name }}</b> product?</p>
-
-                            <button type="submit" class="mb-xs mt-xs mr-xs btn btn-danger pull-right"><i class="fa fa-trash-o"></i> Delete </button>
-                            <a class="mb-xs mt-xs mr-xs btn btn-default pull-right" href="{% url 'products:product_index' %}"><i class="fa fa-home"></i> Back </a>
                         </div>
-                    </form>
 
+                        <footer>
+                            <div class="pull-right">
+                                <a class="mb-xs mt-xs mr-xs btn btn-default" href="{% url 'products:product_index' %}"><i class="fa fa-home"></i> Back </a>
+                                <button type="submit" class="mb-xs mt-xs mr-xs btn btn-danger"><i class="fa fa-trash-o"></i> Delete </button>
+                            </div>
+                        </footer>
+                    </form>
                 </section>
             </div>
         </section>

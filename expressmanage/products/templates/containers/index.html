@@ -30,7 +30,7 @@
 
                     <div class="panel-body">
                         {% if containertype_list %}
-                            <table class="table table-bordered table-striped mb-none">
+                            <table class="table table-hover table-bordered table-striped table-condensed mb-none">
                                 <thead>
                                     <tr>
                                         <th>Name</th>
@@ -44,8 +44,13 @@
                                             <td>{{ ctRec.name }}</td>
                                             <td>{{ ctRec.description }}</td>
                                             <td>
-                                                <a href="{% url 'products:ct_detail' ctRec.id %}"><i class="fa fa-list"></i>
-                                                    Details</a>
+                                                <a href="{% url 'products:container_detail' ctRec.id %}"><i class="fa fa-list"></i> Details </a>
+                                                {% if request.user.is_authenticated and request.user.is_staff %}
+                                                    |
+                                                    <a href="{% url 'products:container_update' ctRec.id %}"><i class="fa fa-pencil"></i> Edit </a>
+                                                    |
+                                                    <a href="{% url 'products:container_delete' ctRec.id %}"><i class="fa fa-trash-o"></i> Delete </a>
+                                                {% endif %}
                                             </td>
                                         </tr>
                                     {% endfor %}
@@ -53,7 +58,7 @@
                             </table>
                         {% else %}
                             <p>No container types are available.</p>
-                            <a href="{% url 'products:ct_create' %}">
+                            <a href="{% url 'products:container_create' %}">
                                 <i class="fa fa-check-square-o"></i>
                                 Add New Container Type
                             </a>

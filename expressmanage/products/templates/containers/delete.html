@@ -3,7 +3,7 @@
 {% block content %}
     <section role="main" class="content-body">
         <header class="page-header">
-            <h2>Customer Management</h2>
+            <h2>Product Management</h2>
 
             <div class="right-wrapper pull-right">
                 <ol class="breadcrumbs">
@@ -12,8 +12,8 @@
                             <i class="fa fa-home"></i>
                         </a>
                     </li>
-                    <li><span>Customer Management</span></li>
-                    <li><span>Customer Details</span></li>
+                    <li><span>Product Management</span></li>
+                    <li><span>Product Details</span></li>
                 </ol>
 
                 <a class="sidebar-right-toggle"><i class=""></i></a>
@@ -32,13 +32,12 @@
                         {% csrf_token %}
 
                         <div class="panel-body">
-                            <p>Are you sure you want to permanantly delete <b>{{ customer.first_name }} {{ customer.last_name }}</b> customer?</p>
-
+                            <p>Are you sure you want to permanantly delete <b>{{ containertype.name }}</b> container type?</p>
                         </div>
 
                         <footer>
                             <button type="submit" class="mb-xs mt-xs mr-xs btn btn-danger pull-right"><i class="fa fa-trash-o"></i> Delete </button>
-                            <a class="mb-xs mt-xs mr-xs btn btn-default pull-right" href="{% url 'customers:customer_index' %}"><i class="fa fa-home"></i> Back </a>
+                            <a class="mb-xs mt-xs mr-xs btn btn-default pull-right" href="{% url 'products:container_index' %}"><i class="fa fa-home"></i> Back </a>
                         </footer>
                     </form>
                 </section>
