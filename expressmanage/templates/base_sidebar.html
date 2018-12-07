@@ -21,23 +21,13 @@
         <div class="nano-content">
             <nav id="menu" class="nav-main" role="navigation">
                 <ul class="nav nav-main">
-                    <li class="opt-home">
+                    <li>
                         <a href="{% url 'home' %}">
                             <i class="fa fa-home" aria-hidden="true"></i>
                             <span>Dashboard</span>
                         </a>
                     </li>
 
-                    <li class="opt-about">
-                        <a href="{% url 'about' %}">
-                            <i class="fa fa-bookmark" aria-hidden="true"></i>
-                            <span>About</span>
-                        </a>
-                    </li>
-
-                    {% comment %} <hr class="separator" /> {% endcomment %}
-
-                    {% comment %}
                     <li class="nav-parent">
                         <a>
                             <i class="fa fa-address-book" aria-hidden="true"></i>
@@ -46,14 +36,13 @@
                         <ul class="nav nav-children">
                             <li>
                                 <a href="{% url 'customers:customer_index' %}">
-                                <a href="#">
                                     <i class="fa fa-users" aria-hidden="true"></i>
                                     <span>List Customers</span>
                                 </a>
                             </li>
+
                             <li>
                                 <a href="{% url 'customers:customer_create' %}">
-                                <a href="#">
                                     <i class="fa fa-user-plus" aria-hidden="true"></i>
                                     <span>Add Customer</span>
                                 </a>
@@ -73,6 +62,7 @@
                                     <span>List Products</span>
                                 </a>
                             </li>
+
                             <li>
                                 <a href="{% url 'products:product_create' %}">
                                     <i class="fa fa-plus-square" aria-hidden="true"></i>
@@ -80,15 +70,17 @@
                                 </a>
                             </li>
                         </ul>
+
                         <ul class="nav nav-children">
                             <li>
-                                <a href="{% url 'products:ct_index' %}">
-                                    <i class="fa fa-th-list" aria-hidden="true"></i>
+                                <a href="{% url 'products:container_index' %}">
+                                    <i class="fa fa-cubes" aria-hidden="true"></i>
                                     <span>List Container Types</span>
                                 </a>
                             </li>
+
                             <li>
-                                <a href="{% url 'products:ct_create' %}">
+                                <a href="{% url 'products:container_create' %}">
                                     <i class="fa fa-dropbox" aria-hidden="true"></i>
                                     <span>Add Container Type</span>
                                 </a>
@@ -136,15 +128,15 @@
                             <i class="fa fa-rupee" aria-hidden="true"></i>
                             <span>Invoices And Payments</span>
                         </a>
-                        {% comment %} <ul class="nav nav-children">
+                        <ul class="nav nav-children">
                             <li>
                                 <a href="{% url 'invoices:invoice_index' %}">
                                     <i class="fa fa-list-alt" aria-hidden="true"></i>
                                     <span>List Invoices</span>
                                 </a>
                             </li>
-                        </ul> 
-                    </li> {% endcomment %}
+                        </ul>
+                    </li>
 
                     <!--
                     <li class="nav-parent">
@@ -166,6 +158,14 @@
                         </ul>
                     </li>
                     -->
+
+
+                    <li class="nav-about">
+                        <a href="{% url 'about' %}">
+                            <i class="fa fa-bookmark" aria-hidden="true"></i>
+                            <span>About</span>
+                        </a>
+                    </li>
                 </ul>
             </nav>
 

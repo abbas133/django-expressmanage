@@ -1,0 +1,209 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block content %}
+    <section role="main" class="content-body">
+        <header class="page-header">
+            <h2>Customer Management</h2>
+
+            <div class="right-wrapper pull-right">
+                <ol class="breadcrumbs">
+                    <li>
+                        <a href="{% url 'home' %}">
+                            <i class="fa fa-home"></i>
+                        </a>
+                    </li>
+                    <li><span>Customer Management</span></li>
+                    <li><span>Customer Details</span></li>
+                </ol>
+
+                <a class="sidebar-right-toggle"><i class=""></i></a>
+            </div>
+        </header>
+
+        <!-- start: page -->
+        <div class="row">
+            <div class="col-md-4 col-lg-3">
+
+                <section class="panel">
+                    <div class="panel-body">
+                        <div class="thumb-info mb-md">
+                            <img src="{% static 'images/user-avatar.png' %}" class="rounded img-responsive">
+                            <div class="thumb-info-title">
+                                <span class="thumb-info-inner">{{ customer.first_name }} {{ customer.last_name }}</span>
+                                <span class="thumb-info-type">{{ customer.firm }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="panel panel-featured panel-featured-primary">
+                    <header class="panel-heading">
+                        <div class="panel-actions">
+                            <a href="#" class="fa fa-caret-down"></a>
+                        </div>
+
+                        <h2 class="panel-title">Recent Invoices</h2>
+                    </header>
+                    <div class="panel-body">
+                        <ul class="simple-post-list">
+                            <li>
+                                <div class="post-info">
+                                    <a href="#">Nullam Vitae Nibh Un Odiosters</a>
+                                    <div class="post-meta">
+                                            Jan 10, 2013
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="post-info">
+                                    <a href="#">Vitae Nibh Un Odiosters</a>
+                                    <div class="post-meta">
+                                            Jan 10, 2013
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="post-info">
+                                    <a href="#">Odiosters Nullam Vitae</a>
+                                    <div class="post-meta">
+                                            Jan 10, 2013
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+            </div>
+
+            <div class="col-md-8 col-lg-6">
+                <div class="tabs">
+                    <ul class="nav nav-tabs tabs-primary">
+                        <li class="active">
+                            <a href="#overview" data-toggle="tab">Overview</a>
+                        </li>
+                        <li>
+                            <a href="#timeline" data-toggle="tab">Timeline</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div id="overview" class="tab-pane active">
+                            <form class="form-horizontal" method="get">
+                                <h4 class="mb-xlg">Personal Information</h4>
+                                <fieldset>
+
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label" for="profile-firm">Firm</label>
+                                        <div class="col-md-8">
+                                            <output type="text" class="form-control" id="profile-firm">{{ customer.firm }}</output>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label" for="profile-fname">First Name</label>
+                                        <div class="col-md-8">
+                                            <output type="text" class="form-control" id="profile-fname">{{ customer.first_name }}</output>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label" for="profile-lname">Last Name</label>
+                                        <div class="col-md-8">
+                                            <output type="text" class="form-control" id="profile-lname">{{ customer.last_name }}</output>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label" for="profile-address">Address</label>
+                                        <div class="col-md-8">
+                                            <output type="text" class="form-control" id="profile-address">{{ customer.address }}</output>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label" for="profile-city">City</label>
+                                        <div class="col-md-8">
+                                            <output type="text" class="form-control" id="profile-city">{{ customer.city }}</output>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label" for="profile-mob">Mobile Number</label>
+                                        <div class="col-md-8">
+                                            <output type="text" class="form-control" id="profile-mob">{{ customer.mobile_number }}</output>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </form>
+                        </div>
+
+                        <div id="timeline" class="tab-pane">
+                            <div class="timeline timeline-simple mt-xlg mb-md">
+                                <div class="tm-body">
+                                    <div class="tm-title">
+                                        <h3 class="h5 text-uppercase">November 2013</h3>
+                                    </div>
+                                    <ol class="tm-items">
+                                        <li>
+                                            <div class="tm-box">
+                                                <p class="text-muted mb-none">7 months ago.</p>
+                                                <p>
+                                                    It's awesome when we find a good solution for our projects, Porto Admin is <span class="text-primary">#awesome</span>
+                                                </p>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="tm-box">
+                                                <p class="text-muted mb-none">7 months ago.</p>
+                                                <p>
+                                                    What is your biggest developer pain point?
+                                                </p>
+                                            </div>
+                                        </li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {% if request.user.is_authenticated and request.user.is_staff %}
+                <div class="col-md-12 col-lg-3">
+                    <h4 class="mb-md">Sale Stats</h4>
+                    <ul class="simple-card-list mb-xlg">
+                        <li class="primary">
+                            <h3>5</h3>
+                            <p>Active Lots.</p>
+                        </li>
+                        <li class="warning">
+                            <h3>16</h3>
+                            <p>Active Invoices</p>
+                        </li>
+                        <li class="danger">
+                            <h3><i class="fa fa-inr"></i> {{ pending_amount }}</h3>
+                            <p>Total Pending</p>
+                        </li>
+                    </ul>
+                </div>
+            {% endif %}
+
+            <div class="col-md-8 col-lg-6">
+                <div class="pull-right">
+                    <a class="mb-xs mt-xs mr-xs btn btn-default" href="{% url 'customers:customer_index' %}"><i class="fa fa-home"></i> Back </a>
+
+                    {% if request.user.is_authenticated and request.user.is_staff %}
+                        <a class="mb-xs mt-xs mr-xs btn btn-danger" href="{% url 'customers:customer_delete' customer.id %}"><i class="fa fa-trash-o"></i> Delete </a>
+                        <a class="mb-xs mt-xs mr-xs btn btn-primary" href="{% url 'customers:customer_update' customer.id %}"><i class="fa fa-pencil"></i> Edit </a>
+                    {% endif %}
+
+                </div>
+            </div>
+
+
+        </div>
+        <!-- end: page -->
+
+    </section>
+{% endblock content %}

@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <section role="main" class="content-body">
+        <header class="page-header">
+            <h2>Product Management</h2>
+
+            <div class="right-wrapper pull-right">
+                <ol class="breadcrumbs">
+                    <li>
+                        <a href="{% url 'home' %}">
+                            <i class="fa fa-home"></i>
+                        </a>
+                    </li>
+                    <li><span>Product Management</span></li>
+                    <li><span>Product Details</span></li>
+                </ol>
+
+                <a class="sidebar-right-toggle"><i class=""></i></a>
+            </div>
+        </header>
+
+        <!-- start: page -->
+        <div class="row">
+            <div class="col-lg-12">
+                <section class="panel panel-danger">
+                    <header class="panel-heading">
+                        <h2 class="panel-title">Confirmation required!</h2>
+                    </header>
+
+                    <form method="POST">
+                        {% csrf_token %}
+
+                        <div class="panel-body">
+                            <p>Are you sure you want to permanantly delete <b>{{ containertype.name }}</b> container type?</p>
+                        </div>
+
+                        <footer>
+                            <button type="submit" class="mb-xs mt-xs mr-xs btn btn-danger pull-right"><i class="fa fa-trash-o"></i> Delete </button>
+                            <a class="mb-xs mt-xs mr-xs btn btn-default pull-right" href="{% url 'products:container_index' %}"><i class="fa fa-home"></i> Back </a>
+                        </footer>
+                    </form>
+                </section>
+            </div>
+        </section>
+        <!-- end: page -->
+    </section> 
+{% endblock content %}

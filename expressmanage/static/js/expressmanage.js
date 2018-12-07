@@ -6,19 +6,19 @@ $(function() {
 
 var init = function() {
     // console.log( "init ");
-    hightlightCurrentSelection();
+    activateNavItem();
 }
 
+var activateNavItem = function() {
+    var url = window.location.pathname;
+    var selectedElem = $('ul.nav a[href="'+ url +'"]')
 
-var hightlightCurrentSelection = function() {
-    var pathname = window.location.pathname;
-    console.log( "pathname : " + pathname);
-
-    // Home page
-    if(pathname == '' || pathname == '/') {
-        $(".opt-home").addClass("nav-expanded nav-active")
-
-    } else if(pathname.startsWith('/about')) {
-        $(".opt-about").addClass("nav-expanded nav-active")
+    if(selectedElem.length == 0) {
+        url = url.slice("0", url.indexOf("/", "1") + 1)
+        selectedElem = $('ul.nav a[href="' + url + '"]')
     }
+
+    $(selectedElem).closest("li").addClass('nav-expanded nav-active');
+    $(selectedElem).closest(".nav-parent").addClass('nav-expanded nav-active');
+
 }

@@ -1,0 +1,4 @@
+<option value="">- Select One -</option>
+{% for in_order in filtered_inward_orders %}
+    <option value="{{ in_order.pk }}">{{ in_order.lot_number }}</option>
+{% endfor %}

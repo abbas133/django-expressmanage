@@ -17,3 +17,26 @@
     <a id="log-in-link" class="nav-link" href="{% url 'account_login' %}">{% trans "Sign In" %}</a>
     </li>
 {% endif %}
+
+
+
+// view.py
+
+from django.shortcuts import render
+
+def index(request):
+    return render(request, "coins/index.html", 
+    {'title': 'All Coins Price'})
+Then, we can display title variable inside index.html file like this.
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Django CRUD Application</title>
+</head>
+<body>
+    <h1>{{ title }}</h1>
+</body>
+</html>

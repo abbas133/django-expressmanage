@@ -71,17 +71,27 @@ DJANGO_APPS = [
     # 'django.contrib.humanize', # Handy template tags
     'django.contrib.admin',
 ]
+
 THIRD_PARTY_APPS = [
     'crispy_forms',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'rest_framework',
+    'widget_tweaks',
+    'django_extensions',
+    'author'
 ]
+
+# Your stuff: custom apps go here
 LOCAL_APPS = [
     'expressmanage.users.apps.UsersAppConfig',
-    # Your stuff: custom apps go here
+    'expressmanage.customers.apps.CustomersConfig',
+    'expressmanage.products.apps.ProductsConfig',
+    'expressmanage.orders.apps.OrdersConfig',
+    'expressmanage.invoices.apps.InvoicesConfig',
 ]
+
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
@@ -144,6 +154,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'author.middlewares.AuthorDefaultBackendMiddleware',
 ]
 
 # STATIC
@@ -260,3 +271,9 @@ SOCIALACCOUNT_ADAPTER = 'expressmanage.users.adapters.SocialAccountAdapter'
 # ------------------------------------------------------------------------------
 ACCOUNT_LOGOUT_ON_GET = True
 ACCOUNT_LOGOUT_REDIRECT_URL = 'home'
+
+
+# django-author
+# ------------------------------------------------------------------------------
+AUTHOR_CREATED_BY_FIELD_NAME = 'created_by'
+AUTHOR_UPDATED_BY_FIELD_NAME = 'last_modified_by'

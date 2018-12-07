@@ -7,20 +7,21 @@ from django.views import defaults as default_views
 
 urlpatterns = [
     path("", TemplateView.as_view(template_name="pages/home.html"), name="home"),
-    path(
-        "about/",
-        TemplateView.as_view(template_name="pages/about.html"),
-        name="about",
-    ),
+    path("about/", TemplateView.as_view(template_name="pages/about.html"), name="about", ),
+
     # Django Admin, use {% url 'admin:index' %}
     path(settings.ADMIN_URL, admin.site.urls),
+
     # User management
-    path(
-        "users/",
-        include("expressmanage.users.urls", namespace="users"),
-    ),
+    path("users/", include("expressmanage.users.urls", namespace="users"),),
     path("accounts/", include("allauth.urls")),
+
     # Your stuff: custom urls includes go here
+    path('customers/', include('expressmanage.customers.urls', namespace="customers")),
+    path('products/', include('expressmanage.products.urls', namespace="products")),
+    path('orders/', include('expressmanage.orders.urls', namespace="orders")),
+    path('invoices/', include('expressmanage.invoices.urls', namespace="invoices")),
+
 ] + static(
     settings.MEDIA_URL, document_root=settings.MEDIA_ROOT
 )

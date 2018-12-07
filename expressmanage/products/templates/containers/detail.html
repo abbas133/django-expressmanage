@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% load widget_tweaks %}
+
+{% block content %}
+<section role="main" class="content-body">
+    <header class="page-header">
+        <h2>Product Management</h2>
+
+        <div class="right-wrapper pull-right">
+            <ol class="breadcrumbs">
+                <li>
+                    <a href="{% url 'home' %}">
+                        <i class="fa fa-home"></i>
+                    </a>
+                </li>
+                <li><span>Product Management</span></li>
+                <li><span>Container Type Details</span></li>
+            </ol>
+
+            <a class="sidebar-right-toggle"><i class=""></i></a>
+        </div>
+    </header>
+
+    <!-- start: page -->
+    <div class="row">
+        <div class="col-lg-12">
+
+            <section class="panel panel-primary">
+                <header class="panel-heading">
+                    <h2 class="panel-title">Container Type Details</h2>
+                </header>
+
+                <div class="panel-body">
+                    <div class="form-group">
+                        <label for="ct-name">Container Type: </label>
+                        <output type="text" class="form-control" id="ct-name">{{ containertype.name }}</output>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ct-desc">Description: </label>
+                        <output type="number" class="form-control" id="ct-desc">{{ containertype.description }}</output>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+
+            <section class="panel panel-featured panel-featured-primary">
+                <header class="panel-heading">
+                    <h2 class="panel-title">Rate Slabs</h2>
+                </header>
+
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover table-bordered table-striped table-condensed mb-none">
+                            <thead>
+                                <th>Rate</th>
+                                <th>Number of days</th>
+                                <th>Slab Number</th>
+                            </thead>
+
+                            <tbody>
+                                {% for rate_slab in containertype.rateslab_set.all %}
+                                    <tr>
+                                        <td><i class="fa fa-inr"> 
+                                            {{ rate_slab.rate }}
+                                        </td>
+                                        <td> {{ rate_slab.number_of_days }} </td>
+                                        <td> {{ rate_slab.slab_number }} </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <footer>
+                    <div class="pull-right">
+                        <a class="mb-xs mt-xs mr-xs btn btn-default" href="{% url 'products:container_index' %}"><i class="fa fa-home"></i> Back </a>
+
+                        {% if request.user.is_authenticated and request.user.is_staff %}
+                            <a class="mb-xs mt-xs mr-xs btn btn-danger" href="{% url 'products:container_delete' containertype.id %}"><i class="fa fa-trash-o"></i> Delete </a>
+                            <a class="mb-xs mt-xs mr-xs btn btn-primary" href="{% url 'products:container_update' containertype.id %}"><i class="fa fa-pencil"></i> Edit </a>
+                        {% endif %}
+                    </div>
+                </footer>
+            </section>
+        </div>
+    </div>
+    <!-- end: page -->
+
+</section>
+{% endblock content %}

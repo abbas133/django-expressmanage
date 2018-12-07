@@ -3,7 +3,7 @@ still out entry is made for it. Static indexing from request.
 
 Code refactor for naming convention
 
-Base abstract model for audit fields
+Base abstract model for audit fields = DONE (using django-author and django-extensions for this)
 
 Custom user model = DONE
 
@@ -16,3 +16,11 @@ Invoice should contain name of the receiver
 selected section to be auto expanded and highlighted in side bar
 
 Facebook like timeline in customer detail page which will show inward order, outward orders and payment
+
+Use jquery data table on all the list views
+
+Use x-editable for edit on the go on list view
+
+User authentication for each operation
+
+Rate column to include rupee symbol
