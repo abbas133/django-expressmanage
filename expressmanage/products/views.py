@@ -117,11 +117,10 @@ class ContainerType_UpdateView(LoginRequiredMixin, PermissionRequiredMixin, gene
     def get_context_data(self, **kwargs):
         context = super(ContainerType_UpdateView, self).get_context_data(**kwargs)
         if self.request.POST:
-            context['rate_slabs'] = RateSlabFormSet(self.request.POST)
+            context['rate_slabs'] = RateSlabFormSet(self.request.POST, instance=self.object)
+            context['rate_slabs'].full_clean()
         else:
-            # import pdb; pdb.set_trace()
-            # rate_slabs = RateSlab.objects.filter(container_type=2)
-            context['rate_slabs'] = RateSlabFormSet()
+            context['rate_slabs'] = RateSlabFormSet(instance=self.object)
         return context
 
     def form_valid(self, form):
