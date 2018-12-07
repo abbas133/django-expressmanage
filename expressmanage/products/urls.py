@@ -33,7 +33,7 @@ urlpatterns = [
     # ex: /products/containers/new
     path('containers/new', views.ContainerType_CreateView.as_view(), name='container_create'),
 
-    # # ex: /products/containers/e/5/
+    # ex: /products/containers/e/5/
     path('containers/e/<int:pk>/', views.ContainerType_UpdateView.as_view(), name='container_update'),
 
     # ex: /products/containers/d/5/

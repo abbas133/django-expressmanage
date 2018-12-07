@@ -87,7 +87,9 @@ THIRD_PARTY_APPS = [
 LOCAL_APPS = [
     'expressmanage.users.apps.UsersAppConfig',
     'expressmanage.customers.apps.CustomersConfig',
-    'expressmanage.products.apps.ProductsConfig'
+    'expressmanage.products.apps.ProductsConfig',
+    'expressmanage.orders.apps.OrdersConfig',
+    'expressmanage.invoices.apps.InvoicesConfig',
 ]
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps

@@ -10,6 +10,9 @@ from .forms import RateSlabFormSet
 # PRODUCT
 # ------------------------------------------------------------------------------
 class Product_IndexView(LoginRequiredMixin, generic.ListView):
+    raise_exception = True
+    permission_required = ('products.view_product')
+
     template_name = 'products/index.html'
 
     def get_queryset(self):
@@ -60,6 +63,9 @@ class Product_DeleteView(LoginRequiredMixin, PermissionRequiredMixin, generic.De
 # CONTAINER TYPE
 # ------------------------------------------------------------------------------
 class ContainerType_IndexView(LoginRequiredMixin, generic.ListView):
+    raise_exception = True
+    permission_required = ('products.view_containertype')
+
     template_name = 'containers/index.html'
 
     def get_queryset(self):

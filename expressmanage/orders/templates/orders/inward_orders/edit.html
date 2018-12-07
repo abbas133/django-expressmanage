@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+
+{% load widget_tweaks %}
+
+{% block content %}
+<section role="main" class="content-body">
+    <header class="page-header">
+        <h2>Order Management</h2>
+
+        <div class="right-wrapper pull-right">
+            <ol class="breadcrumbs">
+                <li>
+                    <a href="{% url 'home' %}">
+                        <i class="fa fa-home"></i>
+                    </a>
+                </li>
+                <li><span>Order Management</span></li>
+                <li><span>Add Inward Order</span></li>
+            </ol>
+
+            <a class="sidebar-right-toggle"><i class=""></i></a>
+        </div>
+    </header>
+
+    <!-- start: page -->
+    <form class="form-horizontal form-bordered" method="post">
+        <div class="row">
+            <div class="col-lg-12">
+
+                <section class="panel panel-primary">
+                    <header class="panel-heading">
+                        <h2 class="panel-title">Add Inward Order</h2>
+                    </header>
+
+                    <div class="panel-body">
+                        {% csrf_token %}
+
+                        {% for hidden in form.hidden_fields %}
+                        {{ hidden }}
+                        {% endfor %}
+
+                        {% for field in form.visible_fields %}
+                        <div class="form-group">
+                            <label class="col-md-3 control-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                            <div class="col-md-6">
+                                {{ field|add_class:'form-control' }}
+
+                                {% for error in field.errors %}
+                                <span class="help-block">{{ error }}</span>
+                                {% endfor %}
+
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+
+                <section class="panel panel-featured panel-featured-primary">
+                    <header class="panel-heading">
+                        <h2 class="panel-title">Rate Slabs</h2>
+                    </header>
+
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table mb-none">
+                                {{ inward_olis.management_form }}
+
+                                {% for form in inward_olis.forms %}
+                                {% if forloop.first %}
+                                <thead>
+                                    <tr>
+                                        {% for field in form.visible_fields %}
+                                        <th>{{ field.label|capfirst }}</th>
+                                        {% endfor %}
+                                    </tr>
+                                </thead>
+                                {% endif %}
+
+                                <tbody>
+                                    <tr formset_row>
+                                        {% for field in form.visible_fields %}
+                                        <td>
+                                            {% if forloop.first %}
+                                            {% for hidden in form.hidden_fields %}
+                                            {{ hidden }}
+                                            {% endfor %}
+                                            {% endif %}
+
+                                            {% for error in field.errors %}
+                                            <span class="help-block">{{ error }}</span>
+                                            {% endfor %}
+
+                                            {{ field|add_class:'form-control' }}
+                                        </td>
+                                        {% endfor %}
+                                    </tr>
+                                </tbody>
+                                {% endfor %}
+                            </table>
+                        </div>
+                    </div>
+
+                    <footer>
+                        <div class="pull-right">
+                            <a class="mb-xs mt-xs mr-xs btn btn-default" href="{% url 'orders:in_index' %}"><i class="fa fa-home"></i> Back </a>
+                            <button type="submit" class="mb-xs mt-xs mr-xs btn btn-success"><i class="fa fa-save"></i> Save </button>
+                        </div>
+                    </footer>
+                </section>
+            </div>
+        </div>
+    </form>
+    <!-- end: page -->
+
+</section>
+{% endblock content %}
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+{% comment %} <script src="{% static 'formset/jquery.formset.js' %}"></script> {% endcomment %}
+<script type="text/javascript">
+    $('.formset_row').formset({
+        addText: 'Add More',
+        deleteText: 'Remove',
+        prefix: 'familymember_set'
+    });
+</script>

@@ -19,6 +19,8 @@ urlpatterns = [
     # Your stuff: custom urls includes go here
     path('customers/', include('expressmanage.customers.urls', namespace="customers")),
     path('products/', include('expressmanage.products.urls', namespace="products")),
+    path('orders/', include('expressmanage.orders.urls', namespace="orders")),
+    path('invoices/', include('expressmanage.invoices.urls', namespace="invoices")),
 
 ] + static(
     settings.MEDIA_URL, document_root=settings.MEDIA_ROOT

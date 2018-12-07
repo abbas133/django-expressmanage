@@ -22,3 +22,5 @@ Use jquery data table on all the list views
 Use x-editable for edit on the go on list view
 
 User authentication for each operation
+
+Rate column to include rupee symbol

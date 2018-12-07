@@ -41,14 +41,12 @@
                                 </a>
                             </li>
 
-                            {% if request.user.is_authenticated and request.user.is_staff %}
                             <li>
                                 <a href="{% url 'customers:customer_create' %}">
                                     <i class="fa fa-user-plus" aria-hidden="true"></i>
                                     <span>Add Customer</span>
                                 </a>
                             </li>
-                            {% endif %}
                         </ul>
                     </li>
 
@@ -65,14 +63,12 @@
                                 </a>
                             </li>
 
-                            {% if request.user.is_authenticated and request.user.is_staff %}
                             <li>
                                 <a href="{% url 'products:product_create' %}">
                                     <i class="fa fa-plus-square" aria-hidden="true"></i>
                                     <span>Add Product</span>
                                 </a>
                             </li>
-                            {% endif %}
                         </ul>
 
                         <ul class="nav nav-children">
@@ -83,18 +79,15 @@
                                 </a>
                             </li>
 
-                            {% if request.user.is_authenticated and request.user.is_staff %}
                             <li>
                                 <a href="{% url 'products:container_create' %}">
                                     <i class="fa fa-dropbox" aria-hidden="true"></i>
                                     <span>Add Container Type</span>
                                 </a>
                             </li>
-                            {% endif %}
                         </ul>
                     </li>
 
-                {% comment %}
                     <li class="nav-parent">
                         <a>
                             <i class="fa fa-shopping-cart" aria-hidden="true"></i>
@@ -135,15 +128,15 @@
                             <i class="fa fa-rupee" aria-hidden="true"></i>
                             <span>Invoices And Payments</span>
                         </a>
-                        {% comment %} <ul class="nav nav-children">
+                        <ul class="nav nav-children">
                             <li>
                                 <a href="{% url 'invoices:invoice_index' %}">
                                     <i class="fa fa-list-alt" aria-hidden="true"></i>
                                     <span>List Invoices</span>
                                 </a>
                             </li>
-                        </ul> 
-                    </li> {% endcomment %}
+                        </ul>
+                    </li>
 
                     <!--
                     <li class="nav-parent">
