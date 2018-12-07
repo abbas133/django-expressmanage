@@ -1,7 +1,7 @@
 static indexing while saving outward orders is buggy as out of 3 olis if first is out of stock,
 still out entry is made for it. Static indexing from request.
 
-Code refactor for naming convention
+Code refactor for naming convention - DONE
 
 Base abstract model for audit fields = DONE (using django-author and django-extensions for this)
 
@@ -13,7 +13,7 @@ Generate receiving challan same as invoice on outward order
 
 Invoice should contain name of the receiver
 
-selected section to be auto expanded and highlighted in side bar
+selected section to be auto expanded and highlighted in side bar - DONE
 
 Facebook like timeline in customer detail page which will show inward order, outward orders and payment
 
@@ -23,4 +23,6 @@ Use x-editable for edit on the go on list view
 
 User authentication for each operation
 
-Rate column to include rupee symbol
+Rate column to include rupee symbol - DONE
+
+Date field widget on non-admin pages
