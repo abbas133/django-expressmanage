@@ -92,10 +92,10 @@
                     <div class="pull-right">
                         <a class="mb-xs mt-xs mr-xs btn btn-default" href="{% url 'orders:out_index' %}"><i class="fa fa-home"></i> Back </a>
 
-                        {% if request.user.is_authenticated and request.user.is_staff %}
+                        {% comment %} {% if request.user.is_authenticated and request.user.is_staff %}
                             <a class="mb-xs mt-xs mr-xs btn btn-danger" href="{% url 'orders:out_delete' outwardorder.id %}"><i class="fa fa-trash-o"></i> Delete </a>
                             <a class="mb-xs mt-xs mr-xs btn btn-primary" href="{% url 'orders:out_update' outwardorder.id %}"><i class="fa fa-pencil"></i> Edit </a>
-                        {% endif %}
+                        {% endif %} {% endcomment %}
                     </div>
                 </footer>
             </section>
