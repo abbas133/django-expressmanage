@@ -21,10 +21,23 @@ class InwardOrder(TimeStampedModel):
         (INACTIVE, INACTIVE),
     )
 
+    # Chamber choices
+    ONE = '1'
+    TWO = '2'
+    THREE = '3'
+    FOUR = '4'
+    CHAMBER_CHOICES = (
+        (ONE, ONE),
+        (TWO, TWO),
+        (THREE, THREE),
+        (FOUR, FOUR),
+    )
+
     lot_number  = models.CharField(max_length=10, blank=True)
     date        = models.DateTimeField(auto_now_add=False, auto_now=False, default=datetime.now)
     customer    = models.ForeignKey(Customer, on_delete=models.CASCADE)
     status      = models.CharField(max_length=50, choices=STATUS_CHOICES, default=ACTIVE)
+    chamber     = models.CharField(max_length=50, choices=CHAMBER_CHOICES, default=ONE)
 
     def __str__(self):
         return self.lot_number

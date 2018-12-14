@@ -69,8 +69,8 @@ class InwardOrder_UpdateView(LoginRequiredMixin, PermissionRequiredMixin, generi
     permission_required = ('orders.change_inwardorder')
 
     model = InwardOrder
-    fields = ['customer', 'date']
-    template_name = 'orders/inward_order/edit.html'
+    fields = ['customer', 'date', 'chamber']
+    template_name = 'orders/inward_orders/edit.html'
 
     def get_context_data(self, **kwargs):
         context = super(InwardOrder_UpdateView, self).get_context_data(**kwargs)
