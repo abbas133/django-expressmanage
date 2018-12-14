@@ -91,7 +91,7 @@ class InwardOrder_UpdateView(LoginRequiredMixin, PermissionRequiredMixin, generi
             if inward_olis.is_valid():
                 inward_olis.instance = self.object
                 inward_olis.save()
-        return super(InwardOrder_CreateView, self).form_valid(form)
+        return super(InwardOrder_UpdateView, self).form_valid(form)
 
     def get_success_url(self):
         return reverse_lazy('orders:in_detail', kwargs={'pk': self.object.pk})

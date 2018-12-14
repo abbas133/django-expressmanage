@@ -152,26 +152,3 @@ class ContainerType_DeleteView(LoginRequiredMixin, PermissionRequiredMixin, gene
     model = ContainerType
     template_name = 'containers/delete.html'
     success_url = reverse_lazy('products:container_index')
-
-
-# RATE SLABS
-# ------------------------------------------------------------------------------
-# class Rate_IndexView(LoginRequiredMixin, PermissionRequiredMixin, generic.ListView):
-#     template_name = 'rates/index.html'
-
-#     def get_queryset(self):
-#         return RateSlab.objects.all()
-
-
-# class Rate_DetailView(LoginRequiredMixin, PermissionRequiredMixin, generic.DetailView):
-#     model = RateSlab
-#     template_name = 'rates/detail.html'
-
-
-# class Rate_CreateView(LoginRequiredMixin, PermissionRequiredMixin, generic.CreateView):
-#     model = RateSlab
-#     fields = ['container_type', 'rate', 'number_of_days', 'slab_number']
-#     template_name = 'rates/edit.html'
-
-#     def get_success_url(self):
-#         return reverse_lazy('products:rate_detail', kwargs={'pk': self.object.pk})
