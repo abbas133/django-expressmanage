@@ -15,7 +15,7 @@ Invoice should contain name of the receiver
 
 selected section to be auto expanded and highlighted in side bar - DONE
 
-Facebook like timeline in customer detail page which will show inward order, outward orders and payment
+Facebook like timeline in customer detail page which will show inward order, outward orders and payment - WIP
 
 Use jquery data table on all the list views
 
@@ -28,3 +28,5 @@ Rate column to include rupee symbol - DONE
 Date field widget on non-admin pages
 
 Chember number to be taken as input along with inward order details - DONE
+
+Conditional rendering of page panel heading and breadcrum
