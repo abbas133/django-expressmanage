@@ -29,11 +29,11 @@ class Invoice_DetailView(LoginRequiredMixin, PermissionRequiredMixin, generic.De
 # ------------------------------------------------------------------------------
 class Payment_CreateView(LoginRequiredMixin, PermissionRequiredMixin, generic.CreateView):
     raise_exception = True
-    permission_required = ('invoices.view_payment')
+    permission_required = ('invoices.add_payment')
 
     model = Payment
     fields = ['invoice', 'amount']
-    template_name = 'invoices/edit.html'
+    template_name = 'payments/edit_modal.html'
 
     def get_success_url(self):
         return reverse_lazy('invoices:invoice_detail', kwargs={'pk': self.object.invoice.pk})

@@ -37,7 +37,7 @@ class InwardOrder_CreateView(LoginRequiredMixin, PermissionRequiredMixin, generi
     permission_required = ('orders.add_inwardorder')
 
     model = InwardOrder
-    fields = ['customer', 'date']
+    fields = ['customer', 'date', 'chamber']
     template_name = 'orders/inward_orders/edit.html'
 
     def get_context_data(self, **kwargs):
@@ -159,10 +159,7 @@ class OutwardOrder_CreateView(LoginRequiredMixin, PermissionRequiredMixin, gener
             if outward_olis.is_valid():
                 outward_olis.instance = self.object
 
-                out_olis = outward_olis.save(commit=False)
-                out_olis = self.populate_oli_details(out_olis)
-
-                # out_olis = self.populate_oli_details(outward_order=outward_olis.instance)
+                out_olis = self.populate_oli_details(outward_order=outward_olis.instance)
                 # out_olis = OutOli.objects.bulk_create(out_olis)
 
                 invoice_lis = get_oli_invoice_li(invoice, out_olis)
@@ -172,8 +169,8 @@ class OutwardOrder_CreateView(LoginRequiredMixin, PermissionRequiredMixin, gener
             invoice.save()
         return super(OutwardOrder_CreateView, self).form_valid(form)
 
-    # def populate_oli_details(self, outward_order):
-    def populate_oli_details(self, out_olis):
+    def populate_oli_details(self, outward_order):
+    # def populate_oli_details(self, out_olis):
         inoli_set           = 'inoli_set-'
         outoli_set          = 'outoli_set-'
 
@@ -183,36 +180,24 @@ class OutwardOrder_CreateView(LoginRequiredMixin, PermissionRequiredMixin, gener
 
         attr_total_forms    = '-TOTAL_FORMS'
 
-        # total_forms = int(self.request.POST[outoli_set.replace('-', '') + attr_total_forms])
-        # lst_out_olis = []
+        total_forms = int(self.request.POST[outoli_set.replace('-', '') + attr_total_forms])
+        lst_out_olis = []
 
-        # for var in list(range(total_forms)):
-        #     out_quantity = int(self.request.POST[outoli_set + str(var) + field_quantity])
+        for var in list(range(total_forms)):
+            out_quantity = int(self.request.POST[outoli_set + str(var) + field_quantity])
 
-        #     if out_quantity > 0:
-        #         oli = OutOli(
-        #             outward_order = outward_order,
-        #             in_oli_id = self.request.POST[inoli_set + str(var) + field_id],
-        #             quantity = out_quantity
-        #         )
-        #         oli = oli.save()
-        #         lst_out_olis.append(oli)
-        #     else:
-        #         pass
-        # return lst_out_olis
+            if out_quantity > 0:
+                oli = OutOli(
+                    outward_order = outward_order,
+                    in_oli_id = self.request.POST[inoli_set + str(var) + field_id],
+                    quantity = out_quantity
+                )
 
-        count = 0
-        for out_oli in out_olis:
-            str_in_oli_id = inoli_set + str(count) + field_id
-
-            # if out_oli.quantity > 0:
-            in_oli_id = self.request.POST[str_in_oli_id]
-
-            out_oli.in_oli_id = in_oli_id
-            out_oli.save()
-
-            count = count+1
-        return out_olis
+                lst_out_olis.append(oli)
+                oli.save()
+            else:
+                pass
+        return lst_out_olis
 
     def get_success_url(self):
         return reverse_lazy('invoices:invoice_detail', kwargs={'pk': Invoice.objects.get(outward_order=self.object.pk).pk})
@@ -244,6 +229,16 @@ class OutOli_IndexView(LoginRequiredMixin, PermissionRequiredMixin, generic.List
 class OutOli_DetailView(LoginRequiredMixin, PermissionRequiredMixin, generic.DetailView):
     model = OutOli
     template_name = 'orders/order_line_items/detail.html'
+
+
+# OUTWARD ORDERS
+# ------------------------------------------------------------------------------
+class ReceivingChallan_DetailView(LoginRequiredMixin, PermissionRequiredMixin, generic.DetailView):
+    raise_exception = True
+    permission_required = ('orders.view_inwardorder')
+
+    model = InwardOrder
+    template_name = 'orders/receiving_challan.html'
 
 
 # AJAX HELPER VIEW

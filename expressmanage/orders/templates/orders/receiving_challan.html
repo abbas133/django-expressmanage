@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+
+{% load widget_tweaks %}
+
+{% block content %}
+<section role="main" class="content-body">
+    <header class="page-header">
+        <h2>Order Management</h2>
+
+        <div class="right-wrapper pull-right">
+            <ol class="breadcrumbs">
+                <li>
+                    <a href="{% url 'home' %}">
+                        <i class="fa fa-home"></i>
+                    </a>
+                </li>
+                <li><span>Order Management</span></li>
+                <li><span>Inward Order Details</span></li>
+            </ol>
+
+            <a class="sidebar-right-toggle"><i class=""></i></a>
+        </div>
+    </header>
+
+    <!-- start: page -->
+
+    <section class="panel panel-primary">
+        <div class="panel-body">
+            <div class="invoice">
+                <header class="clearfix">
+                    <div class="row">
+                        <div class="col-sm-6 mt-md">
+                            <h2 class="h2 mt-none mb-sm text-dark text-bold">RECEIVING CHALLAN</h2>
+                            <h4 class="h4 m-none text-dark text-bold"># {{ inwardorder.pk}} </h4>
+                            <h4 class="h4 m-none text-dark text-bold">Lot Number {{ inwardorder.lot_number}} </h4>
+                        </div>
+                        <div class="col-sm-6 text-right mt-md mb-md">
+                            <address class="ib mr-xlg">
+                                Sona Ice And Cold Storage
+                                <br/>
+                                Sona Compund, Old Agra Road
+                                <br/>
+                                Malegaon
+                            </address>
+                            <!--
+                            <div class="ib">
+                                <img src="assets/images/invoice-logo.png" alt="OKLER Themes" />
+                            </div>
+                            -->
+                        </div>
+                    </div>
+                </header>
+                <div class="bill-info">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="bill-to">
+                                <p class="h5 mb-xs text-dark text-semibold">To:</p>
+                                <address>
+                                    {{ inwardorder.customer }}
+                                    <br/>
+                                    {{ inwardorder.customer.firm }}
+                                    <br/>
+                                    Phone: {{ inwardorder.customer.mobile_number }}
+                                </address>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="bill-data text-right">
+                                <p class="mb-none">
+                                    <span class="text-dark">Date:</span>
+                                    <span class="value">{{ inwardorder.date }}</span>
+                                </p>
+                                <p class="mb-none">
+                                    <span class="text-dark">Received by:</span>
+                                    <span class="value">{{ inwardorder.created_by.name }}</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="table-responsive">
+
+                    <table class="table invoice-items">
+                        <thead>
+                            <tr class="h4 text-dark">
+                                <th id="cell-item"   class="text-semibold">Item</th>
+                                <th id="cell-desc"   class="text-semibold">Container Type</th>
+                                <th id="cell-qty"    class="text-semibold">Quantity</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            {% for in_oli in inwardorder.inoli_set.all %}
+                                <tr>
+                                    <td> {{ in_oli.product }} </td>
+                                    <td> {{ in_oli.container_type }} </td>
+                                    <td> {{ in_oli.quantity }} </td>
+                                </tr>
+                            {% endfor %}
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="text-right mr-lg">
+                <a class="mb-xs mt-xs mr-xs btn btn-default" href="{% url 'orders:in_index' %}"><i class="fa fa-home"></i> Back </a>
+                <a href="#" class="btn btn-primary ml-sm"><i class="fa fa-print"></i> Print</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- end: page -->
+</section>
+
+{% endblock content %}
