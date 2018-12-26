@@ -69,8 +69,8 @@ class InwardOrder_UpdateView(LoginRequiredMixin, PermissionRequiredMixin, generi
     permission_required = ('orders.change_inwardorder')
 
     model = InwardOrder
-    fields = ['customer', 'date']
-    template_name = 'orders/inward_order/edit.html'
+    fields = ['customer', 'date', 'chamber']
+    template_name = 'orders/inward_orders/edit.html'
 
     def get_context_data(self, **kwargs):
         context = super(InwardOrder_UpdateView, self).get_context_data(**kwargs)
@@ -91,7 +91,7 @@ class InwardOrder_UpdateView(LoginRequiredMixin, PermissionRequiredMixin, generi
             if inward_olis.is_valid():
                 inward_olis.instance = self.object
                 inward_olis.save()
-        return super(InwardOrder_CreateView, self).form_valid(form)
+        return super(InwardOrder_UpdateView, self).form_valid(form)
 
     def get_success_url(self):
         return reverse_lazy('orders:in_detail', kwargs={'pk': self.object.pk})
@@ -158,8 +158,12 @@ class OutwardOrder_CreateView(LoginRequiredMixin, PermissionRequiredMixin, gener
 
             if outward_olis.is_valid():
                 outward_olis.instance = self.object
+
                 out_olis = outward_olis.save(commit=False)
                 out_olis = self.populate_oli_details(out_olis)
+
+                # out_olis = self.populate_oli_details(outward_order=outward_olis.instance)
+                # out_olis = OutOli.objects.bulk_create(out_olis)
 
                 invoice_lis = get_oli_invoice_li(invoice, out_olis)
                 invoice_lis = InvoiceLineItem.objects.bulk_create(invoice_lis)
@@ -168,21 +172,45 @@ class OutwardOrder_CreateView(LoginRequiredMixin, PermissionRequiredMixin, gener
             invoice.save()
         return super(OutwardOrder_CreateView, self).form_valid(form)
 
+    # def populate_oli_details(self, outward_order):
     def populate_oli_details(self, out_olis):
-        inoli_set       = 'inoli_set-'
-        field_id        = '-id'
+        inoli_set           = 'inoli_set-'
+        outoli_set          = 'outoli_set-'
+
+        field_id            = '-id'
+        field_quantity      = '-quantity'
+        field_stock         = '-stock'
+
+        attr_total_forms    = '-TOTAL_FORMS'
+
+        # total_forms = int(self.request.POST[outoli_set.replace('-', '') + attr_total_forms])
+        # lst_out_olis = []
+
+        # for var in list(range(total_forms)):
+        #     out_quantity = int(self.request.POST[outoli_set + str(var) + field_quantity])
+
+        #     if out_quantity > 0:
+        #         oli = OutOli(
+        #             outward_order = outward_order,
+        #             in_oli_id = self.request.POST[inoli_set + str(var) + field_id],
+        #             quantity = out_quantity
+        #         )
+        #         oli = oli.save()
+        #         lst_out_olis.append(oli)
+        #     else:
+        #         pass
+        # return lst_out_olis
 
         count = 0
         for out_oli in out_olis:
             str_in_oli_id = inoli_set + str(count) + field_id
 
-            if out_oli.quantity > 0:
-                in_oli_id = self.request.POST[str_in_oli_id]
+            # if out_oli.quantity > 0:
+            in_oli_id = self.request.POST[str_in_oli_id]
 
-                out_oli.in_oli_id = in_oli_id
-                out_oli.save()
-            else:
-                continue
+            out_oli.in_oli_id = in_oli_id
+            out_oli.save()
+
             count = count+1
         return out_olis
 

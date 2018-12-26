@@ -37,6 +37,7 @@
                                         <th>Lot Number</th>
                                         <th>Customer</th>
                                         <th>In Date</th>
+                                        <th>Chamber</th>
                                         <th>Status</th>
                                         <th>Actions</th>
                                     </tr>
@@ -47,6 +48,7 @@
                                             <td>{{ in_order.lot_number }}</td>
                                             <td>{{ in_order.customer }}</td>
                                             <td>{{ in_order.date }}</td>
+                                            <td>{{ in_order.chamber }}</td>
                                             <td>{{ in_order.status }}</td>
                                             <td>
                                                 <a href="{% url 'orders:in_detail' in_order.id %}"><i class="fa fa-list"></i> Details</a>

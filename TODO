@@ -1,21 +1,13 @@
+# TODO
+# ------------------------------------------------------------------------------
 static indexing while saving outward orders is buggy as out of 3 olis if first is out of stock,
 still out entry is made for it. Static indexing from request.
 
-Code refactor for naming convention - DONE
-
-Base abstract model for audit fields = DONE (using django-author and django-extensions for this)
-
-Custom user model = DONE
-
 new field in payment -> accepted by - automatic by current user
 
-Generate receiving challan same as invoice on outward order
+Generate receiving challan same as invoice on inward order
 
-Invoice should contain name of the receiver
-
-selected section to be auto expanded and highlighted in side bar - DONE
-
-Facebook like timeline in customer detail page which will show inward order, outward orders and payment
+Facebook like timeline in customer detail page which will show inward order, outward orders and payment - WIP
 
 Use jquery data table on all the list views
 
@@ -23,8 +15,23 @@ Use x-editable for edit on the go on list view
 
 User authentication for each operation
 
-Rate column to include rupee symbol - DONE
-
 Date field widget on non-admin pages
+
+Conditional rendering of page panel heading and breadcrum
+
+
+# DONE
+# ------------------------------------------------------------------------------
+Code refactor for naming convention
+
+Base abstract model for audit fields (using django-author and django-extensions for this)
+
+Custom user model
+
+Invoice should contain name of the receiver
+
+selected section to be auto expanded and highlighted in side bar
+
+Rate column to include rupee symbol
 
 Chember number to be taken as input along with inward order details

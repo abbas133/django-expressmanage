@@ -38,16 +38,4 @@ urlpatterns = [
 
     # ex: /products/containers/d/5/
     path('containers/d/<int:pk>/', views.ContainerType_DeleteView.as_view(), name='container_delete'),
-
-
-    # RATE SLAB
-    # ------------------------------------------------------------------------------
-    # ex: /products/rs/
-    # path('rs/', views.Rate_IndexView.as_view(), name='rate_index'),
-
-    # ex: /products/rs/1/
-    # path('rs/<int:pk>/', views.Rate_DetailView.as_view(), name='rate_detail'),
-
-    # ex: /products/rs/new
-    # path('rs/new', views.Rate_CreateView.as_view(), name='rate_create'),
 ]
