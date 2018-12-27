@@ -8,6 +8,7 @@ from datetime import datetime
 from expressmanage.orders.models import InwardOrder, OutwardOrder, OutOli
 
 
+@with_author
 class Invoice(TimeStampedModel):
     # Status choices
     ACTIVE = 'Active'
@@ -19,14 +20,13 @@ class Invoice(TimeStampedModel):
 
     inward_order    = models.ForeignKey(InwardOrder, on_delete=models.CASCADE)
     outward_order   = models.ForeignKey(OutwardOrder, on_delete=models.CASCADE)
-    date            = models.DateField(auto_now_add=False, default=datetime.today)
     total_amount    = models.DecimalField(max_digits=5, decimal_places=2, default=0)
     received_amount = models.DecimalField(max_digits=5, decimal_places=2, default=0)
     pending_amount  = models.DecimalField(max_digits=5, decimal_places=2, default=0)
     status          = models.CharField(max_length=50, choices=STATUS_CHOICES, default=ACTIVE)
 
     def __str__(self):
-        return self.inward_order.lot_number
+        return str(self.pk)
 
     def save(self, *args, **kwargs):
         self.pending_amount = self.total_amount - self.received_amount
@@ -35,6 +35,7 @@ class Invoice(TimeStampedModel):
         super(Invoice, self).save(*args, **kwargs)
 
 
+@with_author
 class InvoiceLineItem(TimeStampedModel):
     invoice         = models.ForeignKey(Invoice, on_delete=models.CASCADE)
     out_oli         = models.ForeignKey(OutOli, on_delete=models.CASCADE)
@@ -49,13 +50,13 @@ class InvoiceLineItem(TimeStampedModel):
         super(InvoiceLineItem, self).save(*args, **kwargs)
 
 
+@with_author
 class Payment(TimeStampedModel):
     invoice         = models.ForeignKey(Invoice, on_delete=models.CASCADE)
-    date            = models.DateField(auto_now=True)
     amount          = models.DecimalField(max_digits=5, decimal_places=2)
 
     def __str__(self):
-        return str(self.invoice.pk)
+        return str(self.pk)
 
     def save(self, *args, **kwargs):
         super(Payment, self).save(*args, **kwargs)
@@ -68,8 +69,10 @@ class Payment(TimeStampedModel):
 
     def generate_receipt(invoice, payment):
         receipt = Receipt(invoice=invoice, payment=payment)
+        receipt.save()
 
 
+@with_author
 class Receipt(TimeStampedModel):
     invoice         = models.ForeignKey(Invoice, on_delete=models.CASCADE)
     payment         = models.ForeignKey(Payment, on_delete=models.CASCADE)

@@ -35,7 +35,7 @@ class InwardOrderAdmin(admin.ModelAdmin):
     fieldsets = (
         ('Inward Order', {
             "fields": (
-                'customer',
+                'customer', 'created_by'
             ),
         }),
     )

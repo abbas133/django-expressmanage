@@ -33,6 +33,11 @@ urlpatterns = [
     # ex: /orders/out/new
     path('out/new', views.OutwardOrder_CreateView.as_view(), name='out_create'),
 
+# RECEIVING CHALLAN
+# ------------------------------------------------------------------------------
+    # ex: /orders/rec/1/
+    path('rec/<int:pk>/', views.ReceivingChallan_DetailView.as_view(), name='receiving_challan_detail'),
+
 
 # AJAX HELPER URLS
 # ------------------------------------------------------------------------------

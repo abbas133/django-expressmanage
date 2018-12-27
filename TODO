@@ -1,27 +1,38 @@
 # TODO
 # ------------------------------------------------------------------------------
-static indexing while saving outward orders is buggy as out of 3 olis if first is out of stock,
-still out entry is made for it. Static indexing from request.
+Facebook like timeline in customer detail page which will show inward order, outward orders and payment
 
-new field in payment -> accepted by - automatic by current user
-
-Generate receiving challan same as invoice on inward order
-
-Facebook like timeline in customer detail page which will show inward order, outward orders and payment - WIP
+customer detail page active lots, active invoices to make expandable
 
 Use jquery data table on all the list views
 
 Use x-editable for edit on the go on list view
 
-User authentication for each operation
-
 Date field widget on non-admin pages
 
 Conditional rendering of page panel heading and breadcrum
 
+button on detail page to add more item
+
+link to add more items in formset
+
+Index table with details as per the theme advanced table with details
+
+Query optimization to improve the performance
+
+Manage front-end dependencies via manager
 
 # DONE
 # ------------------------------------------------------------------------------
+option to make payments
+
+Generate receiving challan same as invoice on inward order
+
+new field in payment -> accepted by - automatic by current user -> Used author for this
+
+static indexing while saving outward orders is buggy as out of 3 olis if first is out of stock,
+still out entry is made for it. Static indexing from request.
+
 Code refactor for naming convention
 
 Base abstract model for audit fields (using django-author and django-extensions for this)
@@ -35,3 +46,5 @@ selected section to be auto expanded and highlighted in side bar
 Rate column to include rupee symbol
 
 Chember number to be taken as input along with inward order details
+
+User authentication for each operation

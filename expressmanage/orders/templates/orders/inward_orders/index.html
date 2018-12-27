@@ -57,6 +57,8 @@
                                                     <a href="{% url 'orders:in_update' in_order.id %}"><i class="fa fa-pencil"></i> Edit </a>
                                                     |
                                                     <a href="{% url 'orders:in_delete' in_order.id %}"><i class="fa fa-trash-o"></i> Delete </a>
+                                                    |
+                                                    <a href="{% url 'orders:receiving_challan_detail' in_order.id %}"><i class="fa fa-indent"></i> Receiving Challan </a>
                                                 {% endif %}
                                             </td>
                                         </tr>
