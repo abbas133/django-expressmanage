@@ -3,7 +3,7 @@ from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 
 from .models import Customer
-
+from .helper import CustomerSummary
 
 class Customer_IndexView(LoginRequiredMixin, generic.ListView):
     template_name = 'customers/index.html'
@@ -20,8 +20,17 @@ class Customer_DetailView(LoginRequiredMixin, PermissionRequiredMixin, generic.D
     template_name = 'customers/detail.html'
 
     def get_context_data(self, **kwargs):
+        cont_customer = kwargs['object']
+
         context = super(Customer_DetailView, self).get_context_data(**kwargs)
-        context['pending_amount'] = '53269'
+
+        # Recent Invoices
+        context['recent_invoices'] = CustomerSummary.get_recent_invoices(cont_customer)[:3]
+
+        # Sale stats
+        context['active_lots'] = CustomerSummary.get_active_lots(cont_customer).count()
+        context['active_invoices'] = CustomerSummary.get_active_invoices(cont_customer).count()
+        context['pending_amount'] = CustomerSummary.get_pending_amount(cont_customer)
 
         return context
 

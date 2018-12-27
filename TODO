@@ -1,6 +1,8 @@
 # TODO
 # ------------------------------------------------------------------------------
-Facebook like timeline in customer detail page which will show inward order, outward orders and payment - WIP
+Facebook like timeline in customer detail page which will show inward order, outward orders and payment
+
+customer detail page active lots, active invoices to make expandable
 
 Use jquery data table on all the list views
 
@@ -14,8 +16,6 @@ button on detail page to add more item
 
 link to add more items in formset
 
-option to make payments
-
 Index table with details as per the theme advanced table with details
 
 Query optimization to improve the performance
@@ -24,6 +24,8 @@ Manage front-end dependencies via manager
 
 # DONE
 # ------------------------------------------------------------------------------
+option to make payments
+
 Generate receiving challan same as invoice on inward order
 
 new field in payment -> accepted by - automatic by current user -> Used author for this

@@ -26,7 +26,7 @@ class Invoice(TimeStampedModel):
     status          = models.CharField(max_length=50, choices=STATUS_CHOICES, default=ACTIVE)
 
     def __str__(self):
-        return self.inward_order.lot_number
+        return str(self.pk)
 
     def save(self, *args, **kwargs):
         self.pending_amount = self.total_amount - self.received_amount
@@ -56,7 +56,7 @@ class Payment(TimeStampedModel):
     amount          = models.DecimalField(max_digits=5, decimal_places=2)
 
     def __str__(self):
-        return str(self.invoice.pk)
+        return str(self.pk)
 
     def save(self, *args, **kwargs):
         super(Payment, self).save(*args, **kwargs)

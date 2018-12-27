@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% load widget_tweaks %}
+
+{% block content %}
+<section role="main" class="content-body">
+    <header class="page-header">
+        <h2>Invoices And Payments</h2>
+
+        <div class="right-wrapper pull-right">
+            <ol class="breadcrumbs">
+                <li>
+                    <a href="{% url 'home' %}">
+                        <i class="fa fa-home"></i>
+                    </a>
+                </li>
+                <li><span>Invoices And Payments</span></li>
+                <li><span>Receipt</span></li>
+            </ol>
+
+            <a class="sidebar-right-toggle"><i class=""></i></a>
+        </div>
+    </header>
+
+    <!-- start: page -->
+
+    <section class="panel panel-primary">
+        <div class="panel-body">
+            <div class="invoice">
+                <header class="clearfix">
+                    <div class="row">
+                        <div class="col-sm-6 mt-md">
+                            <h2 class="h2 mt-none mb-sm text-dark text-bold">RECEIPT</h2>
+                            <h4 class="h4 m-none text-dark text-bold"># {{ receipt.pk}} </h4>
+                        </div>
+                        <div class="col-sm-6 text-right mt-md mb-md">
+                            <address class="ib mr-xlg">
+                                Sona Ice And Cold Storage
+                                <br/>
+                                Sona Compund, Old Agra Road
+                                <br/>
+                                Malegaon
+                            </address>
+                            <!--
+                            <div class="ib">
+                                <img src="assets/images/invoice-logo.png" alt="OKLER Themes" />
+                            </div>
+                            -->
+                        </div>
+                    </div>
+                </header>
+                <div class="bill-info">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p class="h5 mb-xs text-dark text-semibold">
+                                Received from  <b><u>{{ receipt.invoice.inward_order.customer }}</u></b> 
+                                the amount of <b><u><i class="fa fa-inr"></i> {{ receipt.payment.amount}}</u></b> 
+                                for the invoice # <b><u>{{ receipt.invoice.pk }}</u></b> 
+                                on <b><u>{{ receipt.created.date }}</u></b> 
+                                by <b><u>{{ receipt.created_by.name }}</u></b> 
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-right mr-lg">
+                <a class="mb-xs mt-xs mr-xs btn btn-default" href="{% url 'invoices:receipt_index' %}"><i class="fa fa-home"></i> Back </a>
+                <a href="#" class="btn btn-primary ml-sm"><i class="fa fa-print"></i> Print</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- end: page -->
+</section>
+
+{% endblock content %}

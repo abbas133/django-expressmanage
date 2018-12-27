@@ -15,29 +15,18 @@ urlpatterns = [
 
     # Payment
     # -----------------------------------------------------------------------------
+    # ex: /invoices/payments/
+    path('payments/', views.Payment_IndexView.as_view(), name='payment_index'),
+
     # ex: /invoices/payment/new
     path('payment/new', views.Payment_CreateView.as_view(), name='payment_create'),
 
-    # # ex: /invoices/new/
-    # path('new/', views.Product_CreateView.as_view(), name='product_create'),
 
-    # # CONTAINER TYPE
-    # # ex: /invoices/ct/
-    # path('ct/', views.Ct_IndexView.as_view(), name='ct_index'),
+    # Receipt
+    # -----------------------------------------------------------------------------
+    # ex: /invoices/receipts/
+    path('receipts/', views.Receipt_IndexView.as_view(), name='receipt_index'),
 
-    # # ex: /invoices/ct/1/
-    # path('ct/<int:pk>/', views.Ct_DetailView.as_view(), name='ct_detail'),
-
-    # # ex: /invoices/ct/new
-    # path('ct/new', views.Ct_CreateView.as_view(), name='ct_create'),
-
-    # # RATE SLAB
-    # # ex: /invoices/rs/
-    # path('rs/', views.Rate_IndexView.as_view(), name='rate_index'),
-
-    # # ex: /invoices/rs/1/
-    # path('rs/<int:pk>/', views.Rate_DetailView.as_view(), name='rate_detail'),
-
-    # # ex: /invoices/rs/new
-    # path('rs/new', views.Rate_CreateView.as_view(), name='rate_create'),
+    # ex: /invoices/receipts/1/
+    path('receipts/<int:pk>/', views.Receipt_DetailView.as_view(), name='receipt_detail'),
 ]

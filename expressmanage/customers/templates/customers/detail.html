@@ -48,30 +48,24 @@
                     </header>
                     <div class="panel-body">
                         <ul class="simple-post-list">
-                            <li>
-                                <div class="post-info">
-                                    <a href="#">Nullam Vitae Nibh Un Odiosters</a>
-                                    <div class="post-meta">
-                                            Jan 10, 2013
+                            {% if recent_invoices %}
+                                {% for invoice in recent_invoices %}
+                                    <li>
+                                        <div class="post-info">
+                                            <a href="{% url 'invoices:invoice_detail' invoice.id %}">{{ invoice.pk }}</a>
+                                            <div class="post-meta">
+                                                    {{ invoice.created.date }}
+                                            </div>
+                                        </div>
+                                    </li>
+                                {% endfor %}
+                            {% else %}
+                                <li>
+                                    <div class="post-info">
+                                        <p>No recent invoices</p>
                                     </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="post-info">
-                                    <a href="#">Vitae Nibh Un Odiosters</a>
-                                    <div class="post-meta">
-                                            Jan 10, 2013
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="post-info">
-                                    <a href="#">Odiosters Nullam Vitae</a>
-                                    <div class="post-meta">
-                                            Jan 10, 2013
-                                    </div>
-                                </div>
-                            </li>
+                                </li>
+                            {% endif %}
                         </ul>
                     </div>
                 </section>
@@ -174,16 +168,16 @@
                     <h4 class="mb-md">Sale Stats</h4>
                     <ul class="simple-card-list mb-xlg">
                         <li class="primary">
-                            <h3>5</h3>
-                            <p>Active Lots.</p>
+                            <h3>{{ active_lots }}</h3>
+                            <p>Active Lots</p>
                         </li>
                         <li class="warning">
-                            <h3>16</h3>
+                            <h3>{{ active_invoices }}</h3>
                             <p>Active Invoices</p>
                         </li>
                         <li class="danger">
-                            <h3><i class="fa fa-inr"></i> {{ pending_amount }}</h3>
-                            <p>Total Pending</p>
+                            <h3><i class="fa fa-inr"></i> {{ pending_amount }} </h3>
+                            <p>Total Amount Pending</p>
                         </li>
                     </ul>
                 </div>
