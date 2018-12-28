@@ -61,7 +61,7 @@ class InOli(TimeStampedModel):
     stock           = models.IntegerField(default=0)
 
     def __str__(self):
-        return str(self.product.name)
+        return str(self.pk)
 
     # self._state.adding is True creating
     # self._state.adding is False updating
@@ -92,7 +92,7 @@ class OutwardOrder(TimeStampedModel):
     status          = models.CharField(max_length=50, choices=STATUS_CHOICES, default=ACTIVE)
 
     def __str__(self):
-        return str(self.inward_order.lot_number)
+        return str(self.pk)
 
     def save(self, *args, **kwargs):
         super(OutwardOrder, self).save(*args, **kwargs)
@@ -105,7 +105,7 @@ class OutOli(TimeStampedModel):
     quantity        = models.IntegerField(default=0)
 
     def __str__(self):
-        return str(self.outward_order.inward_order.lot_number)
+        return str(self.pk)
 
     def save(self, *args, **kwargs):
         super(OutOli, self).save(*args, **kwargs)

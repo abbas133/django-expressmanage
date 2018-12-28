@@ -66,7 +66,7 @@
 
                 <div class="panel-body">
                     <div class="table-responsive">
-                        <table class="table table-hover table-bordered table-striped table-condensed mb-none">
+                        <table class="table table-hover table-striped table-condensed mb-none">
                             <thead>
                                 <th>Product</th>
                                 <th>Container type</th>
@@ -105,85 +105,3 @@
 
 </section>
 {% endblock content %}
-
-
-
-
-
-
-
-
-
-
-
-
-
-{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
-
-<!-- Content Header (Page header) -->
-<section class="content-header">
-    <h1>{{ outwardorder.inward_order.lot_number }}</h1>
-    <!-- <ol class="breadcrumb">
-      <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-      <li class="active">Dashboard</li>
-    </ol> -->
-</section>
-
-<!-- Main content -->
-<section class="content">
-
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-
-            <div class="box box-primary">
-                <div class="box-body">
-
-                    <div class="form-group">
-                        <label for="customer">Customer: </label>
-                        <output type="text" class="form-control" id="customer">{{ outwardorder.customer }}</output>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="out-date">Out Date: </label>
-                        <output type="text" class="form-control" id="out-date">{{ outwardorder.date }}</output>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="inward-order">Inward Order: </label>
-                        <output type="text" class="form-control" id="inward-order">{{ outwardorder.inward_order }}</output>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="is-active">Active: </label>
-                        <output type="text" class="form-control" id="is-active">{{ outwardorder.active }}</output>
-                    </div>
-
-                    <table class="table" border=1>
-                        <thead>
-                            <th>Product</th>
-                            <th>Container type</th>
-                            <th>Qunatity Out</th>
-                            <th>Qunatity Stock</th>
-                        </thead>
-
-                        <tbody>
-                            {% for out_oli in outwardorder.outoli_set.all %}
-                                <tr>
-                                    <td> {{ out_oli.in_oli.product }} </td>
-                                    <td> {{ out_oli.in_oli.container_type }} </td>
-                                    <td> {{ out_oli.quantity }} </td>
-                                    <td> {{ out_oli.in_oli.stock }} </td>
-                                </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-
-                </div>
-                <!-- /.box-body -->
-            </div>
-            <!-- /.box -->
-        </div>
-    </div>
-
-</section>
-<!-- /.content -->
