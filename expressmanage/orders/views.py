@@ -52,10 +52,10 @@ class InwardOrder_CreateView(LoginRequiredMixin, PermissionRequiredMixin, generi
         context = self.get_context_data()
         inward_olis = context['inward_olis']
 
-        with transaction.atomic():
-            self.object = form.save()
+        if form.is_valid() and inward_olis.is_valid():
+            with transaction.atomic():
+                self.object = form.save()
 
-            if inward_olis.is_valid():
                 inward_olis.instance = self.object
                 inward_olis.save()
         return super(InwardOrder_CreateView, self).form_valid(form)
@@ -85,10 +85,10 @@ class InwardOrder_UpdateView(LoginRequiredMixin, PermissionRequiredMixin, generi
         context = self.get_context_data()
         inward_olis = context['inward_olis']
 
-        with transaction.atomic():
-            self.object = form.save()
+        if form.is_valid() and inward_olis.is_valid():
+            with transaction.atomic():
+                self.object = form.save()
 
-            if inward_olis.is_valid():
                 inward_olis.instance = self.object
                 inward_olis.save()
         return super(InwardOrder_UpdateView, self).form_valid(form)
@@ -145,28 +145,29 @@ class OutwardOrder_CreateView(LoginRequiredMixin, PermissionRequiredMixin, gener
         else:
             pass
         return context
-
+ 
     def form_valid(self, form):
         context = self.get_context_data()
         outward_olis = context['outward_olis']
 
-        with transaction.atomic():
-            self.object = form.save()
+        if form.is_valid():
+            with transaction.atomic():
+                self.object = form.save()
 
-            invoice = get_invoice(self.object)
-            invoice.save()
+                invoice = get_invoice(self.object)
+                invoice.save()
 
-            if outward_olis.is_valid():
-                outward_olis.instance = self.object
+                if outward_olis.is_valid():
+                    outward_olis.instance = self.object
 
-                out_olis = self.populate_oli_details(outward_order=outward_olis.instance)
-                # out_olis = OutOli.objects.bulk_create(out_olis)
+                    out_olis = self.populate_oli_details(outward_order=outward_olis.instance)
+                    # out_olis = OutOli.objects.bulk_create(out_olis)
 
-                invoice_lis = get_oli_invoice_li(invoice, out_olis)
-                invoice_lis = InvoiceLineItem.objects.bulk_create(invoice_lis)
+                    invoice_lis = get_oli_invoice_li(invoice, out_olis)
+                    invoice_lis = InvoiceLineItem.objects.bulk_create(invoice_lis)
 
-            invoice = populate_invoice(invoice, invoice_lis)
-            invoice.save()
+                    invoice = populate_invoice(invoice, invoice_lis)
+                    invoice.save()
         return super(OutwardOrder_CreateView, self).form_valid(form)
 
     def populate_oli_details(self, outward_order):
@@ -231,7 +232,7 @@ class OutOli_DetailView(LoginRequiredMixin, PermissionRequiredMixin, generic.Det
     template_name = 'orders/order_line_items/detail.html'
 
 
-# OUTWARD ORDERS
+# RECEIVING CHALLAN
 # ------------------------------------------------------------------------------
 class ReceivingChallan_DetailView(LoginRequiredMixin, PermissionRequiredMixin, generic.DetailView):
     raise_exception = True
@@ -246,7 +247,6 @@ class ReceivingChallan_DetailView(LoginRequiredMixin, PermissionRequiredMixin, g
 def load_customer_in_orders(request):
     customer_id = request.GET.get('cid')
     inward_orders = InwardOrder.objects.filter(customer = customer_id).filter(status = 'Active').order_by('date')
-
     return render(request, 'orders/filtered_inorder_options.html', {'filtered_inward_orders': inward_orders})
 
 
@@ -261,5 +261,4 @@ def load_order_olis(request):
         can_delete=False,
         extra=len(in_order_results),
     )
-
     return render(request, 'orders/filtered_oli_options.html', {'in_order_results': in_order_results, 'outward_olis': outward_olis})

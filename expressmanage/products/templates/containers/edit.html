@@ -87,8 +87,8 @@
                                 </thead>
                                 {% endif %}
 
-                                <tbody>
-                                    <tr formset_row>
+                                {% comment %} <tbody> {% endcomment %}
+                                    <tr class="formset_row container-type">
                                         {% for field in form.visible_fields %}
                                         <td>
                                             {% if forloop.first %}
@@ -105,7 +105,7 @@
                                         </td>
                                         {% endfor %}
                                     </tr>
-                                </tbody>
+                                {% comment %} </tbody> {% endcomment %}
                                 {% endfor %}
                             </table>
                         </div>

@@ -1,12 +1,14 @@
-$(function() {
+$(document).ready(function() {
     // console.log( "document ready!" );
     init();
-});
-
+})
 
 var init = function() {
     // console.log( "init ");
     activateNavItem();
+
+    // initialize dynamic add more and remove option for formsets
+    initFormsetOptions();
 }
 
 var activateNavItem = function() {
@@ -20,5 +22,18 @@ var activateNavItem = function() {
 
     $(selectedElem).closest("li").addClass('nav-expanded nav-active');
     $(selectedElem).closest(".nav-parent").addClass('nav-expanded nav-active');
+}
 
+var initFormsetOptions = function() {
+    $('.formset_row.container-type').formset({
+        addText: 'Add More',
+        deleteText: 'Remove',
+        prefix: 'rateslab_set',
+    });
+
+    $('.formset_row.inward-order').formset({
+        addText: 'Add More',
+        deleteText: 'Remove',
+        prefix: 'inoli_set',
+    });
 }

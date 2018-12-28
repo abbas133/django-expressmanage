@@ -38,30 +38,34 @@
                     </header>
 
                     <div class="panel-body">
+                        {% if error_message %}
+                            <p><strong>{{ error_message }}</strong></p>
+                        {% endif %}
+
                         {% csrf_token %}
 
                         {% for hidden in form.hidden_fields %}
-                        {{ hidden }}
+                            {{ hidden }}
                         {% endfor %}
 
                         {% for field in form.visible_fields %}
-                        <div class="form-group">
-                            <label class="col-md-3 control-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
-                            <div class="col-md-6">
-                                {% comment %} {% if field.name == 'date' %}
-                                    {{ field|add_class:'form-control'|attr:"data-plugin-datepicker" }}
-                                {% else %}
+                            <div class="form-group">
+                                <label class="col-md-3 control-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                                <div class="col-md-6">
+                                    {% comment %} {% if field.name == 'date' %}
+                                        {{ field|add_class:'form-control'|attr:"data-plugin-datepicker" }}
+                                    {% else %}
+                                        {{ field|add_class:'form-control' }}
+                                    {% endif %} {% endcomment %}
+
                                     {{ field|add_class:'form-control' }}
-                                {% endif %} {% endcomment %}
 
-                                {{ field|add_class:'form-control' }}
+                                    {% for error in field.errors %}
+                                        <span class="help-block">{{ error }}</span>
+                                    {% endfor %}
 
-                                {% for error in field.errors %}
-                                <span class="help-block">{{ error }}</span>
-                                {% endfor %}
-
+                                </div>
                             </div>
-                        </div>
                         {% endfor %}
                     </div>
                 </section>
@@ -85,6 +89,8 @@ $(document).ready(function() {
     // Event Listeners
     $("body").on( "change", "#id_customer", getCustomerWiseOrders);
     $("body").on( "change", "#id_inward_order", getOrderWiseOli);
+
+    // $(".btn.btn-success").disabled();
 })
 
 
