@@ -6,7 +6,8 @@ def get_oli_elapsed_days(out_oli):
 
 
 def get_oli_applicable_rate(out_oli, elapsed_days=None):
-    rate_slabs = RateSlab.objects.filter(container_type=out_oli.in_oli.container_type).order_by("slab_number")
+    # rate_slabs = RateSlab.objects.filter(container_type=out_oli.in_oli.container_type).order_by("slab_number")
+    rate_slabs = RateSlab.objects.filter(container_type=out_oli.in_oli.container_type).order_by("number_of_days")
     elapsed_days = elapsed_days if elapsed_days is not None else get_oli_elapsed_days(out_oli)
 
     for rate_slab in rate_slabs:

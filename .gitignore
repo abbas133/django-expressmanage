@@ -279,9 +279,10 @@ pip-selfcheck.json
 
 
 ### Project template
-
 expressmanage/media/
 
 .pytest_cache/
 
-
+expressmanage/db.sqlite3
+*.sqlite3
+**.sqlite3

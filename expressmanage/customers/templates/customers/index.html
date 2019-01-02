@@ -35,8 +35,7 @@
                                 <thead>
                                     <tr>
                                         <th>Firm</th>
-                                        <th>First Name</th>
-                                        <th>Last Name</th>
+                                        <th>Name</th>
                                         <th>Address</th>
                                         <th>City</th>
                                         <th>Mobile Number</th>
@@ -47,8 +46,7 @@
                                     {% for cust in customer_list %}
                                         <tr>
                                             <td>{{ cust.firm }}</td>
-                                            <td>{{ cust.first_name }}</td>
-                                            <td>{{ cust.last_name }}</td>
+                                            <td>{{ cust.name }}</td>
                                             <td>{{ cust.address }}</td>
                                             <td>{{ cust.city }}</td>
                                             <td>{{ cust.mobile_number }}</td>
