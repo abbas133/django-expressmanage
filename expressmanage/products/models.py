@@ -24,9 +24,9 @@ class ContainerType(TimeStampedModel):
 @with_author
 class RateSlab(TimeStampedModel):
     container_type      = models.ForeignKey(ContainerType, on_delete=models.CASCADE)
-    rate                = models.IntegerField()
+    rate                = models.DecimalField(max_digits=5, decimal_places=2)
     number_of_days      = models.IntegerField()
-    slab_number         = models.IntegerField()
+    # slab_number         = models.IntegerField()
 
     def __str__(self):
         return str(self.pk)
