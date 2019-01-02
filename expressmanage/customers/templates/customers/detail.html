@@ -31,7 +31,7 @@
                         <div class="thumb-info mb-md">
                             <img src="{% static 'images/user-avatar.png' %}" class="rounded img-responsive">
                             <div class="thumb-info-title">
-                                <span class="thumb-info-inner">{{ customer.first_name }} {{ customer.last_name }}</span>
+                                <span class="thumb-info-inner">{{ customer.name }}</span>
                                 <span class="thumb-info-type">{{ customer.firm }}</span>
                             </div>
                         </div>
@@ -100,15 +100,6 @@
                                             <output type="text" class="form-control" id="profile-fname">{{ customer.name }}</output>
                                         </div>
                                     </div>
-
-                                    <!--
-                                    <div class="form-group">
-                                        <label class="col-md-3 control-label" for="profile-lname">Last Name</label>
-                                        <div class="col-md-8">
-                                            <output type="text" class="form-control" id="profile-lname">{{ customer.last_name }}</output>
-                                        </div>
-                                    </div>
-                                    -->
 
                                     <div class="form-group">
                                         <label class="col-md-3 control-label" for="profile-address">Address</label>

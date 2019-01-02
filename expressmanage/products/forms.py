@@ -16,7 +16,7 @@ class RateSlabForm(ModelForm):
 RateSlabFormSet = inlineformset_factory(
     ContainerType,
     RateSlab,
-    fields=('container_type', 'rate', 'number_of_days', 'slab_number',),
+    fields=('container_type', 'rate', 'number_of_days',),
     can_delete=False,
     extra=3,
     form=RateSlabForm,

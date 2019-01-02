@@ -3,7 +3,6 @@ from django.db.models import CharField
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 
-from django_extensions.db.models import TimeStampedModel
 from author.decorators import with_author
 
 
