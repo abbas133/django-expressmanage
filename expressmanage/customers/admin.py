@@ -7,7 +7,7 @@ class CustomerAdmin(admin.ModelAdmin):
     fieldsets = (
         (None, {
             "fields": (
-                'firm', 'first_name', 'last_name'
+                'firm', 'name'
             ),
         }),
         ('Contact Information', {
@@ -18,13 +18,13 @@ class CustomerAdmin(admin.ModelAdmin):
     )
 
     # List view option on admin page
-    list_display = ('firm', 'first_name', 'last_name', 'mobile_number')
+    list_display = ('firm', 'name', 'mobile_number')
 
     # List of filterable fields
-    list_filter = ['firm', 'first_name']
+    list_filter = ['firm', 'name']
 
     # Search box at the top
-    search_fields = ['firm', 'first_name']
+    search_fields = ['firm', 'name']
 
 
 admin.site.register(Customer, CustomerAdmin)

@@ -8,7 +8,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMix
 from expressmanage.invoices.models import Invoice, InvoiceLineItem
 
 from .models import InwardOrder, InOli, OutwardOrder, OutOli
-from .forms import InOliFormSet, OutOliFormSet, InOliResultFormSet
+from .forms import InOliFormSet, OutOliFormSet, InOliResultFormSet, OutwardOrderModelForm
 from .helpers import get_invoice, populate_invoice, get_oli_invoice_li
 
 
@@ -131,7 +131,8 @@ class OutwardOrder_CreateView(LoginRequiredMixin, PermissionRequiredMixin, gener
     permission_required = ('orders.add_outwardorder')
 
     model = OutwardOrder
-    fields = ['customer', 'inward_order', 'date', 'received_by',]
+    form_class = OutwardOrderModelForm
+    # fields = ['customer', 'inward_order', 'date', 'received_by',]
     template_name = 'orders/outward_orders/edit.html'
 
     def get_context_data(self, **kwargs):
@@ -145,33 +146,42 @@ class OutwardOrder_CreateView(LoginRequiredMixin, PermissionRequiredMixin, gener
         else:
             pass
         return context
- 
+
     def form_valid(self, form):
         context = self.get_context_data()
         outward_olis = context['outward_olis']
 
+        is_valid = form.is_valid() and outward_olis.is_valid()
+
         if form.is_valid():
             with transaction.atomic():
-                self.object = form.save()
+                self.object = form.save(commit=False)
 
-                invoice = get_invoice(self.object)
-                invoice.save()
+                # invoice = get_invoice(self.object)
+                # invoice.save()
 
                 if outward_olis.is_valid():
+                    form.save()
+
                     outward_olis.instance = self.object
 
                     out_olis = self.populate_oli_details(outward_order=outward_olis.instance)
-                    # out_olis = OutOli.objects.bulk_create(out_olis)
 
-                    invoice_lis = get_oli_invoice_li(invoice, out_olis)
-                    invoice_lis = InvoiceLineItem.objects.bulk_create(invoice_lis)
+                    # invoice_lis = get_oli_invoice_li(invoice, out_olis)
+                    # invoice_lis = InvoiceLineItem.objects.bulk_create(invoice_lis)
 
-                    invoice = populate_invoice(invoice, invoice_lis)
-                    invoice.save()
-        return super(OutwardOrder_CreateView, self).form_valid(form)
+                    # invoice = populate_invoice(invoice, invoice_lis)
+                    # invoice.save()
+                return super(OutwardOrder_CreateView, self).form_valid(form)
+
+    # def form_invalid(self, form):
+    #     response = super().form_invalid(form)
+    #     if self.request.is_ajax():
+    #         return JsonResponse(form.errors, status=400)
+    #     else:
+    #         return response
 
     def populate_oli_details(self, outward_order):
-    # def populate_oli_details(self, out_olis):
         inoli_set           = 'inoli_set-'
         outoli_set          = 'outoli_set-'
 
@@ -201,7 +211,8 @@ class OutwardOrder_CreateView(LoginRequiredMixin, PermissionRequiredMixin, gener
         return lst_out_olis
 
     def get_success_url(self):
-        return reverse_lazy('invoices:invoice_detail', kwargs={'pk': Invoice.objects.get(outward_order=self.object.pk).pk})
+        # return reverse_lazy('invoices:invoice_detail', kwargs={'pk': Invoice.objects.get(outward_order=self.object.pk).pk})
+        return reverse_lazy('orders:out_detail', kwargs={'pk': self.object.pk})
 
 
 # OLI VIEWS - DEVELOPER BACKDOOR

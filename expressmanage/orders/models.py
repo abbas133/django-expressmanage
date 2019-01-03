@@ -47,7 +47,7 @@ class InwardOrder(TimeStampedModel):
         super(InwardOrder, self).save(*args, **kwargs)
 
         # Lot number composition
-        self.lot_number = self.customer.first_name[0].upper() + self.customer.last_name[0].upper() + '00' + str(self.pk)
+        self.lot_number = self.customer.firm[0].upper() + self.customer.name[0].upper() + '00' + str(self.pk)
 
         super(InwardOrder, self).save(*args, **kwargs)
 

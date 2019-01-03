@@ -40,7 +40,7 @@ class Customer_CreateView(LoginRequiredMixin, PermissionRequiredMixin, generic.C
     permission_required = ('customers.add_customer')
 
     model = Customer
-    fields = ['firm','first_name', 'last_name', 'address', 'city', 'mobile_number']
+    fields = ['firm','name', 'address', 'city', 'mobile_number']
     template_name = 'customers/edit.html'
 
     def get_success_url(self):
@@ -52,7 +52,7 @@ class Customer_UpdateView(LoginRequiredMixin, PermissionRequiredMixin, generic.U
     permission_required = ('customers.change_customer')
 
     model = Customer
-    fields = ['firm','first_name', 'last_name', 'address', 'city', 'mobile_number']
+    fields = ['firm','name', 'address', 'city', 'mobile_number']
     template_name = 'customers/edit.html'
 
     def get_success_url(self):
