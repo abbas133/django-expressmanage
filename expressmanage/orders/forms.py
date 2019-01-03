@@ -1,8 +1,6 @@
 # from django import forms
-from django.core.exceptions import ValidationError
-from django.forms import ModelForm
+from django.forms import ModelForm, BaseInlineFormSet, ValidationError
 from django.forms.models import inlineformset_factory
-from django.utils.translation import ugettext_lazy as _
 
 from .models import InwardOrder, InOli, OutwardOrder, OutOli
 
@@ -37,15 +35,15 @@ class OutwardOrderModelForm(ModelForm):
 
     def clean(self):
         super(OutwardOrderModelForm, self).clean()
-        # self.add_error('date', 'The form cannot be submitted')
+        self.add_error('date', 'The form cannot be submitted')
 
 
-InOliFormSet = inlineformset_factory(
-    InwardOrder,
-    InOli,
-    fields=('inward_order','product', 'container_type', 'quantity',),
-    can_delete=False,
-)
+# InOliFormSet = inlineformset_factory(
+#     InwardOrder,
+#     InOli,
+#     fields=('inward_order','product', 'container_type', 'quantity',),
+#     can_delete=False,
+# )
 
 
 InOliResultFormSet = inlineformset_factory(
@@ -65,4 +63,46 @@ OutOliFormSet = inlineformset_factory(
     can_delete=False,
     extra=2,
     form=OutOliModelForm,
+)
+
+
+# NEW FORMS
+# ------------------------------------------------------------------------------
+class BaseInOliFormSet(BaseInlineFormSet):
+    # class Meta:
+    #     model = InOli
+    #     fields = ['inward_order','product', 'container_type', 'quantity']
+
+    # def clean_inward_order(self):
+    #     data = self.cleaned_data["inward_order"]
+    #     raise ValidationError('inward_order doesnt seems right')
+    #     return data
+
+    # def clean_product(self):
+    #     data = self.cleaned_data["product"]
+    #     raise ValidationError('Product doesnt seems right')
+    #     return data
+
+    # def clean_container_type(self):
+    #     data = self.cleaned_data["container_type"]
+    #     raise ValidationError('container_type doesnt seems right')
+    #     return data
+
+    # def clean_quantity(self):
+    #     data = self.cleaned_data["quantity"]
+    #     raise ValidationError('quantity doesnt seems right')
+    #     return data
+
+    def clean(self):
+        for form in self.forms:
+            raise ValidationError('FORM VALIDATION ERROR')
+
+
+InOliFormSet = inlineformset_factory(
+    parent_model=InwardOrder,
+    model=InOli,
+    formset=BaseInOliFormSet,
+    fields=('inward_order','product', 'container_type', 'quantity',),
+    can_delete=False,
+    extra=1,
 )

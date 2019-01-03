@@ -4,6 +4,7 @@ from django.db import transaction
 from django.shortcuts import render
 from django.forms.models import inlineformset_factory
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.http import HttpResponseRedirect
 
 from expressmanage.invoices.models import Invoice, InvoiceLineItem
 
@@ -39,29 +40,75 @@ class InwardOrder_CreateView(LoginRequiredMixin, PermissionRequiredMixin, generi
     model = InwardOrder
     fields = ['customer', 'date', 'chamber']
     template_name = 'orders/inward_orders/edit.html'
+    object = None
 
-    def get_context_data(self, **kwargs):
-        context = super(InwardOrder_CreateView, self).get_context_data(**kwargs)
-        if self.request.POST:
-            context['inward_olis'] = InOliFormSet(self.request.POST)
-        else:
-            context['inward_olis'] = InOliFormSet()
-        return context
+    def get(self, request, *args, **kwargs):
+        self.object = None
+        form_class = self.get_form_class()
+        form = self.get_form(form_class)
+        inward_olis = InOliFormSet()
 
-    def form_valid(self, form):
-        context = self.get_context_data()
-        inward_olis = context['inward_olis']
+        return self.render_to_response(
+            self.get_context_data(form=form, inward_olis=inward_olis,)
+        )
+
+    def post(self, request, *args, **kwargs):
+        self.object = None
+        form_class = self.get_form_class()
+        form = self.get_form(form_class)
+        inward_olis = InOliFormSet(self.request.POST)
 
         if form.is_valid() and inward_olis.is_valid():
-            with transaction.atomic():
-                self.object = form.save()
+            return self.form_valid(form, inward_olis)
+        else:
+            return self.form_invalid(form, inward_olis)
 
-                inward_olis.instance = self.object
-                inward_olis.save()
-        return super(InwardOrder_CreateView, self).form_valid(form)
+    def form_valid(self, form, inward_olis):
+        self.object.save()
+        inward_olis.save()
+
+        return HttpResponseRedirect(self.get_success_url())
+
+    def form_invalid(self, form, inward_olis):
+        # import pdb; pdb.set_trace()
+        return self.render_to_response(
+            self.get_context_data(form=form, inward_olis=inward_olis, )
+        )
 
     def get_success_url(self):
         return reverse_lazy('orders:in_detail', kwargs={'pk': self.object.pk})
+
+
+# class InwardOrder_CreateView(LoginRequiredMixin, PermissionRequiredMixin, generic.CreateView):
+#     raise_exception = True
+#     permission_required = ('orders.add_inwardorder')
+
+#     model = InwardOrder
+#     fields = ['customer', 'date', 'chamber']
+#     template_name = 'orders/inward_orders/edit.html'
+
+#     def get_context_data(self, **kwargs):
+#         context = super(InwardOrder_CreateView, self).get_context_data(**kwargs)
+#         if self.request.POST:
+#             context['inward_olis'] = InOliFormSet(self.request.POST)
+#         else:
+#             context['inward_olis'] = InOliFormSet()
+#         return context
+
+#     def form_valid(self, form):
+#         context = self.get_context_data()
+#         inward_olis = context['inward_olis']
+
+#         if form.is_valid() and inward_olis.is_valid():
+#             with transaction.atomic():
+#                 self.object = form.save()
+
+#                 inward_olis.instance = self.object
+#                 inward_olis.save()
+#         return super(InwardOrder_CreateView, self).form_valid(form)
+
+#     def get_success_url(self):
+#         return reverse_lazy('orders:in_detail', kwargs={'pk': self.object.pk})
 
 
 class InwardOrder_UpdateView(LoginRequiredMixin, PermissionRequiredMixin, generic.UpdateView):
