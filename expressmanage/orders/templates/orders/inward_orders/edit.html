@@ -43,12 +43,6 @@
                         <div class="form-group">
                             <label class="col-md-3 control-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
                             <div class="col-md-6">
-                                {% comment %} {% if field.name == 'date' %}
-                                    {{ field|add_class:'form-control'|attr:"data-plugin-datepicker" }}
-                                {% else %}
-                                    {{ field|add_class:'form-control' }}
-                                {% endif %} {% endcomment %}
-
                                 {{ field|add_class:'form-control' }}
 
                                 {% for error in field.errors %}
@@ -74,30 +68,9 @@
                     <div class="panel-body">
                         <div class="table-responsive">
                             <table class="table table-hover table-striped table-condensed mb-none">
-                                {{ inward_olis.management_form }}
+                                {{ in_oli_formset.management_form }}
 
-                                {{ inward_olis.errors }}
-                                {{ inward_olis.non_field_errors }}
-
-                                {% for form in inward_olis.forms %}
-                                    {% if form.non_field_errors %}
-                                        <ul>
-                                            {% for error in form.non_field_errors %}
-                                                <li>{{ error }}</li>
-                                                <li>PROBLEM</li>
-                                            {% endfor %}
-                                        </ul>
-                                    {% endif %}
-
-                                    {% if form.errors %}
-                                        <ul>
-                                            {% for error in form.errors %}
-                                                <li>{{ error }}</li>
-                                                <li>PROBLEM</li>
-                                            {% endfor %}
-                                        </ul>
-                                    {% endif %}
-
+                                {% for form in in_oli_formset.forms %}
                                     {% if forloop.first %}
                                         <thead>
                                             <tr>
@@ -127,28 +100,6 @@
                                     </tr>
                                 {% endfor %}
                             </table>
-
-                            <!--
-                            <table class="table table-hover table-stripped table-condensed mb-none">
-                                <thead>
-                                    {% for form in inward_olis.forms %}
-                                        {% if forloop.first %}
-                                            {% for field in form %}
-                                                <th>{{ field.label_tag }}</th>
-                                            {% endfor %}
-                                        {% endif %}
-                                </thead>
-                                <tbody>
-                                        <tr>
-                                            {% for field in form %}
-                                                <td>{{ field }}</td>
-                                            {% endfor %}
-                                        </tr>
-                                    {% endfor %}
-                                </tbody>
-                            </table>
-                            -->
-
                         </div>
                     </div>
 

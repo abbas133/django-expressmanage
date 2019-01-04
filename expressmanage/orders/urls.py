@@ -43,21 +43,4 @@ urlpatterns = [
 # ------------------------------------------------------------------------------
     path('ajax/load-inward-orders/', views.load_customer_in_orders, name='load_inward_orders'),
     path('ajax/load-order-olis/', views.load_order_olis, name='load_order_olis'),
-
-
-# NOT TO BE USED ON UI
-# ------------------------------------------------------------------------------
-    # ex: /orders/
-    # path('', views.Order_IndexView.as_view(), name='order_index'),
-    # ex: /order/in/oli
-    path('in/oli', views.InOli_IndexView.as_view(), name='in_oli_index'),
-
-    # ex: /order/in/oli/1/
-    path('in/oli/<int:pk>/', views.InOli_DetailView.as_view(), name='in_oli_detail'),
-
-    # ex: /order/out/oli
-    path('out/oli', views.OutOli_IndexView.as_view(), name='out_oli_index'),
-
-    # ex: /order/out/oli/1/
-    path('out/oli/<int:pk>/', views.OutOli_DetailView.as_view(), name='out_oli_detail'),
 ]

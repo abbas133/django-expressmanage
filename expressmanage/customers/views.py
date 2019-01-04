@@ -2,6 +2,7 @@ from django.views import generic
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 
+from .forms import CustomerForm
 from .models import Customer
 from .helper import CustomerSummary
 
@@ -40,7 +41,7 @@ class Customer_CreateView(LoginRequiredMixin, PermissionRequiredMixin, generic.C
     permission_required = ('customers.add_customer')
 
     model = Customer
-    fields = ['firm','name', 'address', 'city', 'mobile_number']
+    form_class = CustomerForm
     template_name = 'customers/edit.html'
 
     def get_success_url(self):
@@ -52,7 +53,7 @@ class Customer_UpdateView(LoginRequiredMixin, PermissionRequiredMixin, generic.U
     permission_required = ('customers.change_customer')
 
     model = Customer
-    fields = ['firm','name', 'address', 'city', 'mobile_number']
+    form_class = CustomerForm
     template_name = 'customers/edit.html'
 
     def get_success_url(self):

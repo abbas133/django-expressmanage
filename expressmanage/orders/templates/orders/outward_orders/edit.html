@@ -89,6 +89,7 @@ $(document).ready(function() {
     // Event Listeners
     $("body").on( "change", "#id_customer", getCustomerWiseOrders);
     $("body").on( "change", "#id_inward_order", getOrderWiseOli);
+    $("body").on( "change", "input[name$='-quantity']", getInOli);
 
     // $(".btn.btn-success").disabled();
 })
@@ -129,5 +130,19 @@ var getOrderWiseOli = function() {
         }
     )
 }
+
+var getInOli = function() {
+    console.log('hello');
+    elemId = $(event.target).attr("id")
+    elemNumber = elemId.substring(elemId.indexOf("-") + 1, elemId.lastIndexOf("-"))
+
+    sourceElemSelecter = "#id_inoli_set-" + elemNumber + "-id"
+    sourceElem = $(sourceElemSelecter)
+
+    targetElemSelecter = "#id_outoli_set-" + elemNumber + "-in_oli"
+    targetElem = $(targetElemSelecter)
+    targetElem.attr("value", sourceElem.val())
+}
+
 </script>
 {% endblock content %}
