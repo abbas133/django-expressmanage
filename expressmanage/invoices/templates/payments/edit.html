@@ -30,7 +30,9 @@
                         <h2 class="panel-title">Payment</h2>
                     </header>
 
-                    <form class="form-horizontal form-bordered" method="post">
+                    <form id="add-new-form" class="form-horizontal form-bordered" method="post" 
+                        data-get-invoice-url="{% url 'invoices:load_customer_invoices' %}"
+                        data-get-invoice-details-url="{% url 'invoices:fetch_invoice_details'%}">
                         {% csrf_token %}
 
                         <div class="panel-body">
@@ -39,16 +41,25 @@
                             {% endfor %}
 
                             {% for field in form.visible_fields %}
-                                <div class="form-group">
-                                    <label class="col-md-3 control-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
-                                    <div class="col-md-6">
-                                        {{ field|add_class:'form-control' }}
+                                {% if field.errors %}
+                                    <div class="form-group has-error">
+                                        <label class="col-md-3 control-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                                        <div class="col-md-6">
+                                            {{ field|add_class:'form-control' }}
 
-                                        {% for error in field.errors %}
-                                            <span class="help-block">{{ error }}</span>
-                                        {% endfor %}
+                                            {% for error in field.errors %}
+                                                <label for="{{field.label}}" class="error">{{ error }}</label>
+                                            {% endfor %}
+                                        </div>
                                     </div>
-                                </div>
+                                {% else %}
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                                        <div class="col-md-6">
+                                            {{ field|add_class:'form-control' }}
+                                        </div>
+                                    </div>
+                                {% endif %}
                             {% endfor %}
                         </div>
 
@@ -64,4 +75,60 @@
         </section>
         <!-- end: page -->
     </section>
+
+
+
+{% comment %} TODO: Move this to static {% endcomment %}
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+{% comment %} Move this to helper.js {% endcomment %}
+<script>
+$(document).ready(function() {
+    console.log('document ready')
+
+    // Event Listeners
+    $("body").on( "change", "#id_customer", getCustomerWiseInvoices);
+    $("body").on( "change", "#id_invoice", getInvoiceDetails);
+})
+
+
+var getCustomerWiseInvoices = function() {
+    var url = $("#add-new-form").attr("data-get-invoice-url");
+    var customerId = $(this).val();
+
+    $.ajax(
+        {
+            url: url,
+            data: {
+                'cid': customerId
+            },
+
+            success: function (data) {
+                $("#id_invoice").html(data);
+            }
+        }
+    );
+}
+
+var getInvoiceDetails = function() {
+    var url = $("#add-new-form").attr("data-get-invoice-details-url");
+    var invoiceId = $(this).val();
+
+    $(".invoice-detail").remove();
+
+    $.ajax(
+        {
+            url: url,
+            data: {
+                'inv_id': invoiceId
+            },
+
+            success: function (data) {
+                $("#id_pending_amount").val(data["pending_amount"]);
+            }
+        }
+    )
+}
+</script>
+
 {% endblock content %}

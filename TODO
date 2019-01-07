@@ -2,6 +2,12 @@
 # ------------------------------------------------------------------------------
 Facebook like timeline in customer detail page which will show inward order, outward orders and payment
 
+refactor forms using simpleisbetterthancomplex approach
+
+customer, product duplicate validation
+
+InOli Stock quantity logic to be built based on total in - total out, so that the update won't be affected by the change in quantity
+
 Dashboard
 
 Lot summary - NEW

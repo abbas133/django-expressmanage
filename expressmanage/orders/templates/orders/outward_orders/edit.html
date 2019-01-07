@@ -52,12 +52,6 @@
                             <div class="form-group">
                                 <label class="col-md-3 control-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
                                 <div class="col-md-6">
-                                    {% comment %} {% if field.name == 'date' %}
-                                        {{ field|add_class:'form-control'|attr:"data-plugin-datepicker" }}
-                                    {% else %}
-                                        {{ field|add_class:'form-control' }}
-                                    {% endif %} {% endcomment %}
-
                                     {{ field|add_class:'form-control' }}
 
                                     {% for error in field.errors %}
@@ -72,8 +66,13 @@
             </div>
         </div>
 
-        <div class="oli-table">
-        </div>
+        {% if is_invalid == False %}
+            <div class="oli-table">
+            </div>
+        {% else %}
+            {% include "orders/filtered_oli_options.html" %}
+        {% endif %}
+
     </form>
     <!-- end: page -->
 
@@ -86,11 +85,14 @@
 {% comment %} Move this to helper.js {% endcomment %}
 <script>
 $(document).ready(function() {
+    console.log('document ready')
+
     // Event Listeners
     $("body").on( "change", "#id_customer", getCustomerWiseOrders);
     $("body").on( "change", "#id_inward_order", getOrderWiseOli);
+    $("body").on( "change", "input[name$='-quantity']", getInOli);
 
-    // $(".btn.btn-success").disabled();
+    // decorateFormErros();
 })
 
 
@@ -129,5 +131,24 @@ var getOrderWiseOli = function() {
         }
     )
 }
+
+var getInOli = function() {
+    elemId = $(event.target).attr("id")
+    elemNumber = elemId.substring(elemId.indexOf("-") + 1, elemId.lastIndexOf("-"))
+
+    sourceElemSelecter = "#id_inoli_set-" + elemNumber + "-id"
+    sourceElem = $(sourceElemSelecter)
+
+    targetElemSelecter = "#id_outoli_set-" + elemNumber + "-in_oli"
+    targetElem = $(targetElemSelecter)
+    targetElem.attr("value", sourceElem.val())
+}
+
+
+// var decorateFormErros = function() {
+//     elem = $(".validation-message").remove()
+//     $(".forms-table").prepend(elem)
+// }
+
 </script>
 {% endblock content %}

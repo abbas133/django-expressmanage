@@ -10,81 +10,96 @@
 
             <div class="panel-body">
                 <div class="row">
-                    <div class="table-responsive">
+                    <div class="table-responsive forms-table">
                         <table class="table table-condensed mb-none">
                             <tbody>
-                                <tr>
+                                <tr class="form-separator">
                                     <td>
                                         <table class="table table-hover table-striped table-condensed mb-none">
                                             {{ in_order_results.management_form }}
 
                                             {% for form in in_order_results.forms %}
-                                            {% if forloop.first %}
-                                            <thead>
-                                                <tr>
-                                                    {% for field in form.visible_fields %}
-                                                    <th>{{ field.label|capfirst }}</th>
-                                                    {% endfor %}
-                                                </tr>
-                                            </thead>
-                                            {% endif %}
+                                                {% if forloop.first %}
+                                                    <thead>
+                                                        <tr>
+                                                            {% for field in form.visible_fields %}
+                                                                <th>{{ field.label|capfirst }}</th>
+                                                            {% endfor %}
+                                                        </tr>
+                                                    </thead>
+                                                {% endif %}
 
-                                            <tbody>
                                                 <tr formset_row>
                                                     {% for field in form.visible_fields %}
-                                                    <td>
-                                                        {% if forloop.first %}
-                                                        {% for hidden in form.hidden_fields %}
-                                                        {{ hidden }}
-                                                        {% endfor %}
-                                                        {% endif %}
+                                                        <td>
+                                                            {% if forloop.first %}
+                                                                {% for hidden in form.hidden_fields %}
+                                                                    {{ hidden }}
+                                                                {% endfor %}
+                                                            {% endif %}
 
-                                                        {% for error in field.errors %}
-                                                        <span class="help-block">{{ error }}</span>
-                                                        {% endfor %}
+                                                            {% for error in field.errors %}
+                                                                <span class="help-block">{{ error }}</span>
+                                                            {% endfor %}
 
-                                                        {{ field|add_class:'form-control' }}
-                                                    </td>
+                                                            {{ field|add_class:'form-control' }}
+                                                        </td>
                                                     {% endfor %}
                                                 </tr>
-                                            </tbody>
                                             {% endfor %}
                                         </table>
                                     </td>
                                     <td>
                                         <table class="table table-hover table-striped table-condensed mb-none">
-                                            {{ outward_olis.management_form }}
+                                            {{ out_oli_formset.management_form }}
 
-                                            {% for form in outward_olis.forms %}
-                                            {% if forloop.first %}
-                                            <thead>
-                                                <tr>
-                                                    {% for field in form.visible_fields %}
-                                                    <th>{{ field.label|capfirst }}</th>
-                                                    {% endfor %}
-                                                </tr>
-                                            </thead>
-                                            {% endif %}
+                                            {% for form in out_oli_formset.forms %}
+                                                {% if form.non_field_errors %}
+                                                    <div class="validation-message">
+                                                        <ul style="display: block;">
+                                                            {% for error in form.non_field_errors %}
+                                                                <li>
+                                                                    <label class="error" style="display: inline-block;">{{ error }}</label>
+                                                                </li>
+                                                            {% endfor %}
+                                                        </ul>
+                                                    </div>
+                                                {% endif %}
 
-                                            <tbody>
+                                                {% if forloop.first %}
+                                                    <thead>
+                                                        <tr>
+                                                            {% for field in form.visible_fields %}
+                                                                <th>{{ field.label|capfirst }}</th>
+                                                            {% endfor %}
+                                                        </tr>
+                                                    </thead>
+                                                {% endif %}
+
                                                 <tr formset_row>
                                                     {% for field in form.visible_fields %}
-                                                    <td>
-                                                        {% if forloop.first %}
-                                                        {% for hidden in form.hidden_fields %}
-                                                        {{ hidden }}
-                                                        {% endfor %}
-                                                        {% endif %}
+                                                        <td>
+                                                            {% if forloop.first %}
+                                                                {% for hidden in form.hidden_fields %}
+                                                                    {{ hidden }}
+                                                                {% endfor %}
+                                                            {% endif %}
 
-                                                        {% for error in field.errors %}
-                                                        <span class="help-block">{{ error }}</span>
-                                                        {% endfor %}
+                                                            {% if field.errors %}
+                                                                <div class="has-error">
+                                                                    {{ field|add_class:'form-control' }}
 
-                                                        {{ field|add_class:'form-control' }}
-                                                    </td>
+                                                                    {% for error in field.errors %}
+                                                                        <label for="{{field.label}}" class="error">{{ error }}</label>
+                                                                    {% endfor %}
+                                                                </div>
+
+                                                            {% else %}
+                                                                {{ field|add_class:'form-control' }}
+                                                            {% endif %}
+                                                        </td>
                                                     {% endfor %}
                                                 </tr>
-                                            </tbody>
                                             {% endfor %}
                                         </table>
                                     </td>

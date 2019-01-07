@@ -7,6 +7,7 @@ from datetime import datetime
 from decimal import Decimal
 
 from expressmanage.orders.models import InwardOrder, OutwardOrder, OutOli
+from expressmanage.customers.models import Customer
 
 
 @with_author
@@ -53,6 +54,7 @@ class InvoiceLineItem(TimeStampedModel):
 
 @with_author
 class Payment(TimeStampedModel):
+    customer        = models.ForeignKey(Customer, on_delete=models.CASCADE)
     invoice         = models.ForeignKey(Invoice, on_delete=models.CASCADE)
     amount          = models.DecimalField(max_digits=15, decimal_places=2)
 
@@ -75,8 +77,8 @@ class Payment(TimeStampedModel):
 
 @with_author
 class Receipt(TimeStampedModel):
-    invoice         = models.ForeignKey(Invoice, on_delete=models.CASCADE)
-    payment         = models.ForeignKey(Payment, on_delete=models.CASCADE)
+    invoice = models.ForeignKey(Invoice, on_delete=models.CASCADE)
+    payment = models.ForeignKey(Payment, on_delete=models.CASCADE)
 
     def __str__(self):
         return str(self.pk)

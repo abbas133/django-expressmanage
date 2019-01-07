@@ -1,14 +1,14 @@
 from django.views import generic
 from django.urls import reverse_lazy
-from django.db import transaction
 from django.shortcuts import render
 from django.forms.models import inlineformset_factory
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.http import HttpResponseRedirect
 
-from expressmanage.invoices.models import Invoice, InvoiceLineItem
+from expressmanage.invoices.models import Invoice
 
-from .models import InwardOrder, InOli, OutwardOrder, OutOli
-from .forms import InOliFormSet, OutOliFormSet, InOliResultFormSet, OutwardOrderModelForm
+from .models import InwardOrder, OutwardOrder, OutOli
+from .forms import InwardOrderForm, InOliFormSet, InOliUpdateFormset, InOliResultFormSet, OutwardOrderForm, OutOliForm, OutOliFormSet
 from .helpers import get_invoice, populate_invoice, get_oli_invoice_li
 
 
@@ -37,28 +37,45 @@ class InwardOrder_CreateView(LoginRequiredMixin, PermissionRequiredMixin, generi
     permission_required = ('orders.add_inwardorder')
 
     model = InwardOrder
-    fields = ['customer', 'date', 'chamber']
+    form_class = InwardOrderForm
     template_name = 'orders/inward_orders/edit.html'
+    object = None
 
-    def get_context_data(self, **kwargs):
-        context = super(InwardOrder_CreateView, self).get_context_data(**kwargs)
-        if self.request.POST:
-            context['inward_olis'] = InOliFormSet(self.request.POST)
+    def get(self, request, *args, **kwargs):
+        self.object = None
+        form_class = self.get_form_class()
+        form = self.get_form(form_class)
+        in_oli_formset = InOliFormSet()
+
+        return self.render_to_response(
+            self.get_context_data(form=form, in_oli_formset=in_oli_formset)
+        )
+
+    def post(self, request, *args, **kwargs):
+        self.object = None
+        form_class = self.get_form_class()
+        form = self.get_form(form_class)
+        in_oli_formset = InOliFormSet(self.request.POST)
+
+        if form.is_valid() and in_oli_formset.is_valid():
+            return self.form_valid(form, in_oli_formset)
         else:
-            context['inward_olis'] = InOliFormSet()
-        return context
+            return self.form_invalid(form, in_oli_formset)
 
-    def form_valid(self, form):
-        context = self.get_context_data()
-        inward_olis = context['inward_olis']
+    def form_valid(self, form, in_oli_formset):
+        self.object = form.save(commit=False)
+        self.object.save()
 
-        if form.is_valid() and inward_olis.is_valid():
-            with transaction.atomic():
-                self.object = form.save()
+        in_olis = in_oli_formset.save(commit=False)
+        for oli in in_olis:
+            oli.inward_order = self.object
+            oli.save()
+        return HttpResponseRedirect(self.get_success_url())
 
-                inward_olis.instance = self.object
-                inward_olis.save()
-        return super(InwardOrder_CreateView, self).form_valid(form)
+    def form_invalid(self, form, in_oli_formset):
+        return self.render_to_response(
+            self.get_context_data(form=form, in_oli_formset=in_oli_formset)
+        )
 
     def get_success_url(self):
         return reverse_lazy('orders:in_detail', kwargs={'pk': self.object.pk})
@@ -69,29 +86,45 @@ class InwardOrder_UpdateView(LoginRequiredMixin, PermissionRequiredMixin, generi
     permission_required = ('orders.change_inwardorder')
 
     model = InwardOrder
-    fields = ['customer', 'date', 'chamber']
+    form_class = InwardOrderForm
     template_name = 'orders/inward_orders/edit.html'
+    object = None
 
-    def get_context_data(self, **kwargs):
-        context = super(InwardOrder_UpdateView, self).get_context_data(**kwargs)
-        if self.request.POST:
-            context['inward_olis'] = InOliFormSet(self.request.POST, instance=self.object)
-            context['inward_olis'].full_clean()
+    def get_object(self, queryset=None):
+        self.object = super(InwardOrder_UpdateView, self).get_object()
+        return self.object
+
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        in_oli_formset = InOliUpdateFormset(instance=self.object)
+
+        return self.render_to_response(
+            self.get_context_data(form=InwardOrderForm(instance=self.object), in_oli_formset=in_oli_formset)
+        )
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form = InwardOrderForm(data=self.request.POST, instance=self.object)
+        in_oli_formset = InOliUpdateFormset(data=self.request.POST, instance=self.object)
+
+        if form.is_valid() and in_oli_formset.is_valid():
+            return self.form_valid(form, in_oli_formset)
         else:
-            context['inward_olis'] = InOliFormSet(instance=self.object)
-        return context
+            return self.form_invalid(form, in_oli_formset)
 
-    def form_valid(self, form):
-        context = self.get_context_data()
-        inward_olis = context['inward_olis']
+    def form_valid(self, form, in_oli_formset):
+        self.object = form.save(commit=False)
+        self.object.save()
 
-        if form.is_valid() and inward_olis.is_valid():
-            with transaction.atomic():
-                self.object = form.save()
+        in_olis = in_oli_formset.save(commit=False)
+        for oli in in_olis:
+            oli.save()
+        return HttpResponseRedirect(self.get_success_url())
 
-                inward_olis.instance = self.object
-                inward_olis.save()
-        return super(InwardOrder_UpdateView, self).form_valid(form)
+    def form_invalid(self, form, in_oli_formset):
+        return self.render_to_response(
+            self.get_context_data(form=form, in_oli_formset=in_oli_formset)
+        )
 
     def get_success_url(self):
         return reverse_lazy('orders:in_detail', kwargs={'pk': self.object.pk})
@@ -131,116 +164,68 @@ class OutwardOrder_CreateView(LoginRequiredMixin, PermissionRequiredMixin, gener
     permission_required = ('orders.add_outwardorder')
 
     model = OutwardOrder
-    form_class = OutwardOrderModelForm
-    # fields = ['customer', 'inward_order', 'date', 'received_by',]
+    form_class = OutwardOrderForm
     template_name = 'orders/outward_orders/edit.html'
+    object = None
 
     def get_context_data(self, **kwargs):
         context = super(OutwardOrder_CreateView, self).get_context_data(**kwargs)
-
-        if self.request.POST:
-            context['outward_olis'] = OutOliFormSet(self.request.POST)
-
-            in_order_instance = InwardOrder.objects.get(pk=self.request.POST['inward_order'])
-            context['in_order_results'] = InOliResultFormSet(self.request.POST, instance=in_order_instance)
-        else:
-            pass
+        context['is_invalid'] = kwargs['is_invalid']
         return context
 
-    def form_valid(self, form):
-        context = self.get_context_data()
-        outward_olis = context['outward_olis']
+    def get(self, request, *args, **kwargs):
+        self.object = None
+        form_class = self.get_form_class()
+        form = self.get_form(form_class)
 
-        is_valid = form.is_valid() and outward_olis.is_valid()
+        return self.render_to_response(
+            self.get_context_data(form=form, is_invalid=False)
+        )
 
-        if form.is_valid():
-            with transaction.atomic():
-                self.object = form.save(commit=False)
+    def post(self, request, *args, **kwargs):
+        self.object = None
+        form_class = self.get_form_class()
+        form = self.get_form(form_class)
+        out_oli_formset = OutOliFormSet(self.request.POST)
+        in_order_results = InOliResultFormSet(self.request.POST)
 
-                # invoice = get_invoice(self.object)
-                # invoice.save()
+        if form.is_valid() and out_oli_formset.is_valid():
+            return self.form_valid(form, out_oli_formset)
+        else:
+            return self.form_invalid(form, in_order_results, out_oli_formset)
 
-                if outward_olis.is_valid():
-                    form.save()
+    def form_valid(self, form, out_oli_formset):
+        self.object = form.save(commit=False)
+        self.object.save()
 
-                    outward_olis.instance = self.object
+        invoice = get_invoice(self.object)
+        invoice.save()
 
-                    out_olis = self.populate_oli_details(outward_order=outward_olis.instance)
+        out_olis = out_oli_formset.save(commit=False)
 
-                    # invoice_lis = get_oli_invoice_li(invoice, out_olis)
-                    # invoice_lis = InvoiceLineItem.objects.bulk_create(invoice_lis)
+        invoice_lis = []
+        for oli in out_olis:
+            oli.outward_order = self.object
+            oli.save()
 
-                    # invoice = populate_invoice(invoice, invoice_lis)
-                    # invoice.save()
-                return super(OutwardOrder_CreateView, self).form_valid(form)
+            invoice_li = get_oli_invoice_li(invoice, oli)
+            invoice_li.save()
 
-    # def form_invalid(self, form):
-    #     response = super().form_invalid(form)
-    #     if self.request.is_ajax():
-    #         return JsonResponse(form.errors, status=400)
-    #     else:
-    #         return response
+            invoice_lis.append(invoice_li)
 
-    def populate_oli_details(self, outward_order):
-        inoli_set           = 'inoli_set-'
-        outoli_set          = 'outoli_set-'
+        invoice = populate_invoice(invoice, invoice_lis)
+        invoice.save()
 
-        field_id            = '-id'
-        field_quantity      = '-quantity'
-        field_stock         = '-stock'
+        return HttpResponseRedirect(self.get_success_url())
 
-        attr_total_forms    = '-TOTAL_FORMS'
 
-        total_forms = int(self.request.POST[outoli_set.replace('-', '') + attr_total_forms])
-        lst_out_olis = []
-
-        for var in list(range(total_forms)):
-            out_quantity = int(self.request.POST[outoli_set + str(var) + field_quantity])
-
-            if out_quantity > 0:
-                oli = OutOli(
-                    outward_order = outward_order,
-                    in_oli_id = self.request.POST[inoli_set + str(var) + field_id],
-                    quantity = out_quantity
-                )
-
-                lst_out_olis.append(oli)
-                oli.save()
-            else:
-                pass
-        return lst_out_olis
+    def form_invalid(self, form, in_order_results, out_oli_formset):
+        return self.render_to_response(
+            self.get_context_data(form=form, in_order_results=in_order_results, out_oli_formset=out_oli_formset, is_invalid=True)
+        )
 
     def get_success_url(self):
-        # return reverse_lazy('invoices:invoice_detail', kwargs={'pk': Invoice.objects.get(outward_order=self.object.pk).pk})
-        return reverse_lazy('orders:out_detail', kwargs={'pk': self.object.pk})
-
-
-# OLI VIEWS - DEVELOPER BACKDOOR
-# ------------------------------------------------------------------------------
-class InOli_IndexView(LoginRequiredMixin, PermissionRequiredMixin, generic.ListView):
-    template_name = 'orders/order_line_items/index.html'
-    context_object_name = 'in_oli_list'
-
-    def get_queryset(self):
-        return InOli.objects.all()
-
-
-class InOli_DetailView(LoginRequiredMixin, PermissionRequiredMixin, generic.DetailView):
-    model = InOli
-    template_name = 'orders/order_line_items/detail.html'
-
-
-class OutOli_IndexView(LoginRequiredMixin, PermissionRequiredMixin, generic.ListView):
-    template_name = 'orders/order_line_items/index.html'
-    context_object_name = 'out_oli_list'
-
-    def get_queryset(self):
-        return OutOli.objects.all()
-
-
-class OutOli_DetailView(LoginRequiredMixin, PermissionRequiredMixin, generic.DetailView):
-    model = OutOli
-    template_name = 'orders/order_line_items/detail.html'
+        return reverse_lazy('invoices:invoice_detail', kwargs={'pk': Invoice.objects.get(outward_order=self.object.pk).pk})
 
 
 # RECEIVING CHALLAN
@@ -257,7 +242,7 @@ class ReceivingChallan_DetailView(LoginRequiredMixin, PermissionRequiredMixin, g
 # ------------------------------------------------------------------------------
 def load_customer_in_orders(request):
     customer_id = request.GET.get('cid')
-    inward_orders = InwardOrder.objects.filter(customer = customer_id).filter(status = 'Active').order_by('date')
+    inward_orders = InwardOrder.objects.filter(customer=customer_id, status='Active').order_by('date')
     return render(request, 'orders/filtered_inorder_options.html', {'filtered_inward_orders': inward_orders})
 
 
@@ -265,11 +250,11 @@ def load_order_olis(request):
     in_order_id = request.GET.get('inid')
     in_order_results = InOliResultFormSet(instance=InwardOrder.objects.get(pk=in_order_id))
 
-    outward_olis = inlineformset_factory(
+    out_oli_formset = inlineformset_factory(
         OutwardOrder,
         OutOli,
-        fields=('outward_order', 'quantity',),
         can_delete=False,
         extra=len(in_order_results),
+        form=OutOliForm
     )
-    return render(request, 'orders/filtered_oli_options.html', {'in_order_results': in_order_results, 'outward_olis': outward_olis})
+    return render(request, 'orders/filtered_oli_options.html', {'in_order_results': in_order_results, 'out_oli_formset': out_oli_formset})
