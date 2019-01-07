@@ -34,7 +34,6 @@
                                 <thead>
                                     <tr>
                                         <th>Name</th>
-                                        <th>Description</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -42,7 +41,6 @@
                                     {% for ctRec in containertype_list %}
                                         <tr>
                                             <td>{{ ctRec.name }}</td>
-                                            <td>{{ ctRec.description }}</td>
                                             <td>
                                                 <a href="{% url 'products:container_detail' ctRec.id %}"><i class="fa fa-list"></i> Details </a>
                                                 {% if request.user.is_authenticated and request.user.is_staff %}

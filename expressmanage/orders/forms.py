@@ -60,6 +60,7 @@ InOliResultFormSet = inlineformset_factory(
     form=InOliResultForm,
 )
 
+
 # OUTWARD ORDERS
 # ------------------------------------------------------------------------------
 class OutwardOrderForm(ModelForm):
@@ -79,6 +80,15 @@ class OutOliForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super(OutOliForm, self).__init__(*args, **kwargs)
         self.fields['in_oli'].widget = HiddenInput()
+
+    def clean(self):
+        cleaned_data = super(OutOliForm, self).clean()
+        quantity = cleaned_data['quantity']
+        stock = cleaned_data['in_oli'].stock
+
+        if quantity > stock:
+            self.add_error('quantity', 'Qauntity cannot be more than available stock')
+        return cleaned_data
 
 
 OutOliFormSet = inlineformset_factory(

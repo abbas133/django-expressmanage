@@ -10,7 +10,7 @@
 
             <div class="panel-body">
                 <div class="row">
-                    <div class="table-responsive">
+                    <div class="table-responsive forms-table">
                         <table class="table table-condensed mb-none">
                             <tbody>
                                 <tr class="form-separator">
@@ -54,6 +54,18 @@
                                             {{ out_oli_formset.management_form }}
 
                                             {% for form in out_oli_formset.forms %}
+                                                {% if form.non_field_errors %}
+                                                    <div class="validation-message">
+                                                        <ul style="display: block;">
+                                                            {% for error in form.non_field_errors %}
+                                                                <li>
+                                                                    <label class="error" style="display: inline-block;">{{ error }}</label>
+                                                                </li>
+                                                            {% endfor %}
+                                                        </ul>
+                                                    </div>
+                                                {% endif %}
+
                                                 {% if forloop.first %}
                                                     <thead>
                                                         <tr>
@@ -73,11 +85,18 @@
                                                                 {% endfor %}
                                                             {% endif %}
 
-                                                            {% for error in field.errors %}
-                                                                <span class="help-block">{{ error }}</span>
-                                                            {% endfor %}
+                                                            {% if field.errors %}
+                                                                <div class="has-error">
+                                                                    {{ field|add_class:'form-control' }}
 
-                                                            {{ field|add_class:'form-control' }}
+                                                                    {% for error in field.errors %}
+                                                                        <label for="{{field.label}}" class="error">{{ error }}</label>
+                                                                    {% endfor %}
+                                                                </div>
+
+                                                            {% else %}
+                                                                {{ field|add_class:'form-control' }}
+                                                            {% endif %}
                                                         </td>
                                                     {% endfor %}
                                                 </tr>

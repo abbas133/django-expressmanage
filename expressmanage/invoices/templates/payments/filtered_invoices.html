@@ -1,0 +1,4 @@
+<option value="">- Select One -</option>
+{% for invoice in filtered_invoices %}
+    <option value="{{ invoice.pk }}">{{ invoice.pk }}</option>
+{% endfor %}

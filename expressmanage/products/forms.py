@@ -16,10 +16,11 @@ class ProductForm(ModelForm):
 class ContainerTypeForm(ModelForm):
     class Meta:
         model = ContainerType
-        fields = ['name', 'description']
+        fields = ['name']
 
     def __init__(self, *args, **kwargs):
         super(ContainerTypeForm, self).__init__(*args, **kwargs)
+        self.fields['name'].widget.attrs['placeholder'] = 'BUM/BOX/5KG'
 
 
 class RateSlabForm(ModelForm):
@@ -29,18 +30,6 @@ class RateSlabForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(RateSlabForm, self).__init__(*args, **kwargs)
-
-    # def clean_rate(self):
-    #     data = self.cleaned_data['rate']
-    #     raise ValidationError('Rate is not good enough')
-    #     return data
-
-    # def clean(self):
-    #     cleaned_data = super(RateSlabForm, self).clean()
-    #     # Use either one of the below as applicable
-    #     raise ValidationError('FORM VALIDATION ERROR')
-    #     self.add_error('rate', 'rate is not good enough')
-    #     return cleaned_data
 
 
 RateSlabFormSet = inlineformset_factory(

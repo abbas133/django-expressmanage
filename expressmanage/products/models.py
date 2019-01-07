@@ -7,7 +7,7 @@ from expressmanage.utils import normalize_string
 
 @with_author
 class Product(TimeStampedModel):
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50, unique=True)
 
     def __str__(self):
         return self.name
@@ -20,7 +20,6 @@ class Product(TimeStampedModel):
 @with_author
 class ContainerType(TimeStampedModel):
     name            = models.CharField(max_length=50)
-    description     = models.CharField(max_length=255, blank=True, null=True)
 
     def __str__(self):
         return self.name

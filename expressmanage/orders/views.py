@@ -168,15 +168,18 @@ class OutwardOrder_CreateView(LoginRequiredMixin, PermissionRequiredMixin, gener
     template_name = 'orders/outward_orders/edit.html'
     object = None
 
+    def get_context_data(self, **kwargs):
+        context = super(OutwardOrder_CreateView, self).get_context_data(**kwargs)
+        context['is_invalid'] = kwargs['is_invalid']
+        return context
+
     def get(self, request, *args, **kwargs):
         self.object = None
         form_class = self.get_form_class()
         form = self.get_form(form_class)
-        out_oli_formset = OutOliFormSet()
-        in_order_results = InOliResultFormSet()
 
         return self.render_to_response(
-            self.get_context_data(form=form, out_oli_formset=out_oli_formset, in_order_results=in_order_results)
+            self.get_context_data(form=form, is_invalid=False)
         )
 
     def post(self, request, *args, **kwargs):
@@ -189,7 +192,7 @@ class OutwardOrder_CreateView(LoginRequiredMixin, PermissionRequiredMixin, gener
         if form.is_valid() and out_oli_formset.is_valid():
             return self.form_valid(form, out_oli_formset)
         else:
-            return self.form_invalid(form, out_oli_formset)
+            return self.form_invalid(form, in_order_results, out_oli_formset)
 
     def form_valid(self, form, out_oli_formset):
         self.object = form.save(commit=False)
@@ -216,9 +219,9 @@ class OutwardOrder_CreateView(LoginRequiredMixin, PermissionRequiredMixin, gener
         return HttpResponseRedirect(self.get_success_url())
 
 
-    def form_invalid(self, form, out_oli_formset):
+    def form_invalid(self, form, in_order_results, out_oli_formset):
         return self.render_to_response(
-            self.get_context_data(form=form, out_oli_formset=out_oli_formset)
+            self.get_context_data(form=form, in_order_results=in_order_results, out_oli_formset=out_oli_formset, is_invalid=True)
         )
 
     def get_success_url(self):
@@ -239,7 +242,7 @@ class ReceivingChallan_DetailView(LoginRequiredMixin, PermissionRequiredMixin, g
 # ------------------------------------------------------------------------------
 def load_customer_in_orders(request):
     customer_id = request.GET.get('cid')
-    inward_orders = InwardOrder.objects.filter(customer=customer_id).filter(status='Active').order_by('date')
+    inward_orders = InwardOrder.objects.filter(customer=customer_id, status='Active').order_by('date')
     return render(request, 'orders/filtered_inorder_options.html', {'filtered_inward_orders': inward_orders})
 
 

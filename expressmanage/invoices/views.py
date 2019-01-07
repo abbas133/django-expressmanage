@@ -1,8 +1,12 @@
 from django.views import generic
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.shortcuts import render
+from django.http import JsonResponse
+
 
 from .models import Invoice, InvoiceLineItem, Payment, Receipt
+from .forms import PaymentForm
 
 
 # INVOICE
@@ -42,8 +46,8 @@ class Payment_CreateView(LoginRequiredMixin, PermissionRequiredMixin, generic.Cr
     permission_required = ('invoices.add_payment')
 
     model = Payment
-    fields = ['invoice', 'amount']
     template_name = 'payments/edit.html'
+    form_class = PaymentForm
 
     def get_success_url(self):
         return reverse_lazy('invoices:payment_index')
@@ -67,3 +71,17 @@ class Receipt_DetailView(LoginRequiredMixin, PermissionRequiredMixin, generic.De
 
     model = Receipt
     template_name = 'receipts/detail.html'
+
+
+# AJAX HELPER VIEW
+# ------------------------------------------------------------------------------
+def load_customer_invoices(request):
+    customer_id = request.GET.get('cid')
+    invoices = Invoice.objects.filter(inward_order__customer=customer_id, status='Active')
+    return render(request, 'payments/filtered_invoices.html', {'filtered_invoices': invoices})
+
+
+def fetch_invoice_details(request):
+    invoice_id = request.GET.get('inv_id')
+    invoice = Invoice.objects.get(pk=invoice_id)
+    return JsonResponse({'pending_amount' : invoice.pending_amount})
