@@ -16,6 +16,17 @@ var activateNavItem = function() {
     var selectedElem = $('ul.nav a[href="'+ url +'"]')
 
     if(selectedElem.length == 0) {
+        if(url.includes("orders/in")) {
+            url = "/orders/in/"
+        }
+
+        if(url.includes("orders/out")) {
+            url = "/orders/out/"
+        }
+        selectedElem = $('ul.nav a[href="' + url + '"]')
+    }
+
+    if(selectedElem.length == 0) {
         url = url.slice("0", url.indexOf("/", "1") + 1)
         selectedElem = $('ul.nav a[href="' + url + '"]')
     }

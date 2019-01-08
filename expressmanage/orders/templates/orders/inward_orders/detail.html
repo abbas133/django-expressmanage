@@ -24,6 +24,211 @@
 
     <!-- start: page -->
     <div class="row">
+        <div class="col-md-9">
+
+            <div class="tabs">
+                <ul class="nav nav-tabs tabs-primary">
+                    <li class="active">
+                        <a href="#overview" data-toggle="tab">Overview</a>
+                    </li>
+                    <li>
+                        <a href="#details" data-toggle="tab">Details</a>
+                    </li>
+                </ul>
+
+                <div class="tab-content">
+                    <div id="overview" class="tab-pane active">
+                        <section class="panel panel-transparent">
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <label for="lot-number">Lot Number: </label>
+                                    <output type="text" class="form-control" id="lot-number">{{ inwardorder.lot_number }}</output>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="customer">Customer: </label>
+                                    <output type="text" class="form-control" id="customer">{{ inwardorder.customer }}</output>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="in-date">In Date: </label>
+                                    <output type="text" class="form-control" id="in-date">{{ inwardorder.date }}</output>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="chamber">Chamber: </label>
+                                    <output type="text" class="form-control" id="chamber">{{ inwardorder.chamber }}</output>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="status">Status: </label>
+                                    <output type="text" class="form-control" id="status">{{ inwardorder.status }}</output>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section class="panel panel-transparent">
+                            <header class="panel-heading">
+                                <h2 class="panel-title">Order Line Items</h2>
+                            </header>
+
+                            <div class="panel-body">
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-striped table-condensed mb-none">
+                                        <thead>
+                                            <th>Product</th>
+                                            <th>Container</th>
+                                            <th>Qunatity In</th>
+                                            <th>Qunatity Stock</th>
+                                        </thead>
+
+                                        <tbody>
+                                            {% for in_oli in inwardorder.inoli_set.all %}
+                                                <tr>
+                                                    <td> {{ in_oli.product }} </td>
+                                                    <td> {{ in_oli.container_type }} </td>
+                                                    <td> {{ in_oli.quantity }} </td>
+                                                    <td> {{ in_oli.stock }} </td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+
+                    <div id="details" class="tab-pane">
+                        <div class="panel-group" id="accordion">
+                            <div class="panel panel-accordion">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#out-olis">
+                                            Outward Orders
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="out-olis" class="accordion-body collapse in">
+                                    <div class="panel-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover table-striped table-condensed mb-none">
+                                                <thead>
+                                                    <th>Product</th>
+                                                    <th>Container type</th>
+                                                    <th>Qunatity Out</th>
+                                                    {% comment %} <th>Qunatity Stock</th> {% endcomment %}
+                                                    <th>Out Date</th>
+                                                </thead>
+
+                                                <tbody>
+                                                    {% for out_oli in outward_orders %}
+                                                        <tr>
+                                                            <td> {{ out_oli.in_oli.product }} </td>
+                                                            <td> {{ out_oli.in_oli.container_type }} </td>
+                                                            <td> {{ out_oli.quantity }} </td>
+                                                            {% comment %} <td> {{ out_oli.in_oli.stock }} </td> {% endcomment %}
+                                                            <td> {{ out_oli.outward_order.date }} </td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel panel-accordion">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#invoices">
+                                                Invoices
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="invoices" class="accordion-body collapse">
+                                    <div class="panel-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover table-striped table-condensed mb-none">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Invoice Number</th>
+                                                        <th>Inward Order</th>
+                                                        <th>Outward Order</th>
+                                                        <th>Date</th>
+                                                        <th>Total Amount</th>
+                                                        <th>Received Amount</th>
+                                                        <th>Pending Amount</th>
+                                                        <th>Status</th>
+                                                        {% comment %} <th>Action</th> {% endcomment %}
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {% for invoice in order_invoices %}
+                                                        <tr>
+                                                            <td>{{ invoice.pk }}</td>
+                                                            <td>{{ invoice.inward_order.lot_number }}</td>
+                                                            <td>{{ invoice.outward_order.pk }}</td>
+                                                            <td>{{ invoice.created }}</td>
+                                                            <td><i class="fa fa-inr"></i> {{ invoice.total_amount }}</td>
+                                                            <td><i class="fa fa-inr"></i> {{ invoice.received_amount }}</td>
+                                                            <td><i class="fa fa-inr"></i> {{ invoice.pending_amount }}</td>
+                                                            <td>{{ invoice.status }}</td>
+                                                            <!--
+                                                            <td>
+                                                                <a href="{% url 'invoices:invoice_detail' invoice.id %}">
+                                                                    <i class="fa fa-list"></i>
+                                                                    Details
+                                                                </a>
+                                                            </td>
+                                                            -->
+                                                        </tr>
+                                                    {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="col-md-3">
+            <h4 class="mb-md">Order Summary</h4>
+            <ul class="simple-card-list mb-xlg">
+                <li class="primary">
+                    <h3><i class="fa fa-inr"></i> {{ order_amount }} </h3>
+                    <p>Total Bill Till Now</p>
+                </li>
+                <li class="success">
+                    <h3><i class="fa fa-inr"></i> {{ amount_received }} </h3>
+                    <p>Total Amount Received</p>
+                </li>
+                <li class="danger">
+                    <h3><i class="fa fa-inr"></i> {{ amount_pending }} </h3>
+                    <p>Total Amount Pending</p>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <footer>
+        <div class="pull-right">
+            <a class="mb-xs mt-xs mr-xs btn btn-default" href="{% url 'orders:in_index' %}"><i class="fa fa-home"></i> Back</a>
+
+            {% if request.user.is_authenticated and request.user.is_staff %}
+                <a class="mb-xs mt-xs mr-xs btn btn-success" href="{% url 'orders:receiving_challan_detail' inwardorder.id %}"><i class="fa fa-indent"></i> Receiving Challan</a>
+                <a class="mb-xs mt-xs mr-xs btn btn-danger" href="{% url 'orders:in_delete' inwardorder.id %}"><i class="fa fa-trash-o"></i> Delete</a>
+                <a class="mb-xs mt-xs mr-xs btn btn-primary" href="{% url 'orders:in_update' inwardorder.id %}"><i class="fa fa-pencil"></i> Edit</a>
+            {% endif %}
+        </div>
+    </footer>
+
+    <!--
+    <div class="row">
         <div class="col-lg-12">
 
             <section class="panel panel-primary">
@@ -60,6 +265,7 @@
             </section>
         </div>
     </div>
+
 
     <div class="row">
         <div class="col-lg-12">
@@ -107,6 +313,7 @@
             </section>
         </div>
     </div>
+    -->
     <!-- end: page -->
 
 </section>

@@ -1,3 +1,5 @@
+from django.db.models import Sum
+
 from expressmanage.orders.models import InwardOrder, OutwardOrder
 from expressmanage.invoices.models import Invoice, Payment
 
@@ -7,16 +9,10 @@ class CustomerSummary:
         return Invoice.objects.filter(inward_order__customer=customer.pk).order_by("created")
 
     def get_active_lots(customer):
-        return InwardOrder.objects.filter(customer=customer.pk, status="Active")
+        return InwardOrder.objects.filter(customer=customer.pk, status="Active").count()
 
     def get_active_invoices(customer):
-        return Invoice.objects.filter(inward_order__customer=customer.pk, status="Active")
+        return Invoice.objects.filter(inward_order__customer=customer.pk, status="Active").count()
 
     def get_pending_amount(customer):
-        active_invoices = CustomerSummary.get_active_invoices(customer)
-
-        pending_amount = 0
-        for invoice in active_invoices:
-            pending_amount += invoice.pending_amount
-
-        return pending_amount
+        return Invoice.objects.filter(inward_order__customer=customer.pk, status="Active").aggregate(Sum('pending_amount'))['pending_amount__sum']
