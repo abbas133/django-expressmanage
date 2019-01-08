@@ -9,7 +9,7 @@ from expressmanage.invoices.models import Invoice
 
 from .models import InwardOrder, OutwardOrder, OutOli
 from .forms import InwardOrderForm, InOliFormSet, InOliUpdateFormset, InOliResultFormSet, OutwardOrderForm, OutOliForm, OutOliFormSet
-from .helpers import get_invoice, populate_invoice, get_oli_invoice_li
+from .helpers import get_invoice, populate_invoice, get_oli_invoice_li, get_out_olis, get_order_invoices, get_order_amount_received, get_order_amount_pending, get_order_amount_total
 
 
 # INWARD ORDERS
@@ -30,6 +30,26 @@ class InwardOrder_DetailView(LoginRequiredMixin, PermissionRequiredMixin, generi
 
     model = InwardOrder
     template_name = 'orders/inward_orders/detail.html'
+    object = None
+
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+
+        outward_orders = get_out_olis(self.object)
+        order_invoices = get_order_invoices(self.object)
+        order_amount = get_order_amount_total(self.object)
+        amount_received = get_order_amount_received(self.object)
+        amount_pending = get_order_amount_pending(self.object)
+
+        return self.render_to_response(
+            self.get_context_data(
+                outward_orders=outward_orders,
+                order_invoices=order_invoices,
+                order_amount=order_amount,
+                amount_received=amount_received,
+                amount_pending=amount_pending
+            )
+        )
 
 
 class InwardOrder_CreateView(LoginRequiredMixin, PermissionRequiredMixin, generic.CreateView):

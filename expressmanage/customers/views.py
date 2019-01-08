@@ -19,21 +19,24 @@ class Customer_DetailView(LoginRequiredMixin, PermissionRequiredMixin, generic.D
 
     model = Customer
     template_name = 'customers/detail.html'
+    object = None
 
-    def get_context_data(self, **kwargs):
-        cont_customer = kwargs['object']
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
 
-        context = super(Customer_DetailView, self).get_context_data(**kwargs)
+        recent_invoices = CustomerSummary.get_recent_invoices(self.object)[:3]
+        active_lots = CustomerSummary.get_active_lots(self.object)
+        active_invoices = CustomerSummary.get_active_invoices(self.object)
+        pending_amount = CustomerSummary.get_pending_amount(self.object)
 
-        # Recent Invoices
-        context['recent_invoices'] = CustomerSummary.get_recent_invoices(cont_customer)[:3]
-
-        # Sale stats
-        context['active_lots'] = CustomerSummary.get_active_lots(cont_customer).count()
-        context['active_invoices'] = CustomerSummary.get_active_invoices(cont_customer).count()
-        context['pending_amount'] = CustomerSummary.get_pending_amount(cont_customer)
-
-        return context
+        return self.render_to_response(
+            self.get_context_data(
+                recent_invoices=recent_invoices,
+                active_lots=active_lots,
+                active_invoices=active_invoices,
+                pending_amount=pending_amount
+            )
+        )
 
 
 class Customer_CreateView(LoginRequiredMixin, PermissionRequiredMixin, generic.CreateView):

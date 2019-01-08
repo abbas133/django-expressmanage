@@ -6,13 +6,7 @@ Facebook like timeline in customer detail page which will show inward order, out
 
 refactor forms using simpleisbetterthancomplex approach
 
-customer, product duplicate validation
-
 InOli Stock quantity logic to be built based on total in - total out, so that the update won't be affected by the change in quantity
-
-Dashboard
-
-Lot summary - NEW
 
 customer detail page active lots, active invoices to make expandable
 
@@ -34,6 +28,12 @@ Manage front-end dependencies via manager
 
 # DONE
 # ------------------------------------------------------------------------------
+Lot summary - NEW
+
+Dashboard
+
+customer, product duplicate validation
+
 link to add more items in formset
 
 option to make payments
