@@ -26,7 +26,6 @@ class ContainerType(TimeStampedModel):
 
     def save(self, *args, **kwargs):
         self.name = normalize_string(self.name)
-        self.description = normalize_string(self.description)
         super(ContainerType, self).save(*args, **kwargs)
 
 
