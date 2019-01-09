@@ -110,29 +110,31 @@
                                 </div>
                                 <div id="out-olis" class="accordion-body collapse in">
                                     <div class="panel-body">
-                                        <div class="table-responsive">
-                                            <table class="table table-hover table-striped table-condensed mb-none">
-                                                <thead>
-                                                    <th>Product</th>
-                                                    <th>Container type</th>
-                                                    <th>Qunatity Out</th>
-                                                    {% comment %} <th>Qunatity Stock</th> {% endcomment %}
-                                                    <th>Out Date</th>
-                                                </thead>
+                                        {% if outward_orders %}
+                                            <div class="table-responsive">
+                                                <table class="table table-hover table-striped table-condensed mb-none">
+                                                    <thead>
+                                                        <th>Product</th>
+                                                        <th>Container type</th>
+                                                        <th>Qunatity Out</th>
+                                                        <th>Out Date</th>
+                                                    </thead>
 
-                                                <tbody>
-                                                    {% for out_oli in outward_orders %}
-                                                        <tr>
-                                                            <td> {{ out_oli.in_oli.product }} </td>
-                                                            <td> {{ out_oli.in_oli.container_type }} </td>
-                                                            <td> {{ out_oli.quantity }} </td>
-                                                            {% comment %} <td> {{ out_oli.in_oli.stock }} </td> {% endcomment %}
-                                                            <td> {{ out_oli.outward_order.date }} </td>
-                                                        </tr>
-                                                    {% endfor %}
-                                                </tbody>
-                                            </table>
-                                        </div>
+                                                    <tbody>
+                                                        {% for out_oli in outward_orders %}
+                                                            <tr>
+                                                                <td> {{ out_oli.in_oli.product }} </td>
+                                                                <td> {{ out_oli.in_oli.container_type }} </td>
+                                                                <td> {{ out_oli.quantity }} </td>
+                                                                <td> {{ out_oli.outward_order.date }} </td>
+                                                            </tr>
+                                                        {% endfor %}
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        {% else %}
+                                            <p>No outward order generated for this lot</p>
+                                        {% endif %}
                                     </div>
                                 </div>
                             </div>
@@ -146,45 +148,40 @@
                                 </div>
                                 <div id="invoices" class="accordion-body collapse">
                                     <div class="panel-body">
-                                        <div class="table-responsive">
-                                            <table class="table table-hover table-striped table-condensed mb-none">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Invoice Number</th>
-                                                        <th>Inward Order</th>
-                                                        <th>Outward Order</th>
-                                                        <th>Date</th>
-                                                        <th>Total Amount</th>
-                                                        <th>Received Amount</th>
-                                                        <th>Pending Amount</th>
-                                                        <th>Status</th>
-                                                        {% comment %} <th>Action</th> {% endcomment %}
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    {% for invoice in order_invoices %}
+                                        {% if order_invoices%}
+                                            <div class="table-responsive">
+                                                <table class="table table-hover table-striped table-condensed mb-none">
+                                                    <thead>
                                                         <tr>
-                                                            <td>{{ invoice.pk }}</td>
-                                                            <td>{{ invoice.inward_order.lot_number }}</td>
-                                                            <td>{{ invoice.outward_order.pk }}</td>
-                                                            <td>{{ invoice.created }}</td>
-                                                            <td><i class="fa fa-inr"></i> {{ invoice.total_amount }}</td>
-                                                            <td><i class="fa fa-inr"></i> {{ invoice.received_amount }}</td>
-                                                            <td><i class="fa fa-inr"></i> {{ invoice.pending_amount }}</td>
-                                                            <td>{{ invoice.status }}</td>
-                                                            <!--
-                                                            <td>
-                                                                <a href="{% url 'invoices:invoice_detail' invoice.id %}">
-                                                                    <i class="fa fa-list"></i>
-                                                                    Details
-                                                                </a>
-                                                            </td>
-                                                            -->
+                                                            <th>Invoice Number</th>
+                                                            <th>Inward Order</th>
+                                                            <th>Outward Order</th>
+                                                            <th>Date</th>
+                                                            <th>Total Amount</th>
+                                                            <th>Received Amount</th>
+                                                            <th>Pending Amount</th>
+                                                            <th>Status</th>
                                                         </tr>
-                                                    {% endfor %}
-                                                </tbody>
-                                            </table>
-                                        </div>
+                                                    </thead>
+                                                    <tbody>
+                                                        {% for invoice in order_invoices %}
+                                                            <tr>
+                                                                <td>{{ invoice.pk }}</td>
+                                                                <td>{{ invoice.inward_order.lot_number }}</td>
+                                                                <td>{{ invoice.outward_order.pk }}</td>
+                                                                <td>{{ invoice.created }}</td>
+                                                                <td><i class="fa fa-inr"></i> {{ invoice.total_amount }}</td>
+                                                                <td><i class="fa fa-inr"></i> {{ invoice.received_amount }}</td>
+                                                                <td><i class="fa fa-inr"></i> {{ invoice.pending_amount }}</td>
+                                                                <td>{{ invoice.status }}</td>
+                                                            </tr>
+                                                        {% endfor %}
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        {% else %}
+                                            <p>No invoice generated for this lot</p>
+                                        {% endif %}
                                     </div>
                                 </div>
                             </div>
@@ -226,95 +223,5 @@
             {% endif %}
         </div>
     </footer>
-
-    <!--
-    <div class="row">
-        <div class="col-lg-12">
-
-            <section class="panel panel-primary">
-                <header class="panel-heading">
-                    <h2 class="panel-title">Inward Order Details</h2>
-                </header>
-
-                <div class="panel-body">
-                    <div class="form-group">
-                        <label for="lot-number">Lot Number: </label>
-                        <output type="text" class="form-control" id="lot-number">{{ inwardorder.lot_number }}</output>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="customer">Customer: </label>
-                        <output type="text" class="form-control" id="customer">{{ inwardorder.customer }}</output>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="in-date">In Date: </label>
-                        <output type="text" class="form-control" id="in-date">{{ inwardorder.date }}</output>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="chamber">Chamber: </label>
-                        <output type="text" class="form-control" id="chamber">{{ inwardorder.chamber }}</output>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="status">Status: </label>
-                        <output type="text" class="form-control" id="status">{{ inwardorder.status }}</output>
-                    </div>
-                </div>
-            </section>
-        </div>
-    </div>
-
-
-    <div class="row">
-        <div class="col-lg-12">
-
-            <section class="panel panel-featured panel-featured-primary">
-                <header class="panel-heading">
-                    <h2 class="panel-title">Order Line Items</h2>
-                </header>
-
-                <div class="panel-body">
-                    <div class="table-responsive">
-                        <table class="table table-hover table-striped table-condensed mb-none">
-                            <thead>
-                                <th>Product</th>
-                                <th>Container</th>
-                                <th>Qunatity In</th>
-                                <th>Qunatity Stock</th>
-                            </thead>
-
-                            <tbody>
-                                {% for in_oli in inwardorder.inoli_set.all %}
-                                    <tr>
-                                        <td> {{ in_oli.product }} </td>
-                                        <td> {{ in_oli.container_type }} </td>
-                                        <td> {{ in_oli.quantity }} </td>
-                                        <td> {{ in_oli.stock }} </td>
-                                    </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <footer>
-                    <div class="pull-right">
-                        <a class="mb-xs mt-xs mr-xs btn btn-default" href="{% url 'orders:in_index' %}"><i class="fa fa-home"></i> Back</a>
-
-                        {% if request.user.is_authenticated and request.user.is_staff %}
-                            <a class="mb-xs mt-xs mr-xs btn btn-success" href="{% url 'orders:receiving_challan_detail' inwardorder.id %}"><i class="fa fa-indent"></i> Receiving Challan</a>
-                            <a class="mb-xs mt-xs mr-xs btn btn-danger" href="{% url 'orders:in_delete' inwardorder.id %}"><i class="fa fa-trash-o"></i> Delete</a>
-                            <a class="mb-xs mt-xs mr-xs btn btn-primary" href="{% url 'orders:in_update' inwardorder.id %}"><i class="fa fa-pencil"></i> Edit</a>
-                        {% endif %}
-                    </div>
-                </footer>
-            </section>
-        </div>
-    </div>
-    -->
-    <!-- end: page -->
-
 </section>
 {% endblock content %}

@@ -19,7 +19,7 @@ class Product(TimeStampedModel):
 
 @with_author
 class ContainerType(TimeStampedModel):
-    name            = models.CharField(max_length=50)
+    name = models.CharField(max_length=50)
 
     def __str__(self):
         return self.name
@@ -31,9 +31,9 @@ class ContainerType(TimeStampedModel):
 
 @with_author
 class RateSlab(TimeStampedModel):
-    container_type      = models.ForeignKey(ContainerType, on_delete=models.CASCADE)
-    rate                = models.DecimalField(max_digits=5, decimal_places=2)
-    number_of_days      = models.IntegerField()
+    container_type = models.ForeignKey(ContainerType, on_delete=models.CASCADE)
+    rate           = models.DecimalField(max_digits=5, decimal_places=2)
+    number_of_days = models.IntegerField()
 
     def __str__(self):
         return str(self.pk)

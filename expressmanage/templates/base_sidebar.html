@@ -120,7 +120,7 @@
                                     <span>Add Outward Order</span>
                                 </a>
                             </li>
-                        </ul> 
+                        </ul>
                     </li>
 
                     <li class="nav-parent">
@@ -146,7 +146,13 @@
                             <li>
                                 <a href="{% url 'invoices:payment_create' %}">
                                     <i class="fa fa-money" aria-hidden="true"></i>
-                                    <span>Payment Entry</span>
+                                    <span>Invoice Payment Entry</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{% url 'invoices:payment_bulk_create' %}">
+                                    <i class="fa fa-credit-card" aria-hidden="true"></i>
+                                    <span>Lot Payment Entry</span>
                                 </a>
                             </li>
                         </ul>

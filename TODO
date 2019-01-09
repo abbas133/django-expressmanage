@@ -1,7 +1,5 @@
 # TODO
 # ------------------------------------------------------------------------------
-Rate not defined notification
-
 Facebook like timeline in customer detail page which will show inward order, outward orders and payment
 
 refactor forms using simpleisbetterthancomplex approach
@@ -28,6 +26,10 @@ Manage front-end dependencies via manager
 
 # DONE
 # ------------------------------------------------------------------------------
+Lot payment provision
+
+Rate not defined notification
+
 Lot summary - NEW
 
 Dashboard

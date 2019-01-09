@@ -2,7 +2,7 @@ from django.forms import ModelForm, ValidationError, HiddenInput
 from django.forms.models import inlineformset_factory
 
 from .models import InwardOrder, InOli, OutwardOrder, OutOli
-
+from .helpers import get_oli_applicable_rate
 
 # INWARD ORDERS
 # ------------------------------------------------------------------------------
@@ -85,6 +85,17 @@ class OutOliForm(ModelForm):
         cleaned_data = super(OutOliForm, self).clean()
         quantity = cleaned_data['quantity']
         stock = cleaned_data['in_oli'].stock
+
+        try:
+            oli = self.save(commit=False)
+            oli.in_oli = cleaned_data['in_oli']
+            oli.outward_order = cleaned_data['outward_order']
+
+            get_oli_applicable_rate(oli)
+
+        except Exception as e:
+            self.add_error('quantity', 'Rate slab not configured for the number of days this item has elaped. Please re-configure the rate slab and try again')
+
 
         if quantity > stock:
             self.add_error('quantity', 'Qauntity cannot be more than available stock')
