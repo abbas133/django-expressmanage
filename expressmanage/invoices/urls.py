@@ -21,6 +21,9 @@ urlpatterns = [
     # ex: /invoices/payment/new
     path('payment/new', views.Payment_CreateView.as_view(), name='payment_create'),
 
+    # ex: /invoices/payment/bulk/new
+    path('payment/bulk/new', views.LotPayment_CreateView.as_view(), name='payment_bulk_create'),
+
 
 # Receipt
 # -----------------------------------------------------------------------------
@@ -35,4 +38,6 @@ urlpatterns = [
 # ------------------------------------------------------------------------------
     path('ajax/load-customer-invoices/', views.load_customer_invoices, name='load_customer_invoices'),
     path('ajax/fetch-invoice-details/', views.fetch_invoice_details, name='fetch_invoice_details'),
+    path('ajax/load-customer-inward-orders/', views.load_customer_inward_orders, name='load_customer_inward_orders'),
+    path('ajax/load-order-amount-pending/', views.load_order_amount_pending, name='load_order_amount_pending'),
 ]

@@ -1,0 +1,134 @@
+{% extends "base.html" %}
+
+{% load widget_tweaks %}
+
+{% block content %}
+    <section role="main" class="content-body">
+        <header class="page-header">
+            <h2>Invoices And Payments</h2>
+
+            <div class="right-wrapper pull-right">
+                <ol class="breadcrumbs">
+                    <li>
+                        <a href="{% url 'home' %}">
+                            <i class="fa fa-home"></i>
+                        </a>
+                    </li>
+                    <li><span>Invoices And Payments</span></li>
+                    <li><span>Payment</span></li>
+                </ol>
+
+                <a class="sidebar-right-toggle"><i class=""></i></a>
+            </div>
+        </header>
+
+        <!-- start: page -->
+        <div class="row">
+            <div class="col-lg-12">
+                <section class="panel panel-primary">
+                    <header class="panel-heading">
+                        <h2 class="panel-title">Lot Payment</h2>
+                    </header>
+
+                    <form id="add-new-form" class="form-horizontal form-bordered" method="post"
+                        data-get-inward-order-url="{% url 'invoices:load_customer_inward_orders' %}"
+                        data-get-inward-order-details-url="{% url 'invoices:load_order_amount_pending' %}"
+                    >
+                        {% csrf_token %}
+
+                        <div class="panel-body">
+                            {% for hidden in form.hidden_fields %}
+                                {{ hidden }}
+                            {% endfor %}
+
+                            {% for field in form.visible_fields %}
+                                {% if field.errors %}
+                                    <div class="form-group has-error">
+                                        <label class="col-md-3 control-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                                        <div class="col-md-6">
+                                            {{ field|add_class:'form-control' }}
+
+                                            {% for error in field.errors %}
+                                                <label for="{{field.label}}" class="error">{{ error }}</label>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                {% else %}
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                                        <div class="col-md-6">
+                                            {{ field|add_class:'form-control' }}
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+
+                        <footer>
+                            <div class="pull-right">
+                                <a class="mb-xs mt-xs mr-xs btn btn-default" href="{% url 'invoices:invoice_index' %}"><i class="fa fa-home"></i> Back </a>
+                                <button type="submit" class="mb-xs mt-xs mr-xs btn btn-success"><i class="fa fa-save"></i> Save </button>
+                            </div>
+                        </footer>
+                    </form>
+                </section>
+            </div>
+        </section>
+        <!-- end: page -->
+    </section>
+
+{% comment %} TODO: Move this to static {% endcomment %}
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+{% comment %} Move this to helper.js {% endcomment %}
+<script>
+$(document).ready(function() {
+    console.log('document ready')
+
+    // Event Listeners
+    $("body").on( "change", "#id_customer", getCustomerInwardOrders);
+    $("body").on( "change", "#id_lot_number", getInvoiceDetails);
+})
+
+
+var getCustomerInwardOrders = function() {
+    var url = $("#add-new-form").attr("data-get-inward-order-url");
+    var customerId = $(this).val();
+
+    $.ajax(
+        {
+            url: url,
+            data: {
+                'cid': customerId
+            },
+
+            success: function (data) {
+                $("#id_lot_number").html(data);
+            }
+        }
+    );
+}
+
+var getInvoiceDetails = function() {
+    var url = $("#add-new-form").attr("data-get-inward-order-details-url");
+    var invoiceId = $(this).val();
+
+    $(".invoice-detail").remove();
+
+    $.ajax(
+        {
+            url: url,
+            data: {
+                'inv_id': invoiceId
+            },
+
+            success: function (data) {
+                $("#id_pending_amount").val(data["pending_amount"]);
+            }
+        }
+    )
+}
+</script>
+
+
+{% endblock content %}

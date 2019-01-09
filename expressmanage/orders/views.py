@@ -9,7 +9,7 @@ from expressmanage.invoices.models import Invoice
 
 from .models import InwardOrder, OutwardOrder, OutOli
 from .forms import InwardOrderForm, InOliFormSet, InOliUpdateFormset, InOliResultFormSet, OutwardOrderForm, OutOliForm, OutOliFormSet
-from .helpers import get_invoice, populate_invoice, get_oli_invoice_li, get_out_olis, get_order_invoices, get_order_amount_received, get_order_amount_pending, get_order_amount_total
+from .helpers import get_invoice, populate_invoice, get_oli_invoice_li, get_out_olis, get_order_invoices, get_order_amount_received, get_order_amount_pending, get_order_amount_total, get_oli_applicable_rate
 
 
 # INWARD ORDERS
@@ -210,11 +210,11 @@ class OutwardOrder_CreateView(LoginRequiredMixin, PermissionRequiredMixin, gener
         in_order_results = InOliResultFormSet(self.request.POST)
 
         if form.is_valid() and out_oli_formset.is_valid():
-            return self.form_valid(form, out_oli_formset)
+            return self.form_valid(form, in_order_results, out_oli_formset)
         else:
             return self.form_invalid(form, in_order_results, out_oli_formset)
 
-    def form_valid(self, form, out_oli_formset):
+    def form_valid(self, form, in_order_results, out_oli_formset):
         self.object = form.save(commit=False)
         self.object.save()
 
