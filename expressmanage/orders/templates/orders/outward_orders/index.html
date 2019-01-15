@@ -52,11 +52,7 @@
                                             <td>{{ out_order.status }}</td>
                                             <td>
                                                 <a href="{% url 'orders:out_detail' out_order.id %}"><i class="fa fa-list"></i> Details </a>
-
-                                                <!--
-                                                |
-                                                <a href="{% url 'orders:out_update' out_order.id %}"><i class="fa fa-pencil"></i> Edit </a>
-                                                -->
+                                                {% comment %} | <a href="{% url 'orders:out_update' out_order.id %}"><i class="fa fa-pencil"></i> Edit </a> {% endcomment %}
                                             </td>
                                         </tr>
                                     {% endfor %}
