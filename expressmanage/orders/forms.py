@@ -36,6 +36,15 @@ class InOliResultForm(ModelForm):
         self.fields['stock'].widget.attrs['readonly'] = True
 
 
+class InOliUpdateForm(ModelForm):
+    class Meta:
+        model = InOli
+        fields = ['product', 'container_type', 'quantity', 'stock']
+
+    def __init__(self, *args, **kwargs):
+        super(InOliUpdateForm, self).__init__(*args, **kwargs)
+
+
 InOliFormSet = inlineformset_factory(
     InwardOrder,
     InOli,
@@ -49,7 +58,7 @@ InOliUpdateFormset = inlineformset_factory(
     InOli,
     can_delete=False,
     extra=0,
-    form=InOliForm,
+    form=InOliUpdateForm,
 )
 
 InOliResultFormSet = inlineformset_factory(
@@ -70,6 +79,17 @@ class OutwardOrderForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(OutwardOrderForm, self).__init__(*args, **kwargs)
+
+
+class OutwardOrderUpdateForm(ModelForm):
+    class Meta:
+        model = OutwardOrder
+        fields = ['customer', 'inward_order', 'date', 'received_by']
+
+    def __init__(self, *args, **kwargs):
+        super(OutwardOrderUpdateForm, self).__init__(*args, **kwargs)
+        self.fields['customer'].widget.attrs['readonly'] = True
+        self.fields['inward_order'].widget.attrs['readonly'] = True
 
 
 class OutOliForm(ModelForm):
@@ -107,5 +127,13 @@ OutOliFormSet = inlineformset_factory(
     OutOli,
     can_delete=False,
     extra=2,
+    form=OutOliForm,
+)
+
+OutOliResultFormSet = inlineformset_factory(
+    OutwardOrder,
+    OutOli,
+    can_delete=False,
+    extra=0,
     form=OutOliForm,
 )

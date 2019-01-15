@@ -31,6 +31,14 @@ class Invoice_DetailView(LoginRequiredMixin, PermissionRequiredMixin, generic.De
     template_name = 'invoices/detail.html'
 
 
+class Invoice_PrintView(LoginRequiredMixin, PermissionRequiredMixin, generic.DetailView):
+    raise_exception = True
+    permission_required = ('invoices.view_invoice')
+
+    model = Invoice
+    template_name = 'invoices/print_invoice.html'
+
+
 # PAYMENT
 # ------------------------------------------------------------------------------
 class Payment_IndexView(LoginRequiredMixin, PermissionRequiredMixin, generic.ListView):

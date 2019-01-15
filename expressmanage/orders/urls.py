@@ -33,6 +33,9 @@ urlpatterns = [
     # ex: /orders/out/new
     path('out/new', views.OutwardOrder_CreateView.as_view(), name='out_create'),
 
+    # ex: /orders/out/e/5
+    # path('out/e/<int:pk>/', views.OutwardOrder_UpdateView.as_view(), name='out_update'),
+
 # RECEIVING CHALLAN
 # ------------------------------------------------------------------------------
     # ex: /orders/rec/1/

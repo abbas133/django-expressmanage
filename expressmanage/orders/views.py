@@ -8,7 +8,7 @@ from django.http import HttpResponseRedirect
 from expressmanage.invoices.models import Invoice
 
 from .models import InwardOrder, OutwardOrder, OutOli
-from .forms import InwardOrderForm, InOliFormSet, InOliUpdateFormset, InOliResultFormSet, OutwardOrderForm, OutOliForm, OutOliFormSet
+from .forms import InwardOrderForm, InOliFormSet, InOliUpdateFormset, InOliResultFormSet, OutwardOrderForm, OutwardOrderUpdateForm, OutOliForm, OutOliFormSet, OutOliResultFormSet
 from .helpers import get_invoice, populate_invoice, get_oli_invoice_li, get_out_olis, get_order_invoices, get_order_amount_received, get_order_amount_pending, get_order_amount_total, get_oli_applicable_rate
 
 
@@ -246,6 +246,56 @@ class OutwardOrder_CreateView(LoginRequiredMixin, PermissionRequiredMixin, gener
 
     def get_success_url(self):
         return reverse_lazy('invoices:invoice_detail', kwargs={'pk': Invoice.objects.get(outward_order=self.object.pk).pk})
+
+
+# class OutwardOrder_UpdateView(LoginRequiredMixin, PermissionRequiredMixin, generic.UpdateView):
+#     raise_exception = True
+#     permission_required = ('orders.change_outwardorder')
+
+#     model = OutwardOrder
+#     form_class = OutwardOrderUpdateForm
+#     template_name = 'orders/outward_orders/edit.html'
+#     object = None
+
+#     def get_object(self, queryset=None):
+#         self.object = super(OutwardOrder_UpdateView, self).get_object()
+#         return self.object
+
+#     def get(self, request, *args, **kwargs):
+#         self.object = self.get_object()
+#         form_class = self.get_form_class()
+
+#         form = self.get_form(form_class)
+#         out_oli_formset = OutOliResultFormSet(instance=self.object)
+#         in_order_results = InOliResultFormSet(instance=self.object.inward_order)
+
+#         return self.render_to_response(
+#             self.get_context_data(form=form, in_order_results=in_order_results, out_oli_formset=out_oli_formset)
+#         )
+
+#     def post(self, request, *args, **kwargs):
+#         self.object = self.get_object()
+#         form = OutwardOrderUpdateForm(data=self.request.POST, instance=self.object)
+#         out_oli_formset = OutOliFormSet(data=self.request.POST, instance=self.object)
+#         in_order_results = InOliResultFormSet(data=self.request.POST, instance=self.object.inward_order)
+
+#         if form.is_valid() and out_oli_formset.is_valid():
+#             return self.form_valid(form, out_oli_formset)
+#         else:
+#             return self.form_invalid(form=form, in_order_results=in_order_results, out_oli_formset=out_oli_formset)
+
+#     def form_valid(self, form, in_order_results, out_oli_formset):
+#         self.object = form.save(commit=False)
+#         self.object.save()
+
+#     def form_invalid(self, form, in_order_results, out_oli_formset):
+#         return self.render_to_response(
+#             self.get_context_data(form=form, in_order_results=in_order_results, out_oli_formset=out_oli_formset)
+#         )
+
+#     def get_success_url(self):
+#         return reverse_lazy('invoices:invoice_detail', kwargs={'pk': Invoice.objects.get(outward_order=self.object.pk).pk})
+
 
 
 # RECEIVING CHALLAN
