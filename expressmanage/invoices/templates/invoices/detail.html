@@ -26,6 +26,8 @@
 
     <section class="panel panel-primary">
         <div class="panel-body">
+
+            <!-- PRINTABLE AREA STARTS -->
             <div class="invoice">
                 <header class="clearfix">
                     <div class="row">
@@ -77,20 +79,20 @@
                         </div>
                     </div>
                 </div>
-            
+
                 <div class="table-responsive">
 
                     <table class="table invoice-items">
                         <thead>
-                            <tr class="h4 text-dark">
-                                <th id="cell-id"     class="text-semibold">Lot Number</th>
-                                <th id="cell-item"   class="text-semibold">Item</th>
-                                <th id="cell-desc"   class="text-semibold">Container Type</th>
-                                <th id="cell-qty"    class="text-semibold">Quantity Out</th>
-                                <th id="cell-desc"   class="text-semibold">Elapsed Days</th>
-                                <th id="cell-price"  class="text-semibold">Rate</th>
-                                <th id="cell-qty"    class="text-semibold">Stock</th>
-                                <th id="cell-total"  class="text-semibold">Total</th>
+                            <tr class="h5 text-dark">
+                                <th class="text-semibold">Lot Number</th>
+                                <th class="text-semibold">Item</th>
+                                <th class="text-semibold">Container Type</th>
+                                <th class="text-semibold">Quantity Out</th>
+                                <th class="text-semibold">Elapsed Days</th>
+                                <th class="text-semibold">Rate</th>
+                                <th class="text-semibold">Stock</th>
+                                <th class="text-semibold">Total</th>
                             </tr>
                         </thead>
 
@@ -115,11 +117,13 @@
                         <div class="col-sm-4 col-sm-offset-8">
                             <table class="table h5 text-dark">
                                 <tbody>
+                                    <!--
                                     <tr class="b-top-none">
                                         <td colspan="2">Subtotal</td>
                                         <td class="text-left"><i class="fa fa-inr"></i> {{ invoice.total_amount }}</td>
                                     </tr>
-                                    <tr class="h4">
+                                    -->
+                                    <tr class="h5">
                                         <td colspan="2">Grand Total</td>
                                         <td class="text-left"><i class="fa fa-inr"></i> {{ invoice.total_amount }}</td>
                                     </tr>
@@ -129,44 +133,14 @@
                     </div>
                 </div>
             </div>
+            <!-- PRINTABLE AREA ENDS -->
 
             <div class="text-right mr-lg">
                 <a class="mb-xs mt-xs mr-xs btn btn-default" href="{% url 'invoices:invoice_index' %}"><i class="fa fa-home"></i> Back </a>
-                <a href="#" class="btn btn-primary ml-sm"><i class="fa fa-print"></i> Print</a>
+                <a href="{% url 'invoices:invoice_print' invoice.id %}" target="_blank" class="btn btn-primary ml-sm"><i class="fa fa-print"></i> Print</a>
             </div>
         </div>
     </section>
-
-    <!--
-    <a href="#modal-payment-confirmation" class="ml-sm mb-xs mt-xs mr-xs modal-basic btn btn-success btn-js-make-payment"><i class="fa fa-money"></i> Make Payment</a>
-
-    <div id="modal-payment-confirmation" class="modal-block modal-block-primary mfp-hide">
-        <section class="panel">
-            <div class="panel-body">
-                <div class="modal-wrapper">
-                    <div class="modal-text">
-                    </div>
-                    <div class="modal-icon">
-                        <i class="fa fa-question-circle"></i>
-                    </div>
-                    <div class="modal-text">
-                        <h4>Confirmation required!</h4>
-                        <p>Please confirm only if you have received payment of <span class="text-danger"><i class="fa fa-inr"></i> {{ invoice.total_amount }} </span></p>
-                    </div>
-                </div>
-            </div>
-            <footer class="panel-footer">
-                <div class="row">
-                    <div class="col-md-12 text-right">
-                        <button type="submit" class="btn btn-primary modal-confirm">Confirm</button>
-                        <button class="btn btn-default modal-dismiss">Cancel</button>
-                    </div>
-                </div>
-            </footer>
-        </section>
-    </div>
-    -->
-
     <!-- end: page -->
 </section>
 

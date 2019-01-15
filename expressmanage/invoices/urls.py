@@ -12,6 +12,9 @@ urlpatterns = [
     # ex: /invoices/5/
     path('<int:pk>/', views.Invoice_DetailView.as_view(), name='invoice_detail'),
 
+    # ex: /invoices/p/5/
+    path('p/<int:pk>/', views.Invoice_PrintView.as_view(), name='invoice_print'),
+
 
 # Payment
 # -----------------------------------------------------------------------------
