@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% load widget_tweaks %}
+{% load math_filters %}
 
 {% block content %}
 <section role="main" class="content-body">
@@ -80,6 +81,7 @@
                                             <th>Container</th>
                                             <th>Qunatity In</th>
                                             <th>Qunatity Stock</th>
+                                            <th>Quantity Out Till Now</th>
                                         </thead>
 
                                         <tbody>
@@ -89,6 +91,7 @@
                                                     <td> {{ in_oli.container_type }} </td>
                                                     <td> {{ in_oli.quantity }} </td>
                                                     <td> {{ in_oli.stock }} </td>
+                                                    <td> {{ in_oli.quantity|isub:in_oli.stock }} </td>
                                                 </tr>
                                             {% endfor %}
                                         </tbody>
