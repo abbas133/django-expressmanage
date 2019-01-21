@@ -103,13 +103,15 @@ class OutOli(TimeStampedModel):
     outward_order   = models.ForeignKey(OutwardOrder, on_delete=models.CASCADE)
     in_oli          = models.ForeignKey(InOli, on_delete=models.CASCADE, blank=True)
     quantity        = models.IntegerField(default=0)
+    in_stock        = models.IntegerField(default=0)
 
     def __str__(self):
         return str(self.pk)
 
     def save(self, *args, **kwargs):
-        super(OutOli, self).save(*args, **kwargs)
-
         in_oli = InOli.objects.get(pk=self.in_oli.pk)
         in_oli.stock -= self.quantity
         in_oli.save()
+
+        self.in_stock = in_oli.stock
+        super(OutOli, self).save(*args, **kwargs)

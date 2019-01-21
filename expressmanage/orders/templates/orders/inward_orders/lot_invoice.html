@@ -32,8 +32,8 @@
                 <header class="clearfix">
                     <div class="row">
                         <div class="col-sm-6 mt-md">
-                            <h2 class="h2 mt-none mb-sm text-dark text-bold">INVOICE</h2>
-                            <h4 class="h4 m-none text-dark text-bold"># {{ invoice.pk}} </h4>
+                            <h2 class="h2 mt-none mb-sm text-dark text-bold">INVOICE SUMMARY</h2>
+                            <h4 class="h4 m-none text-dark text-bold"># {{ inwardorder.lot_number}} </h4>
                         </div>
                         <div class="col-sm-6 text-right mt-md mb-md">
                             <address class="ib mr-xlg">
@@ -57,11 +57,11 @@
                             <div class="bill-to">
                                 <p class="h5 mb-xs text-dark text-semibold">To:</p>
                                 <address>
-                                    {{ invoice.inward_order.customer }}
+                                    {{ inwardorder.customer }}
                                     <br/>
-                                    {{ invoice.inward_order.customer.firm }}
+                                    {{ inwardorder.customer.firm }}
                                     <br/>
-                                    Phone: {{ invoice.inward_order.customer.mobile_number }}
+                                    Phone: {{ inwardorder.customer.mobile_number }}
                                 </address>
                             </div>
                         </div>
@@ -69,11 +69,11 @@
                             <div class="bill-data text-right">
                                 <p class="mb-none">
                                     <span class="text-dark">Invoice Date:</span>
-                                    <span class="value">{{ invoice.created.date }}</span>
+                                    <span class="value">{% now "SHORT_DATE_FORMAT" %}</span>
                                 </p>
                                 <p class="mb-none">
                                     <span class="text-dark">Invoice & items received by:</span>
-                                    <span class="value">{{ invoice.outward_order.received_by }}</span>
+                                    <span class="value">{{ inwardorder.customer }}</span>
                                 </p>
                             </div>
                         </div>
@@ -85,10 +85,12 @@
                     <table class="table invoice-items">
                         <thead>
                             <tr class="h5 text-dark">
-                                <th class="text-semibold">Lot Number</th>
+                                <th class="text-semibold">Out Order</th>
+                                <th class="text-semibold">Invoice</th>
                                 <th class="text-semibold">Item</th>
                                 <th class="text-semibold">Container Type</th>
                                 <th class="text-semibold">Quantity Out</th>
+                                <th class="text-semibold">Out Date</th>
                                 <th class="text-semibold">Elapsed Days</th>
                                 <th class="text-semibold">Rate</th>
                                 <th class="text-semibold">Stock</th>
@@ -97,17 +99,21 @@
                         </thead>
 
                         <tbody>
-                            {% for invoice_line_item in invoice.invoicelineitem_set.all %}
-                                <tr>
-                                    <td> {{ invoice.inward_order.lot_number }} </td>
-                                    <td> {{ invoice_line_item.out_oli.in_oli.product }} </td>
-                                    <td> {{ invoice_line_item.out_oli.in_oli.container_type }} </td>
-                                    <td> {{ invoice_line_item.out_oli.quantity }} </td>
-                                    <td> {{ invoice_line_item.elapsed_days }} </td>
-                                    <td><i class="fa fa-inr"></i> {{ invoice_line_item.rate }} </td>
-                                    <td> {{ invoice_line_item.out_oli.in_stock }} </td>
-                                    <td><i class="fa fa-inr"></i> {{ invoice_line_item.amount }} </td>
-                                </tr>
+                            {% for invoice in inwardorder.invoice_set.all %}
+                                {% for invoice_line_item in invoice.invoicelineitem_set.all %}
+                                    <tr>
+                                        <td> {{ invoice.outward_order }} </td>
+                                        <td> {{ invoice.pk }} </td>
+                                        <td> {{ invoice_line_item.out_oli.in_oli.product }} </td>
+                                        <td> {{ invoice_line_item.out_oli.in_oli.container_type }} </td>
+                                        <td> {{ invoice_line_item.out_oli.quantity }} </td>
+                                        <td> {{ invoice_line_item.out_oli.outward_order.date }} </td>
+                                        <td> {{ invoice_line_item.elapsed_days }} </td>
+                                        <td><i class="fa fa-inr"></i> {{ invoice_line_item.rate }} </td>
+                                        <td> {{ invoice_line_item.out_oli.in_stock }} </td>
+                                        <td><i class="fa fa-inr"></i> {{ invoice_line_item.amount }} </td>
+                                    </tr>
+                                {% endfor %}
                             {% endfor %}
                         </tbody>
                     </table>
@@ -125,7 +131,7 @@
                                     -->
                                     <tr class="h5">
                                         <td colspan="2">Grand Total</td>
-                                        <td class="text-left"><i class="fa fa-inr"></i> {{ invoice.total_amount }}</td>
+                                        <td class="text-left"><i class="fa fa-inr"></i> {{ order_amount }}</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -136,8 +142,8 @@
             <!-- PRINTABLE AREA ENDS -->
 
             <div class="text-right mr-lg">
-                <a class="mb-xs mt-xs mr-xs btn btn-default" href="{% url 'invoices:invoice_index' %}"><i class="fa fa-home"></i> Back </a>
-                <a href="{% url 'invoices:invoice_print' invoice.id %}" target="_blank" class="btn btn-primary ml-sm"><i class="fa fa-print"></i> Print</a>
+                <a class="mb-xs mt-xs mr-xs btn btn-default" href="{% url 'orders:in_index' %}"><i class="fa fa-home"></i> Back</a>
+                <a href="{% url 'orders:print_lot_invoice' inwardorder.id %}" target="_blank" class="btn btn-primary ml-sm"><i class="fa fa-print"></i> Print</a>
             </div>
         </div>
     </section>
