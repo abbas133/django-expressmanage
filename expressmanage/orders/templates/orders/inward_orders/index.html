@@ -31,7 +31,7 @@
                     <div class="panel-body">
                         {% if inwardorder_list %}
                         <div class="table-responsive">
-                            <table class="table table-hover table-bordered table-striped table-condensed mb-none">
+                            <table class="table table-hover table-bordered table-striped table-condensed mb-none list-table">
                                 <thead>
                                     <tr>
                                         <th>Lot Number</th>
@@ -59,6 +59,8 @@
                                                     <a href="{% url 'orders:in_delete' in_order.id %}"><i class="fa fa-trash-o"></i> Delete </a>
                                                     |
                                                     <a href="{% url 'orders:receiving_challan_detail' in_order.id %}"><i class="fa fa-indent"></i> Receiving Challan </a>
+                                                    |
+                                                    <a href="{% url 'orders:lot_invoice' in_order.id %}"><i class="fa fa-fax"></i> Lot Invoice</a>
                                                 {% endif %}
                                             </td>
                                         </tr>

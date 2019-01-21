@@ -1,0 +1,123 @@
+{% load static i18n %}
+
+<html>
+
+<head>
+    <title>Invoice Print</title>
+    <!-- Web Fonts  -->
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet" type="text/css">
+    <!-- Vendor CSS -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+
+    <!-- Theme CSS -->
+    <link rel="stylesheet" href="{% static 'css/theme.css' %}">
+</head>
+
+<body>
+    <div class="invoice">
+        <header class="clearfix">
+            <div class="row">
+                <div class="col-sm-6 mt-md">
+                    <h2 class="h2 mt-none mb-sm text-dark text-bold">INVOICE SUMMARY</h2>
+                    <h4 class="h4 m-none text-dark text-bold"># {{ inwardorder.lot_number}} </h4>
+                </div>
+                <div class="col-sm-6 text-right mt-md mb-md">
+                    <address class="ib mr-xlg">
+                        Sona Ice And Cold Storage
+                        <br />
+                        Sona Compund, Old Agra Road
+                        <br />
+                        Malegaon
+                    </address>
+                </div>
+            </div>
+        </header>
+        <div class="bill-info">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="bill-to">
+                        <p class="h5 mb-xs text-dark text-semibold">To:</p>
+                        <address>
+                            {{ inwardorder.customer }}
+                            <br />
+                            {{ inwardorder.customer.firm }}
+                            <br />
+                            Phone: {{ inwardorder.customer.mobile_number }}
+                        </address>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="bill-data text-right">
+                        <p class="mb-none">
+                            <span class="text-dark">Invoice Date:</span>
+                            <span class="value">{% now "SHORT_DATE_FORMAT" %}</span>
+                        </p>
+                        <p class="mb-none">
+                            <span class="text-dark">Invoice & items received by:</span>
+                            <span class="value">{{ inwardorder.customer }}</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+
+            <table class="table invoice-items">
+                <thead>
+                    <tr class="h5 text-dark">
+                        <th class="text-semibold">Out Order</th>
+                        <th class="text-semibold">Invoice</th>
+                        <th class="text-semibold">Item</th>
+                        <th class="text-semibold">Container Type</th>
+                        <th class="text-semibold">Quantity Out</th>
+                        <th class="text-semibold">Out Date</th>
+                        <th class="text-semibold">Elapsed Days</th>
+                        <th class="text-semibold">Rate</th>
+                        <th class="text-semibold">Stock</th>
+                        <th class="text-semibold">Total</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for invoice in inwardorder.invoice_set.all %}
+                    {% for invoice_line_item in invoice.invoicelineitem_set.all %}
+                    <tr>
+                        <td> {{ invoice.outward_order }} </td>
+                        <td> {{ invoice.pk }} </td>
+                        <td> {{ invoice_line_item.out_oli.in_oli.product }} </td>
+                        <td> {{ invoice_line_item.out_oli.in_oli.container_type }} </td>
+                        <td> {{ invoice_line_item.out_oli.quantity }} </td>
+                        <td> {{ invoice_line_item.out_oli.outward_order.date }} </td>
+                        <td> {{ invoice_line_item.elapsed_days }} </td>
+                        <td><i class="fa fa-inr"></i> {{ invoice_line_item.rate }} </td>
+                        <td> {{ invoice_line_item.out_oli.in_stock }} </td>
+                        <td><i class="fa fa-inr"></i> {{ invoice_line_item.amount }} </td>
+                    </tr>
+                    {% endfor %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="invoice-summary">
+            <div class="row">
+                <div class="col-sm-4 col-sm-offset-8">
+                    <table class="table h5 text-dark">
+                        <tbody>
+                            <tr class="h5">
+                                <td colspan="2">Grand Total</td>
+                                <td class="text-left"><i class="fa fa-inr"></i> {{ order_amount }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        window.print();
+    </script>
+</body>
+
+</html>

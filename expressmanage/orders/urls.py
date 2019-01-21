@@ -22,6 +22,12 @@ urlpatterns = [
     # ex: /orders/in/d/5/
     path('in/d/<int:pk>/', views.InwardOrder_DeleteView.as_view(), name='in_delete'),
 
+    # ex: /orders/in/invoice/5/
+    path('in/invoice/<int:pk>/', views.InwardOrder_InvoiceView.as_view(), name='lot_invoice'),
+
+    # ex: /orders/in/invoice/p/5/
+    path('in/invoice/p/<int:pk>/', views.InwardOrder_InvoicePrintView.as_view(), name='print_lot_invoice'),
+
 # OUTWARD ORDERS
 # ------------------------------------------------------------------------------
     # ex: /orders/out/

@@ -30,7 +30,7 @@
 
                     <div class="panel-body">
                         {% if product_list %}
-                            <table class="table table-hover table-bordered table-striped table-condensed mb-none">
+                            <table class="table table-hover table-bordered table-striped table-condensed mb-none list-table">
                                 <thead>
                                     <tr>
                                         <th>Name</th>
@@ -43,7 +43,7 @@
                                             <td>{{ product.name }}</td>
                                             <td>
                                                 <a href="{% url 'products:product_detail' product.id %}"><i class="fa fa-list"></i> Details </a>
-                                                
+
                                                 {% if request.user.is_authenticated and request.user.is_staff %}
                                                     |
                                                     <a href="{% url 'products:product_update' product.id %}"><i class="fa fa-pencil"></i> Edit </a>

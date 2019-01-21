@@ -23,7 +23,7 @@ class OutOli_Inline(admin.TabularInline):
     fieldsets = (
         ('Order Details', {
             "fields": (
-                'outward_order', 'in_oli', 'quantity'
+                'outward_order', 'in_oli', 'quantity', 'in_stock',
             ),
         }),
     )

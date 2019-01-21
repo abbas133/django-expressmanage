@@ -159,6 +159,35 @@ class InwardOrder_DeleteView(LoginRequiredMixin, PermissionRequiredMixin, generi
     success_url = reverse_lazy('orders:in_index')
 
 
+class InwardOrder_InvoiceView(LoginRequiredMixin, PermissionRequiredMixin, generic.DetailView):
+    raise_exception = True
+    permission_required = ('orders.view_inwardorder')
+
+    model = InwardOrder
+    template_name = 'orders/inward_orders/lot_invoice.html'
+    object = None
+
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        order_amount = get_order_amount_total(self.object)
+
+        return self.render_to_response(self.get_context_data(order_amount=order_amount))
+
+
+class InwardOrder_InvoicePrintView(LoginRequiredMixin, PermissionRequiredMixin, generic.DetailView):
+    raise_exception = True
+    permission_required = ('orders.view_inwardorder')
+
+    model = InwardOrder
+    template_name = 'orders/inward_orders/print_lot_invoice.html'
+    object = None
+
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        order_amount = get_order_amount_total(self.object)
+
+        return self.render_to_response(self.get_context_data(order_amount=order_amount))
+
 # OUTWARD ORDERS
 # ------------------------------------------------------------------------------
 class OutwardOrder_IndexView(LoginRequiredMixin, PermissionRequiredMixin, generic.ListView):

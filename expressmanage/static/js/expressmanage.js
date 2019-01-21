@@ -9,6 +9,9 @@ var init = function() {
 
     // initialize dynamic add more and remove option for formsets
     initFormsetOptions();
+
+    // initialize data table for list pages
+    initDataTable();
 }
 
 var activateNavItem = function() {
@@ -47,4 +50,8 @@ var initFormsetOptions = function() {
         deleteText: 'Remove',
         prefix: 'inoli_set',
     });
+}
+
+var initDataTable = function() {
+    $('.list-table').DataTable();
 }
