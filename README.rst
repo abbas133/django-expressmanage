@@ -13,8 +13,7 @@ A simple ERP solution for cold storage industry
 Demo
 ----
 
-Live demo is available at::
-    abbas133.pythonanywhere.com
+Live demo is available at abbas133.pythonanywhere.com
 
 Login using below mentioned credentials
 
