@@ -12,15 +12,18 @@ A simple ERP solution for cold storage industry
 
 Demo
 ----
+
 Live demo is available at::
     abbas133.pythonanywhere.com
 
 Login using below mentioned credentials
+
     Username: demo
+
     Password: demo123
 
 
 For Developers
 --------------
-If you want to setup the project locally for customization, please read .. Django Cookiecutter docs
-    :target: https://cookiecutter-django.readthedocs.io/en/latest/
+
+If you want to setup the project locally for customization, please read Django Cookiecutter docs https://cookiecutter-django.readthedocs.io/en/latest/
